@@ -2,13 +2,13 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
-		<link
-		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		<!-- Place your kit's code here --><script src="https://kit.fontawesome.com/0b80b0b83d.js" crossorigin="anonymous"> </script>
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
@@ -17,8 +17,49 @@
 		{% endblock %}
 	</head>
 	<body>
-		{% block body %}
-			Hello
-		{% endblock %}
+		<header>
+			<!-- Navigation-->
+			<nav class="navbar navbar-expand-lg bg-secondary text-uppercase" id="mainNav">
+				<div class="container">
+					<a class="navbar-brand text-white" href="#page-top">
+						<img src="{{ asset('medias/Snowboarding_pictogram.svg') }}" alt="Snowtricks" width="50px"/>
+						Sowtricks
+					</a>
+					<button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+						Menu
+						<i class="fas fa-bars"></i>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarResponsive">
+						<ul class="navbar-nav ms-auto">
+							<li class="nav-item mx-0 mx-lg-1">
+								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Accueil</a>
+							</li>
+							<li class="nav-item mx-0 mx-lg-1">
+								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Figures</a>
+							</li>
+							<li class="nav-item mx-0 mx-lg-1">
+								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Se connecter</a>
+							</li>
+							<li class="nav-item mx-0 mx-lg-1">
+								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">S'enregistrer</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<section class="hero text-center align-middle">
+			<div class="">
+				<h2>Bienvenue sur le site communtaire du Snowboard</h2>
+				<h3>Ouvert à tous</h3>
+				<a href="#tricks">
+					<h1>
+						<i class="fa-solid fa-arrow-down-long"></i>
+					</h1>
+				</a>
+
+			</div>
+		</section>
+		{% block body %}{% endblock %}
 	</body>
 </html>
