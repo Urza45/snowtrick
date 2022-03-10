@@ -5,5 +5,3 @@ RewriteEngine On
 # RewriteRule ^admin(.*)$ index.php?url=$1&app=Backend [QSA,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
-
-ErrorDocument 403 http://p5blog/error403
