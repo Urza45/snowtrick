@@ -13,6 +13,9 @@ class TrickController extends AbstractController
      */
     public function index(): Response
     {
+
+
+
         return $this->render('trick/index.html.twig', [
             'controller_name' => 'TrickController',
         ]);
