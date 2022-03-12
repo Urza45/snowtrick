@@ -1,3 +1,17 @@
+$colour-primary: #122c3e;
+$colour-secondary: #d2a058;
+$colour-accent: #b4406a;
+$colour-background : #466272;
+$colour-white: #fff;
+$colour-invalid: #b4406a;
+$colour-section: #60a5bc;
+$colour-lightgray: #e3e3e4;
+
+$heading-shadow-size: 0.55rem;
+$layout-margin: 6rem;
+$grid-gutter: $layout-margin * 0.25;
+
+
 .nav-link {
   color: white;
   font-size: large;
@@ -15,4 +29,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+section {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  border: solid $colour-secondary 10px;
+  border-radius: 1.5em;
+  padding: 5px;
+  background: $colour-section;
 }

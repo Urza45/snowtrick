@@ -5,10 +5,21 @@
 {% endblock %}
 
 {% block body %}
+	<div class="hero text-center align-middle">
+		<div class="">
+			<h2>Bienvenue sur le site communtaire du Snowboard</h2>
+			<h3>Ouvert à tous</h3>
+			<a href="#tricks">
+				<h1>
+					<i class="fa-solid fa-arrow-down-long"></i>
+				</h1>
+			</a>
+		</div>
+	</div>
 	<section id="tricks">
 		<h1>Bonjour</h1>
 		<pre>
-			{{ dump() }}
+			{{ dump(app.user) }}
 		</pre>
 		<i class="bi-alarm"></i>
 	</section>
