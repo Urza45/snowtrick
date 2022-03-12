@@ -7,7 +7,6 @@ use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Media;
 use App\Entity\Trick;
-use App\Entity\TypeMedia;
 use App\Entity\TypeUser;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -102,19 +101,6 @@ class AppFixtures extends Fixture
                 $manager->persist($comment);
             }
         }
-
-        // Type media
-        $typeMedia = new TypeMedia();
-        $typeMedia->setGroupMedia('Vidéo')
-            ->setTypeMedia('mp4');
-
-        $manager->persist($typeMedia);
-
-        $typeMedia = new TypeMedia();
-        $typeMedia->setGroupMedia('Image')
-            ->setTypeMedia('jpg');
-
-        $manager->persist($typeMedia);
 
         $manager->flush();
     }
