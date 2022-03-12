@@ -1,20 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Hello UserController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/WAMP/www/snowtrick/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/WAMP/www/snowtrick/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col s12 m12 l12">
+					<h4>Bonjour
+						{{ USER.firstName }}
+						{{ USER.lastName|upper}}
+					</h4>
+					<div class="col-4">
+						<img src="{{ asset(USER.avatar.url) }}" class="rounded-circle" style="height: 100px" alt="profile picture">
+					</div>
+				</div>
+				{% include "user/user.html.twig" %}
+				<hr/>
+				{% include "user/tricks.html.twig" %}
+				<hr/>
+				{% include "user/comments.html.twig" %}
+			</div>
+		</div>
+	</section>
 {% endblock %}

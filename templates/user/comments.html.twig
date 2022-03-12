@@ -1,0 +1,11 @@
+{% if comments %}
+	Vos commentaires :
+	{% for comment in comments %}
+		[{{ comment.createdAt|date('d/m/Y') }}]
+		{{ comment.content }}
+		- Figure
+		{{ comment.trick.title }}<br/>
+	{% endfor %}
+{% else %}
+	Vous n'avez pas créé de commentaire.
+{% endif %}

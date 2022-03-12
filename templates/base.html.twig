@@ -25,10 +25,6 @@
 						<img src="{{ asset('medias/Snowboarding_pictogram.svg') }}" alt="Snowtricks" width="50px"/>
 					</a>
 					<h1>Sowtricks</h1>
-					{% if app.user %}
-						<p>You are logged in as</p>
-						{{ app.user.username }}
-					{% endif %}
 					<button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 						Menu
 						<i class="fas fa-bars"></i>
@@ -55,11 +51,35 @@
 									<a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ path('app_register') }}">S'enregistrer</a>
 								</li>
 							{% endif %}
+							{% if app.user %}
+								<li>
+									<a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ path('app_user') }}">
+										{% if app.user.avatar %}
+											<img src="{{ asset(app.user.avatar.url) }}" class="rounded-circle" height="40px"/>
+										{% else %}
+											<img src="{{ asset('medias/avatars/manProfil.jpg') }}" class="rounded-circle" width="40px" height="40px"/>
+										{% endif %}
+									</a>
+								</li>
+							{% endif %}
+							{% if 'ROLE_ADMIN' in app.user.roles %}
+								<li>
+									<a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ path('admin_home') }}">
+										<h2>
+											<i class="fa-solid fa-gear"></i>
+										</h2>
+									</a>
+								</li>
+							{% endif %}
+
 						</ul>
 					</div>
 				</div>
 			</nav>
 		</header>
+		{% for flash_error in app.flashes('notice') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
 		{% block body %}{% endblock %}
 	</body>
 </html>
