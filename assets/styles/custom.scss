@@ -1,18 +1,18 @@
 .nav-link {
-    color: white;
-    font-size: large;
-    font-weight: bold;
+  color: white;
+  font-size: large;
+  font-weight: bold;
 }
 
 /* HERO */
 .hero {
-    min-height: 90vh;
-    background: url("/public/medias/snow.jpg");
-    background-size: cover;
-    background-position: center;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  min-height: 90vh;
+  background: url("/public/medias/snow.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
