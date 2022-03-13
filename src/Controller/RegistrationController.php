@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\TypeUser;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\TypeUserRepository;
 use App\Security\AppAuthenticator;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,8 +32,14 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
-    {
+    public function register(
+        TypeUserRepository $repoTypeUSer,
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        UserAuthenticatorInterface $userAuthenticator,
+        AppAuthenticator $authenticator,
+        EntityManagerInterface $entityManager
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -44,6 +52,12 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $date = new \DateTime();
+            $user->setCreatedAt($date);
+            $user->setRoles(['ROLE_USER']);
+            $typeUser = $repoTypeUSer->findOneByLabel('Utilisateur enregistré');
+
+            $user->setTypeUser($typeUser);
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -89,8 +103,8 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('notice', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_user');
     }
 }

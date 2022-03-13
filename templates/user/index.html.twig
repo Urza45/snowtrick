@@ -5,23 +5,31 @@
 
 {% block body %}
 	<section>
-		<div class="container">
-			<div class="row">
-				<div class="col s12 m12 l12">
+		<div class="container container-fluid">
+			<div class="row justify-content-around">
+				<div class="col-lg-8">
 					<h4>Bonjour
 						{{ USER.firstName }}
 						{{ USER.lastName|upper}}
 					</h4>
-					<div class="col-4">
-						<img src="{{ asset(USER.avatar.url) }}" class="rounded-circle" style="height: 100px" alt="profile picture">
+					<div class="col-lg-4">
+						{% if USER.avatar %}
+							<img src="{{ asset(USER.avatar.url) }}" class="rounded-circle" style="height: 100px" alt="profile picture">
+						{% else %}
+							<img src="" class="rounded-circle" style="height: 100px" alt="profile picture">
+						{% endif %}
 					</div>
 				</div>
-				{% include "user/user.html.twig" %}
-				<hr/>
+			</div>
+
+			{% include "user/user.html.twig" %}
+
+			<div class="row justify-content-around">
 				{% include "user/tricks.html.twig" %}
-				<hr/>
+			</div>
+			<div class="row justify-content-around">
 				{% include "user/comments.html.twig" %}
 			</div>
 		</div>
-	</section>
-{% endblock %}
+	</div>
+</section>{% endblock %}

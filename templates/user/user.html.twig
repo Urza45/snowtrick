@@ -1,61 +1,64 @@
 {{ form_start(formUser) }}
-<div class="container">
-	<div class="row">
-		<div class="col">
-			{{ form_row(formUser.pseudo, {
+<div class="row justify-content-evenly">
+	<div class="col-lg-3 col-12">
+		{{ form_row(formUser.pseudo, {
 			'label': 'Identifiant :', 
 			'attr': {
 				'placeholder': 'Identifiant',
 				'class': 'form-control'
 			}
 		    }) }}
-			{{ form_row(formUser.lastName, {
+		{{ form_row(formUser.lastName, {
 			'label': 'Nom', 
 			'attr': {
 				'placeholder': 'Votre nom',
 				'class': 'form-control'
 			}
 		    }) }}
-			{{ form_row(formUser.firstName, {
+		{{ form_row(formUser.firstName, {
 			'label': 'Prénom', 
 			'attr': {
 				'placeholder': 'Votre prénom',
 				'class': 'form-control'
 			}
 		    }) }}
-		</div>
-		<div class="col">
-			{{ form_row(formUser.email, {
+	</div>
+	<div class="col-lg-3 col-12">
+		{{ form_row(formUser.email, {
 			'label': 'Email :', 
 			'attr': {
 				'placeholder': 'Votre email',
 				'class': 'form-control'
 			}
 		    }) }}
-			{{ form_row(formUser.phone, {
+		{{ form_row(formUser.phone, {
 			'label': 'Télephone :', 
 			'attr': {
 				'placeholder': 'Votre téléphone fixe',
 				'class': 'form-control'
 			}
 		    }) }}
-			{{ form_row(formUser.cellPhone, {
+		{{ form_row(formUser.cellPhone, {
 			'label': 'Portable', 
 			'attr': {
 				'placeholder': 'Votre téléphone portable',
 				'class': 'form-control'
 			}
 		    }) }}
-		</div>
-		<div class="col">
-			<input type="button" class="btn btn-lg btn-primary" value="Changer de mot de passe"><br/>
-			<br/>
-			<input type="button" class="btn btn-lg btn-primary" value="Changer de photographie de profil"><br/>
-			<br/>
-			<button class="btn btn-lg btn-primary" type="submit">
-				Enregistrer
-			</button>
-		</div>
+	</div>
+	<div class="col-lg-3 col-12">
+		<br>
+		<button class="btn btn-lg btn-md btn-primary">
+			Changer de mot de passe
+		</button>
+		<br/><br/>
+		<button class="btn btn-lg btn-md btn-primary">
+			Changer de photographie
+		</button>
+		<br/><br/>
+		<button class="btn btn-lg btn-md btn-primary" type="submit">
+			Enregistrer
+		</button>
 	</div>
 </div>
 {{ form_end(formUser) }}

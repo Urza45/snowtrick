@@ -61,17 +61,16 @@
 										{% endif %}
 									</a>
 								</li>
+								{% if 'ROLE_ADMIN' in app.user.roles %}
+									<li>
+										<a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ path('admin_home') }}">
+											<h2>
+												<i class="fa-solid fa-gear"></i>
+											</h2>
+										</a>
+									</li>
+								{% endif %}
 							{% endif %}
-							{% if 'ROLE_ADMIN' in app.user.roles %}
-								<li>
-									<a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ path('admin_home') }}">
-										<h2>
-											<i class="fa-solid fa-gear"></i>
-										</h2>
-									</a>
-								</li>
-							{% endif %}
-
 						</ul>
 					</div>
 				</div>

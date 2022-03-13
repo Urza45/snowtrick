@@ -60,7 +60,8 @@ class AppFixtures extends Fixture
             ->setValidationKey('-------------------------')
             ->setTypeUser($typeUser)
             ->setCreatedAt($date)
-            ->setAvatar($avatar);
+            ->setAvatar($avatar)
+            ->setIsVerified(true);
 
         $manager->persist($userAdmin);
 
