@@ -12,9 +12,7 @@
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
-		{% endblock %}
+
 	</head>
 	<body>
 		<header>
@@ -80,5 +78,9 @@
 			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 		{% endfor %}
 		{% block body %}{% endblock %}
+
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		{{ encore_entry_script_tags('app') }}
+		{% block javascripts %}{% endblock %}
 	</body>
 </html>

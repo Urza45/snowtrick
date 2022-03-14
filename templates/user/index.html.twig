@@ -1,10 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!
+{% block title %}
+	Votre Profil
 {% endblock %}
 
 {% block body %}
 	<section>
+		<div
+			class="container">
+			<!-- Modal role="dialog" -->
+			<div class="modal fade" id="empModal" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+				<div
+					class="modal-dialog modal-lg modal-dialog-scrollable">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">User Info</h4>
+						</div>
+						<div class="modal-body">
+							<form action="#" method="POST" class="needs-validation" novalidate></form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">Fermer</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="container container-fluid">
 			<div class="row justify-content-around">
 				<div class="col-lg-8">
@@ -21,9 +44,9 @@
 					</div>
 				</div>
 			</div>
-
-			{% include "user/user.html.twig" %}
-
+			<div class="row justify-content-around">
+				{% include "user/user.html.twig" %}
+			</div>
 			<div class="row justify-content-around">
 				{% include "user/tricks.html.twig" %}
 			</div>
@@ -32,4 +55,5 @@
 			</div>
 		</div>
 	</div>
-</section>{% endblock %}
+</section>{% endblock %}{% block javascripts %}
+{{ encore_entry_script_tags('modal') }}{% endblock %}

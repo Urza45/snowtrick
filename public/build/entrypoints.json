@@ -9,6 +9,12 @@
       "css": [
         "/build/app.606c2a21.css"
       ]
+    },
+    "modal": {
+      "js": [
+        "/build/runtime.61b1725c.js",
+        "/build/modal.f4dbd7a9.js"
+      ]
     }
   }
 }
