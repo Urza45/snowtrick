@@ -25,3 +25,9 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+/medias/
+!/medias/avatars/manProfil.jpg
+!/medias/avatars/womanProfil.jpg
+!/medias/snow.jpg
+!/medias/Snowboarding_pictogram.svg

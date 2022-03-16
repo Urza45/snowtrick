@@ -7,6 +7,7 @@ parameters:
     upload_directory: '%kernel.project_dir%/public/medias'
     avatars_directory: '%kernel.project_dir%/public/medias/avatars'
     tricks_directory: '%kernel.project_dir%/public/medias/tricks'
+    mail_from: 'sergepillay@gmail.com'
 
 services:
     # default configuration for services in *this* file
@@ -30,4 +31,8 @@ services:
             $uploadDirectory: '%upload_directory%'
             $avatarDirectory: '%avatars_directory%'
             $tricksDirectory: '%tricks_directory%'
+    
+    App\Service\MailerService:
+        arguments:
+            $mailFrom: '%mail_from%'
 

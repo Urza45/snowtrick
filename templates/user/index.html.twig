@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-	<section>
+	<section class="bg-secondary p-2 text-dark bg-opacity-50">
 		<div
 			class="container">
 			<!-- Modal role="dialog" -->
@@ -39,7 +39,7 @@
 						{% if USER.avatar %}
 							<img src="{{ asset(USER.avatar.url) }}" class="rounded-circle" style="height: 100px" alt="profile picture">
 						{% else %}
-							<img src="" class="rounded-circle" style="height: 100px" alt="profile picture">
+							<img src="{{ asset('medias/avatars/manProfil.jpg') }}" class="rounded-circle" style="height: 100px" alt="profile picture">
 						{% endif %}
 					</div>
 				</div>

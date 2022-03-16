@@ -75,8 +75,32 @@
 			</nav>
 		</header>
 		{% for flash_error in app.flashes('notice') %}
+			<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+				<div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+					<div class="toast-header">
+						<img src="..." class="rounded me-2" alt="...">
+						<strong class="me-auto">Bootstrap</strong>
+						<small>11 mins ago</small>
+						<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+					</div>
+					<div class="toast-body">
+						Hello, world! This is a toast message.<br/>
+						{{ flash_error }}
+					</div>
+				</div>
+			</div>
 			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 		{% endfor %}
+		{% for flash_error in app.flashes('notice') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
+		{% for flash_error in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
+		{% for flash_error in app.flashes('success') %}
+			<div class="alert alert-success" role="alert">{{ flash_error }}</div>
+		{% endfor %}
+		<br/>
 		{% block body %}{% endblock %}
 
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

@@ -1,0 +1,12 @@
+<head>
+	<titleBienvenu(e)MerciVous sur mon blog</title> </head> <body> <h1> de vous joindre à nous !</h1> <p> n\'avez pas réussi à vous connecté.</p>
+				            <table cellspacing="0" style="border: 2px dashed #FB4314; width: 100%;">
+				                <tr>
+				                    <th>Nom :</th><td>' . $user->getName() . ' ' . $user->getFirstName() . '</td>
+</head></tr><tr style="background-color: #e0e0e0;">
+<th>Email:</th>
+<td>' . $user->getEmail() . '</td></tr></table><br/><p>Pour déboquer votre compte, cliquer sur le lien ci-dessous.</p><p>Si cela n\'était pas vous, nous vous recommendons de changer votre mot de passe une fois connecté.</p><table cellspacing="0" style="border: 2px dashed #FB4314; width: 100%;"><tr style="background-color: #e0e0e0;">
+<th>
+	<a href="' . $this->webUrl . '/code/?p='
+				                    . $user->getPseudo() . '&v=' . $user->getValidationKey() . '">Débloquer votre compte</a>
+</th></tr></table></body></html>'

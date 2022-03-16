@@ -30,14 +30,14 @@ class AppFixtures extends Fixture
         $avatar = new Avatar();
         $avatar->setLegend('Femme')
             ->setType('jpg')
-            ->setUrl('media\avatars\womanProfils.jpg');
+            ->setUrl('media\avatars\womanProfil.jpg');
 
         $manager->persist($avatar);
 
         $avatar = new Avatar();
         $avatar->setLegend('Homme')
             ->setType('jpg')
-            ->setUrl('medias\avatars\manProfils.jpg');
+            ->setUrl('medias\avatars\manProfil.jpg');
 
         $manager->persist($avatar);
 

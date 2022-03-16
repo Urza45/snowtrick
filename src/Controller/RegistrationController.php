@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Avatar;
 use App\Entity\TypeUser;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -45,21 +46,30 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // encode the password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
             $date = new \DateTime();
             $user->setCreatedAt($date);
             $user->setRoles(['ROLE_USER']);
-            $typeUser = $repoTypeUSer->findOneByLabel('Utilisateur enregistré');
 
+            // Assign default type of user
+            $typeUser = $repoTypeUSer->findOneByLabel('Utilisateur enregistré');
             $user->setTypeUser($typeUser);
 
+            // Assign default picture profile
+            $avatar = new Avatar();
+            $avatar->setUrl('/medias/avatars/manProfil.jpg');
+            $avatar->setType('jpg');
+            $entityManager->persist($avatar);
+            $user->setAvatar($avatar);
+
             $entityManager->persist($user);
+
             $entityManager->flush();
 
             // generate a signed url and email it to the user
@@ -103,7 +113,7 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('notice', 'Your email address has been verified.');
+        $this->addFlash('success', 'Your email address has been verified.');
 
         return $this->redirectToRoute('app_user');
     }

@@ -31,7 +31,7 @@ class UserController extends AbstractController
         $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
         $tricks = $user->getTricks();
         $comments = $user->getComments();
-        $manager = $doctrine->getManager();;
+        $manager = $doctrine->getManager();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -39,7 +39,7 @@ class UserController extends AbstractController
             $user->setStatusConnected(true);
             $manager->persist($user);
             $manager->flush();
-            $this->addFlash('notice', 'Vos modification sont bien - 1 - enregitrées.');
+            $this->addFlash('notice', 'Vos modification sont bien enregitrées.');
         }
 
         return $this->render('user/index.html.twig', [
