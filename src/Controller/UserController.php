@@ -87,12 +87,12 @@ class UserController extends AbstractController
                         if (!$avatar) {
                             $avatar = new Avatar();
                             $avatar->addUser($user);
-                            $avatar->setUrl('medias/avatars/' . $fileName);
                             $avatar->setType($extension);
                             $manager->persist($avatar);
-                        } else {
-                            $avatar->setUrl('medias/avatars/' . $fileName);
                         }
+
+                        $avatar->setUrl('medias/avatars/' . $fileName);
+                        
                         $manager->flush();
 
                         $this->addFlash('success', 'Vos modifications sont bien enregitrées.');

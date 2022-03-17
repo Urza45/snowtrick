@@ -18,6 +18,8 @@ class RepeatedPasswordType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        
+        
         $resolver->setDefaults([
             'type' => PasswordType::class,
             'invalid_message' => 'Les mots de passe saisis ne correspondent pas.',
@@ -38,10 +40,10 @@ class RepeatedPasswordType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 10,
-                        'maxMessage' => 'Votre mot de passe doit contenir au plus {{ limit }} caractères.',
+                        'maxMessage' => 'Votre mot de passe doit contenir au plus 10 caractères.',
                     ]),
                 ],
             ],
@@ -61,10 +63,10 @@ class RepeatedPasswordType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 10,
-                        'maxMessage' => 'Votre mot de passe doit contenir au plus {{ limit }} caractères.',
+                        'maxMessage' => 'Votre mot de passe doit contenir au plus 10 caractères.',
                     ]),
                 ],
             ]

@@ -25,10 +25,9 @@ class FileUploaderAvatar extends AbstractController
 
     public function upload(UploadedFile $file, Request $request)
     {
+        $directory = $this->getTricksDirectory();
         if (in_array($request->getPathInfo(), ['/profile', '/profile/change_picture', '/register'])) {
             $directory = $this->getAvatarDirectory();
-        } else {
-            $directory = $this->getTricksDirectory();
         }
 
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);

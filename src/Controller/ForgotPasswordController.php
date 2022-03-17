@@ -7,11 +7,9 @@ use App\Service\MailerService;
 use App\Form\ForgotPasswordType;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -77,7 +75,11 @@ class ForgotPasswordController extends AbstractController
                     'user' => $user
                 ]
             );
-
+            /*
+            [
+                dfsd => sqsf
+            ]
+                */
             $this->addFlash('success', 'Un email vous a été envoyé pour réinitailiser votre mot de pase.');
             $this->redirectToRoute('app_login');
         }

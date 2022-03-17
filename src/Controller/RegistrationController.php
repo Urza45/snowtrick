@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Avatar;
-use App\Entity\TypeUser;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\TypeUserRepository;
