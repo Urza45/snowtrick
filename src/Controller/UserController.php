@@ -2,22 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Avatar;
 use App\Entity\User;
+use App\Entity\Avatar;
 use App\Form\UserType;
-use App\Form\AvatarType;
 use App\Form\ChangePasswordType;
 use App\Form\FileUploadAvatarType;
 use App\Repository\UserRepository;
-use App\Repository\TrickRepository;
 use App\Service\FileUploaderAvatar;
 use App\Repository\AvatarRepository;
-use App\Repository\CommentRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -144,15 +140,13 @@ class UserController extends AbstractController
                     $manager->persist($user);
                     $manager->flush();
                     $this->addFlash('success', 'Votre mot de passe bien été modifié.');
-                } else {
-                    $this->addFlash('notice', 'La saisie de votre mot de passe actuel est invalide.');
+                    return $this->redirectToRoute('app_user');
                 }
-
-                return $this->redirectToRoute('app_user');
-            } else {
-                $this->addFlash('notice', $form->getErrors(true)[0]->getMessageTemplate());
+                $this->addFlash('notice', 'La saisie de votre mot de passe actuel est invalide.');
                 return $this->redirectToRoute('app_user');
             }
+            $this->addFlash('notice', $form->getErrors(true)[0]->getMessageTemplate());
+            return $this->redirectToRoute('app_user');
         }
 
         return $this->render('user/change_password.html.twig', [
