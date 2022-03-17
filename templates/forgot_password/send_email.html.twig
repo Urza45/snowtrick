@@ -1,12 +1,30 @@
-<head>
-	<titleBienvenu(e)MerciVous sur mon blog</title> </head> <body> <h1> de vous joindre à nous !</h1> <p> n\'avez pas réussi à vous connecté.</p>
-				            <table cellspacing="0" style="border: 2px dashed #FB4314; width: 100%;">
-				                <tr>
-				                    <th>Nom :</th><td>' . $user->getName() . ' ' . $user->getFirstName() . '</td>
-</head></tr><tr style="background-color: #e0e0e0;">
-<th>Email:</th>
-<td>' . $user->getEmail() . '</td></tr></table><br/><p>Pour déboquer votre compte, cliquer sur le lien ci-dessous.</p><p>Si cela n\'était pas vous, nous vous recommendons de changer votre mot de passe une fois connecté.</p><table cellspacing="0" style="border: 2px dashed #FB4314; width: 100%;"><tr style="background-color: #e0e0e0;">
-<th>
-	<a href="' . $this->webUrl . '/code/?p='
-				                    . $user->getPseudo() . '&v=' . $user->getValidationKey() . '">Débloquer votre compte</a>
-</th></tr></table></body></html>'
+<h1>
+	<img src="{{ asset('medias/Snowboarding_pictogram.svg') }}" alt="Snowtricks" width="50px"/>SNOwTRICKS
+</h1>
+<p>
+	Une demande de mot de passe a été effectuée il y a peu, cliquer sur le lien en bas de ce message pour réinitialiser votre mot de passe.
+</p>
+<table cellspacing="0" style="border: 2px dashed #FB4314; width: 100%;">
+	<tr>
+		<th>
+			Nom :
+		</th>
+		<td>
+			{{ user.lastName|upper }}
+			{{ user.firstName }}
+		</td>
+	</tr>
+</tr>
+<tr style="background-color: #e0e0e0;">
+	<th>
+		Email:
+	</th>
+	<td>
+		{{ user.email }}
+	</td>
+</tr></table><br/><p>Si cela n'était pas vous, nous vous recommendons de changer votre mot de passe une fois connecté.</p><table cellspacing="0" style="border: 2px dashed #FB4314; width: 100%;">
+<tr style="background-color: #e0e0e0;">
+	<th>
+		<a href="{{ absolute_url(path('app_retrieve_credentials', {'id': user.id, 'token': user.validationKey})) }}">Réinitialiser mon mot de passe.</a>
+	</th>
+</tr></table>
