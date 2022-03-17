@@ -92,24 +92,21 @@ class UserController extends AbstractController
                         }
 
                         $avatar->setUrl('medias/avatars/' . $fileName);
-                        
+
                         $manager->flush();
 
                         $this->addFlash('success', 'Vos modifications sont bien enregitrées.');
                         return $this->redirectToRoute('app_user');
-                    } else {
-                        $this->addFlash('notice', 'Il y a eu un problème :' . $file);
-                        return $this->redirectToRoute('app_user');
                     }
+                    $this->addFlash('notice', 'Il y a eu un problème :' . $file);
+                    return $this->redirectToRoute('app_user');
                 }
-            } else {
-                $this->addFlash('notice', $form->getErrors(true)[0]->getMessageTemplate());
-                return $this->redirectToRoute('app_user');
             }
-        } else {
-            $user = $repoUser->findOneBy(['id' => $request->request->get('userId')]);
-            $avatar = $repoAvatar->findOneBy(['id' => $user->getAvatar()]);
+            $this->addFlash('notice', $form->getErrors(true)[0]->getMessageTemplate());
+            return $this->redirectToRoute('app_user');
         }
+        $user = $repoUser->findOneBy(['id' => $request->request->get('userId')]);
+        $avatar = $repoAvatar->findOneBy(['id' => $user->getAvatar()]);
 
         return $this->render('service/file_upload_avatar.html.twig', [
             'form' => $form->createView(),
