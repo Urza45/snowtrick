@@ -29,14 +29,3 @@ $(".close").click(function () {
     $("#empModal").modal("hide");
 });
 
-$(document).ready(function () {
-    $('#file_upload').on('submit', function (e) {
-        e.preventDefault();
-        alert('ici');
-        $.post('http://www.somewhere.com/path/to/post',
-            $('#myForm').serialize(),
-            function (data, status, xhr) {
-                alert('là');
-            });
-    });
-});

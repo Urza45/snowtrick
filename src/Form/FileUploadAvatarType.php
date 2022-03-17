@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class FileUploadType extends AbstractType
+class FileUploadAvatarType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -21,18 +21,8 @@ class FileUploadType extends AbstractType
                 'constraints' => [
                     new File([
                         'mimeTypes' => [ // We want to let upload only txt, csv or Excel files
-                            'text/x-comma-separated-values',
-                            'text/comma-separated-values',
-                            'text/x-csv',
-                            'text/csv',
-                            'text/plain',
-                            'application/octet-stream',
-                            'application/vnd.ms-excel',
-                            'application/x-csv',
-                            'application/csv',
-                            'application/excel',
-                            'application/vnd.msexcel',
-                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            'image/jpeg',
+                            'image/png'
                         ],
                         'mimeTypesMessage' => "Le type de votre photographie n'est pas valide.",
                     ])

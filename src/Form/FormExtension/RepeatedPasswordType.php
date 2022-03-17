@@ -53,7 +53,7 @@ class RepeatedPasswordType extends AbstractType
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'class' => 'form-control',
-                    'placeholder' => 'Votre mot de passe'
+                    'placeholder' => 'Répéter votre mot de passe'
                 ],
                 'constraints' => [
                     new NotBlank([

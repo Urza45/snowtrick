@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class FileUploader extends AbstractController
+class FileUploaderAvatar extends AbstractController
 {
     private $uploadDirectory;
     private $avatarDirectory;
