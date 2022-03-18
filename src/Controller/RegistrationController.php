@@ -40,7 +40,9 @@ class RegistrationController extends AbstractController
         AppAuthenticator $authenticator,
         EntityManagerInterface $entityManager
     ): Response {
+
         $user = new User();
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -52,8 +54,8 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            $date = new \DateTime();
-            $user->setCreatedAt($date);
+            // $date = new \DateTime();
+            // $user->setCreatedAt($date);
             $user->setRoles(['ROLE_USER']);
 
             // Assign default type of user
@@ -76,9 +78,9 @@ class RegistrationController extends AbstractController
                 'app_verify_email',
                 $user,
                 (new TemplatedEmail())
-                    ->from(new Address('sergepillay@gmail.com', 'Acme Mail Bot'))
+                    ->from(new Address('sergepillay@gmail.com', 'SNOwTRICKS'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Confirmer votre email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
@@ -112,7 +114,7 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Votre email est confirmé.');
 
         return $this->redirectToRoute('app_user');
     }

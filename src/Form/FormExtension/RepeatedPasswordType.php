@@ -18,37 +18,36 @@ class RepeatedPasswordType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        
-        
+        $constraints = [
+            new NotBlank([
+                'message' => 'Entrer votre mot de passe.',
+            ]),
+            new Length([
+                'min' => 6,
+                'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
+                'max' => 10,
+                'maxMessage' => 'Votre mot de passe doit contenir au plus 10 caractères.',
+            ]),
+        ];
+
         $resolver->setDefaults([
             'type' => PasswordType::class,
             'invalid_message' => 'Les mots de passe saisis ne correspondent pas.',
             'required' => true,
             'first_options' => [
-                'label' => 'Mot de passe :',
+                'label' => 'Mot de passe (*) :',
                 'label_attr' => [
-                    'title' => 'Votre mot de passe doit contenir au moins 6 caractères.'
+                    'title' => 'Votre mot de passe doit avoir entre 6 et 10 caractères.'
                 ],
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'class' => 'form-control',
                     'placeholder' => 'Votre mot de passe'
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrer votre mot de passe.',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 10,
-                        'maxMessage' => 'Votre mot de passe doit contenir au plus 10 caractères.',
-                    ]),
-                ],
+                'constraints' => $constraints,
             ],
             'second_options' => [
-                'label' => 'Confirmer le mot de passe :',
+                'label' => 'Confirmer le mot de passe (*) :',
                 'label_attr' => [
                     'tite' => 'Confirmez votre mot de passe.'
                 ],
@@ -57,18 +56,7 @@ class RepeatedPasswordType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Répéter votre mot de passe'
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrer votre mot de passe.',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 10,
-                        'maxMessage' => 'Votre mot de passe doit contenir au plus 10 caractères.',
-                    ]),
-                ],
+                'constraints' => $constraints,
             ]
         ]);
     }

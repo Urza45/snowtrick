@@ -1,12 +1,19 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-	<h1>Accès refusé</h1>
-	<p>La page que vous recherchez n'a pas été trouvée.</p>
-	<p>Code de l'erreur :
-		{{ status_code }}</p>
-	<p>Message de l'erreur :
-		{{ status_text }}</p>
-	<p>Message personnalisé :
-		{{ exception.message }}</p>
+	<section class="bg-secondary p-2 text-dark bg-opacity-50">
+		<div class="container container-fluid">
+			<div class="row justify-content-around">
+				<div class="col-lg-4 text-center">
+					<img src="{{ asset('medias/403.png') }}" width="200px" alt="Erreur 403">
+				</div>
+				<div class="col-lg-8 text-middle">
+					<br/>
+					<h1>Accès refusé</h1>
+					<br/>
+					<p>Vous n'avez pas les droits nécessaires pour accéder à cette page.</p>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}

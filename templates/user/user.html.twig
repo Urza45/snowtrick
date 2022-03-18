@@ -46,9 +46,16 @@
 			}
 		    }) }}
 	</div>
-	<div class="col-lg-3 col-12">
+	<div class="col-lg-3 col-12 text-center">
 		<button class="btn btn-lg btn-md btn-primary" type="submit">
 			Enregistrer
+		</button>
+		<br><br>
+		<button id="theElement1" name="theElement1" data-id="{{ app.user.id }}" data-route="{{ path('change_password_user') }}" data-title="Modifier votre mot de passe" class='btn btn-info userinfo'>
+			Changer de mot de passe
+		</button><br><br>
+		<button id="theElement1" name="theElement1" data-id="{{ app.user.id }}" data-route="{{ path('change_picture_user') }}" data-title="Modifier votre photographie de profil" class='btn btn-info userinfo'>
+			Changer de photographie
 		</button>
 	</div>
 	{{ form_end(formUser) }}
@@ -56,13 +63,5 @@
 
 </div>
 <div class="row justify-content-evenly">
-	<div class="col-lg-12">
-		<br>
-		<button id="theElement1" name="theElement1" data-id="{{ app.user.id }}" data-route="{{ path('change_password_user') }}" data-title="Modifier votre mot de passe" class='btn btn-info userinfo'>
-			Changer de mot de passe
-		</button>
-		<button id="theElement1" name="theElement1" data-id="{{ app.user.id }}" data-route="{{ path('change_picture_user') }}" data-title="Modifier votre photographie de profil" class='btn btn-info userinfo'>
-			Changer de photographie
-		</button>
-	</div>
+	<div class="col-lg-12"></div>
 </div>

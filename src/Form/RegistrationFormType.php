@@ -20,7 +20,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('pseudo', TextType::class, [
-                'label' => 'Votre identifiant :',
+                'label' => 'Votre identifiant (*) :',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Votre identifiant'
@@ -28,38 +28,38 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Length([
                         'min' => 5,
-                        'minMessage' => 'Votre identifiant doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'Votre identifiant doit contenir au moins 5 caractères',
                         'max' => 20,
-                        'maxMessage' => 'Votre identifiant doit contenir au plus {{ limit }} caractères.',
+                        'maxMessage' => 'Votre identifiant doit contenir au plus 20 caractères.',
                     ]),
                 ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'En m\'inscrivant, j\'accepte les CGU',
+                'label' => 'En m\'inscrivant, j\'accepte les CGU (*) ',
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter les Conditions Générales d\'Utilisation.',
                     ]),
                 ],
             ])
             ->add('password', RepeatedPasswordType::class)
             ->add('lastName', TextType::class, [
-                'label' => 'Votre nom :',
+                'label' => 'Votre nom (*) :',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Votre nom'
                 ],
             ])
             ->add('firstName', TextType::class, [
-                'label' => 'Votre prénom :',
+                'label' => 'Votre prénom (*) :',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Votre prénom'
                 ],
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Votre email :',
+                'label' => 'Votre email (*) :',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Votre email'
@@ -82,11 +82,8 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('salt', HiddenType::class)
-            //->add('statusConnected', HiddenType::class)
             ->add('validationKey', HiddenType::class)
             ->add('activatedUser', HiddenType::class);
-        //->add('createdAt', HiddenType::class)
-        //->add('isVerified', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

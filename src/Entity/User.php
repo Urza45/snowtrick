@@ -91,7 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $typeUser;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default" = "CURRENT_TIMESTAMP"})
      */
     private $createdAt;
 
@@ -119,6 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->setCreatedAt(new \DateTime('NOW'));
     }
 
     public function getId(): ?int

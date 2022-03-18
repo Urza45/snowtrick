@@ -30,6 +30,14 @@ class MailerService extends AbstractController
      */
     private $mailFrom;
 
+    /**
+     * __construct
+     *
+     * @param  string $mailFrom
+     * @param  MailerInterface $mailer
+     * @param  Environment $twig
+     * @return void
+     */
     public function __construct($mailFrom, MailerInterface $mailer, Environment $twig)
     {
         $this->mailer = $mailer;
@@ -37,22 +45,25 @@ class MailerService extends AbstractController
         $this->mailFrom = $mailFrom;
     }
 
-    public function send(
-        string $subject,
-        string $from = '',
-        string $to,
-        string $template,
-        array $parameters
-    ): void {
-        if ($from == '') {
-            $from = $this->mailFrom;
+    /**
+     * send
+     * 
+     * @param  array $array
+     * @return void
+     */
+    public function send(array $array): void
+    {
+        $from = $this->mailFrom;
+        if ($array['from']) {
+            $from = $array['from'];
         }
+
         $email = (new Email())
             ->from($from)
-            ->to($to)
-            ->subject($subject)
+            ->to($array['to'])
+            ->subject($array['subject'])
             ->html(
-                $this->twig->render($template, $parameters),
+                $this->twig->render($array['template'], $array['parameters']),
                 'text/html'
             );
 

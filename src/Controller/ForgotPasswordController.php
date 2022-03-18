@@ -65,21 +65,19 @@ class ForgotPasswordController extends AbstractController
             $manager->persist($user);
             $manager->flush();
 
-            // Send Mail here
-            $sendEmail->send(
-                'Réinitialisation de votre mot de passe',
-                '',
-                $user->getEmail(),
-                'forgot_password/send_email.html.twig',
-                [
+            $emailParameters = [
+                'subject' => 'Réinitialisation de votre mot de passe',
+                'from' => '',
+                'to' => $user->getEmail(),
+                'template' => 'forgot_password/send_email.html.twig',
+                'parameters' => [
                     'user' => $user
                 ]
-            );
-            /*
-            [
-                dfsd => sqsf
-            ]
-                */
+            ];
+
+            // Send Mail here
+            $sendEmail->send($emailParameters);
+
             $this->addFlash('success', 'Un email vous a été envoyé pour réinitailiser votre mot de pase.');
             $this->redirectToRoute('app_login');
         }
