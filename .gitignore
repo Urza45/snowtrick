@@ -27,6 +27,8 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 /medias/
+/medias/avatars/*
+/medias/tricks/*
 !/medias/avatars/manProfil.jpg
 !/medias/avatars/womanProfil.jpg
 !/medias/snow.jpg

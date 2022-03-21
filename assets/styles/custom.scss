@@ -79,7 +79,7 @@ section {
   display: none;
 }
 
-@media (max-width: 700px){
+@media (max-width: 700px) {
   .tablehead {
     font-weight: bold;
     display: inline;
@@ -89,19 +89,19 @@ section {
     display: none;
   }
 
-  .table tr{
-  display: block;
-  margin-bottom: 40px;
+  .table tr {
+    display: block;
+    margin-bottom: 40px;
   }
 
   .table td {
-  display: block;
-  text-align: right;
+    display: block;
+    text-align: right;
   }
 
   .table td:before {
-  content: attr(data-label);
-  float: left;
-  font-weight: bold;
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
   }
-  }
+}
