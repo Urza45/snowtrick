@@ -54,7 +54,7 @@ body {
   min-height: 90vh;
   background-size: cover;
   background-position: center;
-  color: white;
+  color: $colour-white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,7 +66,42 @@ section {
   margin-left: auto;
   margin-right: auto;
   width: 80%;
-  color: white;
+  color: $colour-white;
   border-radius: 1.5em;
   padding: 5px;
 }
+
+.table {
+  background-color: $colour-secondary;
+}
+
+.tablehead {
+  display: none;
+}
+
+@media (max-width: 700px){
+  .tablehead {
+    font-weight: bold;
+    display: inline;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tr{
+  display: block;
+  margin-bottom: 40px;
+  }
+
+  .table td {
+  display: block;
+  text-align: right;
+  }
+
+  .table td:before {
+  content: attr(data-label);
+  float: left;
+  font-weight: bold;
+  }
+  }

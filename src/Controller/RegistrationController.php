@@ -54,18 +54,16 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            // $date = new \DateTime();
-            // $user->setCreatedAt($date);
             $user->setRoles(['ROLE_USER']);
 
             // Assign default type of user
-            $typeUser = $repoTypeUSer->findOneByLabel('Utilisateur enregistré');
-            $user->setTypeUser($typeUser);
+            $user->setTypeUser($repoTypeUSer->findOneByLabel('Utilisateur enregistré'));
 
             // Assign default picture profile
             $avatar = new Avatar();
-            $avatar->setUrl('/medias/avatars/manProfil.jpg');
-            $avatar->setType('jpg');
+            $avatar->setUrl('/medias/avatars/manProfil.jpg')
+                ->setType('jpg');
+
             $entityManager->persist($avatar);
             $user->setAvatar($avatar);
 

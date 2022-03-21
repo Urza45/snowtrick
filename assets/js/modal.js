@@ -16,11 +16,12 @@ $(".userinfo").click(function () {
             // Display Modal
             $("#empModal").modal("show");
         },
-        error: function () {
-            $(".modal-body").html("Une erreur est survenue.");
+        error: function (response) {
+            alert('hoho');
+            $(".modal-body").html("Une erreur est survenue." + response.html);
             $(".modal-title").html("Erreur");
             // Display Modal
-            $("#empModal").modal("show");
+            //$("#empModal").modal("show");
         }
     });
 });

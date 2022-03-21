@@ -43,7 +43,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/index.html.twig', [
-            'USER' => $user,
+            'user' => $user,
             'formUser' => $form->createView(),
             'tricks' => $tricks,
             'comments' => $comments
@@ -63,43 +63,43 @@ class UserController extends AbstractController
         $form = $this->createForm(FileUploadAvatarType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $file = $form['upload_file']->getData();
-                if ($file) {
-                    $fileName = $fileUploader->upload($file, $request);
-                    $extension = pathinfo($file, PATHINFO_EXTENSION);
-                    if ($fileName !== null) {
-                        $manager = $doctrine->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                        $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
+            $file = $form['upload_file']->getData();
+            if ($file) {
+                $fileName = $fileUploader->upload($file, $request);
+                $extension = pathinfo($file, PATHINFO_EXTENSION);
+                if ($fileName !== null) {
+                    $manager = $doctrine->getManager();
 
-                        $avatar = null;
+                    $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
 
-                        if ($user->getAvatar() !== null) {
-                            $avatar = $user->getAvatar();
-                        }
+                    $avatar = null;
 
-                        if (!$avatar) {
-                            $avatar = new Avatar();
-                            $avatar->addUser($user);
-                            $avatar->setType($extension);
-                            $manager->persist($avatar);
-                        }
-
-                        $avatar->setUrl('medias/avatars/' . $fileName);
-
-                        $manager->flush();
-
-                        $this->addFlash('success', 'Vos modifications sont bien enregitrées.');
-                        return $this->redirectToRoute('app_user');
+                    if ($user->getAvatar() !== null) {
+                        $avatar = $user->getAvatar();
                     }
-                    $this->addFlash('notice', 'Il y a eu un problème :' . $file);
+
+                    if (!$avatar) {
+                        $avatar = new Avatar();
+                        $avatar->addUser($user);
+                        $avatar->setType($extension);
+                        $manager->persist($avatar);
+                    }
+
+                    $avatar->setUrl('medias/avatars/' . $fileName);
+
+                    $manager->flush();
+
+                    $this->addFlash('success', 'Vos modifications sont bien enregitrées.');
                     return $this->redirectToRoute('app_user');
                 }
+                $this->addFlash('notice', 'Il y a eu un problème :' . $file);
+                return $this->redirectToRoute('app_user');
             }
-            $this->addFlash('notice', $form->getErrors(true)[0]->getMessageTemplate());
-            return $this->redirectToRoute('app_user');
+
+            //$this->addFlash('notice', $form->getErrors(true)[0]->getMessageTemplate());
+            //return $this->redirectToRoute('app_user');
         }
         $user = $repoUser->findOneBy(['id' => $request->request->get('userId')]);
         $avatar = $repoAvatar->findOneBy(['id' => $user->getAvatar()]);
@@ -126,11 +126,11 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+
                 $manager = $doctrine->getManager();
                 $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
 
                 if ($userPasswordHasher->isPasswordValid($this->getUser(), $form->get('oldPassword')->getData())) {
-                    //if ($actualPassword == $oldPassword) {
                     $user->setPassword(
                         $userPasswordHasher->hashPassword(
                             $this->getUser(),

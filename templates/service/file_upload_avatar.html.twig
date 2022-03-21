@@ -7,16 +7,20 @@
 					<input type="hidden" name="id" value="{{ avatar.id }}">
 					<input type="hidden" name="legend" value="{{ avatar.legend }}">
 					<input type="hidden" name="type" value="{{ avatar.type }}">
+
 					{% if avatar.url %}
-						<img src="{{ asset(app.user.avatar.url) }}" class="rounded-circle"/>
+						<img src="{{ asset(user.avatar.url) }}" class="rounded-circle" height="100px"/>
 					{% else %}
-						<img src="{{ asset('medias/avatars/manProfil.jpg') }}" class="rounded-circle"/>
+						<img src="{{ asset('medias/avatars/manProfil.jpg') }}" class="rounded-circle" height="100px"/>
 					{% endif %}
 				{% endif %}
+				&nbsp;Photographie actuelle :
+				{{ app.user.avatar.url }}<br/>
 				{{ form_label(form.upload_file) }}
 				{{ form_widget(form.upload_file) }}
 				{{ form_errors(form.upload_file) }}
-				{{ form_widget(form.send, {'label': "Upload this file", 'attr' : { 'class': 'btn btn-primary' }}) }}
+
+				{{ form_widget(form.send, {'label': "Choisir cette photographie", 'attr' : { 'class': 'btn btn-primary' }}) }}
 			</div>
 			<div
 				class="form-group">{#{ form_widget(form.send, {'label': "Upload this file", 'attr' : { 'class': 'btn btn-primary' }}) }#}
