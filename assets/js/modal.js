@@ -16,8 +16,8 @@ $(".userinfo").click(function () {
             // Display Modal
             $("#empModal").modal("show");
         },
-        error: function (response) {
-            $(".modal-body").html("Une erreur est survenue." + response.html);
+        error: function () {
+            $(".modal-body").html("Une erreur est survenue.");
             $(".modal-title").html("Erreur");
             // Display Modal
             $("#empModal").modal("show");

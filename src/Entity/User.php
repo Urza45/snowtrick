@@ -12,7 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo")
+ * @UniqueEntity(fields={"pseudo"}, message="Ce pseudo est déjà utilisé")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -119,7 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->setCreatedAt(new \DateTime('NOW'));
+        //$this->setCreatedAt(new \DateTime('NOW'));
     }
 
     public function getId(): ?int
@@ -420,5 +421,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
     }
 }
