@@ -36,3 +36,12 @@ services:
         arguments:
             $mailFrom: '%mail_from%'
 
+    App\EntityListener\TrickEntityListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener1', event: 'prePersist', entity: 'App\Entity\Trick'}
+            - { name: 'doctrine.orm.entity_listener1', event: 'preUpdate', entity: 'App\Entity\Trick'}
+
+    App\EntityListener\UserEntityListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener2', event: 'prePersist', entity: 'App\Entity\User'}
+            - { name: 'doctrine.orm.entity_listener2', event: 'preUpdate', entity: 'App\Entity\User'}

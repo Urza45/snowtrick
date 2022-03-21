@@ -20,4 +20,12 @@ class ManagingUsersController extends AbstractController
             'users' => $users,
         ]);
     }
+
+    /**
+     * @Route("/admin/managing/users/{slug}", name="app_managing_user")
+     */
+    public function FunctionName()
+    {
+        return $this->render('managing_users/index.html.twig', []);
+    }
 }
