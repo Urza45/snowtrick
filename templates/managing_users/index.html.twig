@@ -15,8 +15,7 @@
 							<thead>
 								<tr class="text-center">
 									<th>Pseudo</th>
-									<th>Nom</th>
-									<th>Prénom</th>
+									<th>Nom - Prénom</th>
 									<th>
 										<i class="fa-solid fa-envelope"></i>
 									</th>
@@ -32,7 +31,7 @@
 							{% for user in users %}
 								<tr class="text-center">
 									<td>
-										<div class="tablehead">ID</div>
+										<div class="tablehead"></div>
 										{% if app.user.avatar %}
 											<img src="{{ asset(app.user.avatar.url) }}" class="rounded-circle" height="40px"/>
 										{% else %}
@@ -40,15 +39,65 @@
 										{% endif %}
 										{{ user.pseudo }}
 									</td>
-									<td>{{ user.lastName }}</td>
-									<td>{{ user.firstName }}</td>
-									<td>{{ user.email }}</td>
-									<td>{{ user.tricks.count }}</td>
-									<td>{{ user.comments.count }}</td>
 									<td>
-										<a class="btn btn-sm btn-primary" href="{{ path('app_managing_user', { slug: user.slug }) }}">
-											<i class="glyphicon glyphicon-eye-open"></i>
-											Voir son profil</a>
+										<div class="tablehead">
+											Nom - Prénom :
+										</div>
+										{{ user.lastName }}
+										{{ user.firstName }}
+									</td>
+									<td>
+										<div class="tablehead">
+											Email :
+										</div>
+										{{ user.email }}
+									</td>
+									<td>
+										<div class="tablehead">
+											Nombre d'article(s) :
+										</div>
+										{{ user.tricks.count }}
+									</td>
+									<td>
+										<div class="tablehead">
+											Commentaire(s) :
+										</div>
+										{{ user.comments.count }}
+										{% set nbCommentDisabed = 0 %}
+										{% for comment in user.comments %}
+											{% if comment.disabled == 1 %}
+												{% set nbCommentDisabed = var +1 %}
+											{% endif %}
+										{% endfor %}
+										(
+										{{ nbCommentDisabed }}
+										interdits)
+									</td>
+									<td class="text-center">
+										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir son profil">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-id="{{ app.user.id }}" data-route="{{ path('app_managing_user', { slug: user.slug }) }}" data-title="Voir le profil de {{ user.lastName }} {{ user.firstName }}">
+												<i class="fa-solid fa-eye text-light"></i>
+											</span>
+										</button>
+										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Autoriser/Bannir">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-id="{{ app.user.id }}" data-route="{{ path('app_ban_user', { slug: user.slug }) }}" data-title="Bannir {{ user.lastName }} {{ user.firstName }}">
+												{% if user.activatedUser is same as(null) %}
+													<i class="fa-solid fa-ban  text-danger"></i>
+													<i class="fa-solid fa-circle-check  text-success"></i>
+												{% endif %}
+												{% if user.activatedUser is same as(true) %}
+													<i class="fa-solid fa-circle-check  text-success"></i>
+												{% endif %}
+												{% if user.activatedUser is same as(false) %}
+													<i class="fa-solid fa-ban  text-danger"></i>
+												{% endif %}
+											</span>
+										</button>
+										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-id="{{ app.user.id }}" data-route="{{ path('app_managing_user', { slug: user.slug }) }}" data-title="Supprimer {{ user.lastName }} {{ user.firstName }}">
+												<i class="fa-solid fa-trash-can text-danger"></i>
+											</span>
+										</button>
 									</td>
 								</tr>
 							{% endfor %}
@@ -58,4 +107,6 @@
 			</div>
 		</div>
 	</div>
-</section>{% endblock %}
+</section>{% endblock %}{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('modal') }}{% endblock %}

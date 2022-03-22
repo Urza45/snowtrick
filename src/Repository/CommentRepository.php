@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -73,4 +74,13 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByCommentDisabledByUser($var = null)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.disabled = 1')
+            ->andWhere('p.user_id = :var)')
+            ->setParameter('var', $var);
+        return $qb->getQuery()->getResult();
+    }
 }

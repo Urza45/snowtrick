@@ -82,6 +82,9 @@
 			<div class="alert alert-success" role="alert">{{ flash_error }}</div>
 		{% endfor %}
 		<br/>
+
+		{% include "modal.html.twig" %}
+
 		{% block body %}{% endblock %}
 
 
@@ -93,7 +96,9 @@
 
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-		{{ encore_entry_script_tags('app') }}
-		{% block javascripts %}{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
 	</body>
 </html>
