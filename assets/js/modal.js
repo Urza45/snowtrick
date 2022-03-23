@@ -1,7 +1,9 @@
-$(".userinfo").click(function () {
+$(".userinfo").on("click", function () {
     var userId = $(this).data("id");
     var urlDest = $(this).data("route");
     var newTitle = $(this).data("title");
+    var newButton = $(this).data("button");
+    var afficheButton = $(this).data("affiche");
     // AJAX request
     $.ajax({
         url: urlDest,
@@ -13,6 +15,11 @@ $(".userinfo").click(function () {
             // Add response in Modal body
             $(".modal-body").html(response);
             $(".modal-title").html(newTitle);
+            $(".submitBtn").html(newButton);
+            $(".submitBtn").show();
+            if (afficheButton == 'no') {
+                $(".submitBtn").hide();
+            }
             // Display Modal
             $("#empModal").modal("show");
         },
@@ -26,7 +33,93 @@ $(".userinfo").click(function () {
     });
 });
 
-$(".close").click(function () {
+$(".close").on("click", function () {
     $("#empModal").modal("hide");
+    location.reload(true);
+})
+
+$(".submitBtn").on("click", function () {
+    var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+    var name = $('#nameForm').val();
+    var url = $('#route').val();
+    var verif = true;
+    var message = '';
+
+    switch (name) {
+        case 'banUser':
+            var activatedUser = $('input[name="ban_user[activatedUser]"]:checked').val();
+            if (activatedUser == '0') {
+                $('.statusMsg').html('Il vous faut choisir entre Oui ou Non.');
+                verif = false;
+            }
+            break;
+        case 'showUser':
+            var pseudo = $('input[name="show_user[pseudo]"').val().trim();
+            if ((pseudo.length > 10) || (pseudo.length < 5)) {
+                message = "L'identifiant doit être compris entre 5 et 10 caractères.";
+                verif = false;
+            }
+            var lastName = $('input[name="show_user[lastName]"').val().trim();
+            if (lastName == '') {
+                if (message != '') { message = message + '<br/>'; }
+                message = message + 'Vous devez saisir un nom.';
+                verif = false;
+            }
+            var firstName = $('input[name="show_user[firstName]"').val();
+            var email = $('input[name="show_user[email]"').val().trim();
+            if (email == '') {
+                if (message != '') { message = message + '<br/>'; }
+                message = message + 'Vous devez saisir un email.';
+                verif = false;
+            }
+            if ((email != '') && (!reg.test(email))) {
+                if (message != '') { message = message + '<br/>'; }
+                message = message + 'Vous devez saisir un email valide.';
+                verif = false;
+            }
+            var phone = $('input[name="show_user[phone]"').val();
+            var cellPhone = $('input[name="show_user[cellPhone]"').val();
+            var roles = $('#show_user_roles').val();
+            if (roles.toString().trim() == '') {
+                if (message != '') { message = message + '<br/>'; }
+                message = message + 'Vous devez choisir au moins un roles.';
+                verif = false;
+            }
+            var slug = $('input[name="show_user[slug]"').val();
+            var createdAt = $('select[name="show_user[createdAt][day]"').val() + '/' + $('select[name="show_user[createdAt][month]"').val() + '/';
+            createdAt = createdAt + $('select[name="show_user[createdAt][year]"').val();
+            var isVerified = $('input[name="show_user[isVerified]"]:checked').val();
+            break;
+        default:
+            verif = true;
+    }
+
+    if (verif == false) {
+        $('.statusMsg').html('<p class="text-danger">' + message + '</p>');
+        return false;
+    } else {
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: $('form#formModal').serialize(),
+            beforeSend: function () {
+                $('.submitBtn').attr("disabled", "disabled");
+                $('.modal-body').css('opacity', '.5');
+            },
+            success: function (msg) {
+                $('.statusMsg').html(msg);
+                $('.submitBtn').removeAttr("disabled");
+                $('.modal-body').css('opacity', '');
+            },
+            error: function () {
+                alert("Error");
+                $('.submitBtn').removeAttr("disabled");
+                $('.modal-body').css('opacity', '');
+            }
+        });
+    }
 });
 
+function verif() {
+
+}

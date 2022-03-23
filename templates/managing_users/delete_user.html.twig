@@ -4,14 +4,13 @@
 			<p class="statusMsg"></p>
 			{{ form_start(form, { attr: {'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
 			<div class="form-group">
-				{% for child in form.activatedUser %}
-					<div class="">
-						{{- form_widget(child) -}}
-						{{- form_label(child, null) -}}
-					</div>
+                Supprimer ? 
+				{% for child in form.supprimer %}
+					{{- form_label(child, null) -}}&nbsp;
+					{{- form_widget(child) -}}&nbsp;
 				{% endfor %}
 				<input type="hidden" name="nameForm" id="nameForm" value="banUser">
-				<input type="hidden" name="route" id="route" value="{{ path("app_managing_userban", { slug: user.slug }) }}">
+				<input type="hidden" name="route" id="route" value="{{ path("app_managing_userdelete", { slug: user.slug }) }}">
 			</div>
 			{{ form_rest(form) }}
 			{{ form_end(form) }}

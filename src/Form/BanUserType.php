@@ -8,13 +8,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class BanUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            //->add('pseudo')
+            //->add('pseudo', HiddenType::class)
             // ->add('roles')
             // ->add('password')
             // ->add('lastName')
@@ -27,7 +28,7 @@ class BanUserType extends AbstractType
             // ->add('validationKey')
             ->add('activatedUser', ChoiceType::class, [
                 'choices'  => [
-                    '_Peut-être_' => null,
+                    ' Peut-être ' => null,
                     ' Non ' => true,
                     ' Oui ' => false,
                 ],

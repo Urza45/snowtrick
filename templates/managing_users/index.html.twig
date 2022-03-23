@@ -75,12 +75,12 @@
 									</td>
 									<td class="text-center">
 										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir son profil">
-											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-id="{{ app.user.id }}" data-route="{{ path('app_managing_user', { slug: user.slug }) }}" data-title="Voir le profil de {{ user.lastName }} {{ user.firstName }}">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ app.user.id }}" data-affiche="yes" data-route="{{ path('app_managing_user', { slug: user.slug }) }}" data-title="Profil de {{ user.lastName }} {{ user.firstName }}">
 												<i class="fa-solid fa-eye text-light"></i>
 											</span>
 										</button>
 										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Autoriser/Bannir">
-											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-id="{{ app.user.id }}" data-route="{{ path('app_ban_user', { slug: user.slug }) }}" data-title="Bannir {{ user.lastName }} {{ user.firstName }}">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ app.user.id }}" data-affiche="yes" data-route="{{ path('app_managing_userban', { slug: user.slug }) }}" data-title="Bannir {{ user.lastName }} {{ user.firstName }}">
 												{% if user.activatedUser is same as(null) %}
 													<i class="fa-solid fa-ban  text-danger"></i>
 													<i class="fa-solid fa-circle-check  text-success"></i>
@@ -94,7 +94,7 @@
 											</span>
 										</button>
 										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer">
-											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-id="{{ app.user.id }}" data-route="{{ path('app_managing_user', { slug: user.slug }) }}" data-title="Supprimer {{ user.lastName }} {{ user.firstName }}">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ app.user.id }}" data-affiche="yes" data-route="{{ path('app_managing_userdelete', { slug: user.slug }) }}" data-title="Supprimer {{ user.lastName }} {{ user.firstName }}">
 												<i class="fa-solid fa-trash-can text-danger"></i>
 											</span>
 										</button>
