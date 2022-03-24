@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -83,7 +84,22 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('salt', HiddenType::class)
             ->add('validationKey', HiddenType::class)
-            ->add('activatedUser', HiddenType::class);
+            ->add('activatedUser', HiddenType::class)
+            ->add('captcha', NumberType::class, [
+                'label' => '',
+                'invalid_message' => 'Vous devez saisir un nombre',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Captcha *'
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => 4,
+                        'max' => 4,
+                        'exactMessage' => 'Votre captcha doit contenir exactement 4 caractères.',
+                    ]),
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

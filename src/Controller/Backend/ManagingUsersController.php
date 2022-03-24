@@ -6,8 +6,6 @@ use App\Form\BanUserType;
 use App\Form\DeleteUserType;
 use App\Form\ShowUserType;
 use App\Repository\UserRepository;
-use App\Repository\TrickRepository;
-use App\Repository\CommentRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,9 +85,7 @@ class ManagingUsersController extends AbstractController
      */
     public function deleteUser(
         Request $request,
-        UserRepository $repoUser,
-        CommentRepository $repoComment,
-        ManagerRegistry $doctrine
+        UserRepository $repoUser
     ) {
         $user = $repoUser->findOneBy(['slug' => $request->get('slug')]);
 
@@ -118,7 +114,5 @@ class ManagingUsersController extends AbstractController
             'form' => $form->createView(),
             'user' => $user
         ]);
-        // $reponse = new Response('Bienvenue dans Symfony');
-        // return $reponse;
     }
 }

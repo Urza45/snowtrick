@@ -16,9 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -38,7 +40,9 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         UserAuthenticatorInterface $userAuthenticator,
         AppAuthenticator $authenticator,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Session $session,
+        SluggerInterface $slugger
     ): Response {
 
         $user = new User();
@@ -47,6 +51,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Captcha verification
+            if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
+                $this->addFlash('notice', 'Le captcha saisi n\'est pas correct.' . $form->get('captcha')->getData() . ' - ' . $session->get('captcha'));
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+
             // encode the password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -65,6 +77,7 @@ class RegistrationController extends AbstractController
                 ->setType('jpg');
 
             $entityManager->persist($avatar);
+            //$user->computeSlug($slugger);
             $user->setAvatar($avatar);
 
             $entityManager->persist($user);

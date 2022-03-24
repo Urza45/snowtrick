@@ -7,6 +7,7 @@ parameters:
     upload_directory: '%kernel.project_dir%/public/medias'
     avatars_directory: '%kernel.project_dir%/public/medias/avatars'
     tricks_directory: '%kernel.project_dir%/public/medias/tricks'
+    police: '%kernel.project_dir%/public/fonts/28_Days_Later.ttF'
     mail_from: 'sergepillay@gmail.com'
 
 services:
@@ -36,12 +37,16 @@ services:
         arguments:
             $mailFrom: '%mail_from%'
 
+    App\Service\Captcha:
+        arguments:
+            $police: '%police%'
+
     App\EntityListener\TrickEntityListener:
         tags:
-            - { name: 'doctrine.orm.entity_listener1', event: 'prePersist', entity: 'App\Entity\Trick'}
-            - { name: 'doctrine.orm.entity_listener1', event: 'preUpdate', entity: 'App\Entity\Trick'}
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Trick'}
+            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Trick'}
 
     App\EntityListener\UserEntityListener:
         tags:
-            - { name: 'doctrine.orm.entity_listener2', event: 'prePersist', entity: 'App\Entity\User'}
-            - { name: 'doctrine.orm.entity_listener2', event: 'preUpdate', entity: 'App\Entity\User'}
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\User'}
+            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\User'}
