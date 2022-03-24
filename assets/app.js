@@ -14,16 +14,16 @@ import { Tooltip, Toast, Popover } from "bootstrap";
 // start the Stimulus application
 import "./bootstrap";
 
-const $ = require('jquery');
+const $ = require("jquery");
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
 //require('bootstrap');
 
-window.bootstrap = require('bootstrap');
+window.bootstrap = require("bootstrap");
 
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipTriggerList = [].slice.call(document.querySelectorAll("[data-bs-toggle='tooltip']"));
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
 
 

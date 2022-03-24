@@ -6,26 +6,13 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class BanUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            //->add('pseudo', HiddenType::class)
-            // ->add('roles')
-            // ->add('password')
-            // ->add('lastName')
-            // ->add('firstName')
-            // ->add('email')
-            // ->add('phone')
-            // ->add('cellPhone')
-            // ->add('salt')
-            // ->add('statusConnected')
-            // ->add('validationKey')
             ->add('activatedUser', ChoiceType::class, [
                 'choices'  => [
                     ' Peut-être ' => null,
@@ -37,13 +24,7 @@ class BanUserType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ]
-            ])
-            // ->add('createdAt')
-            // ->add('isVerified')
-            // ->add('slug')
-            // ->add('typeUser')
-            // ->add('avatar')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

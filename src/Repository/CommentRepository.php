@@ -74,13 +74,4 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    public function findByCommentDisabledByUser($var = null)
-    {
-        $qb = $this->createQueryBuilder('p')
-            ->where('p.disabled = 1')
-            ->andWhere('p.user_id = :var)')
-            ->setParameter('var', $var);
-        return $qb->getQuery()->getResult();
-    }
 }

@@ -19,7 +19,7 @@ class ManagingUsersController extends AbstractController
     /**
      * @Route("/admin/managing/users", name="app_managing_users")
      */
-    public function index(UserRepository $repoUser, TrickRepository $repoTrick, CommentRepository $repoComment): Response
+    public function index(UserRepository $repoUser): Response
     {
         $users = $repoUser->findAll();
 

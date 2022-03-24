@@ -16,10 +16,6 @@ class ForgotPasswordType extends AbstractType
             ->add('pseudo', RepeatedType::class, [
                 'type' => TextType::class,
                 'invalid_message' => "Les pseudos doivent être identiques.",
-                /*'constraints' => [
-                    new NotBlank(),
-                    new Email()
-                ],*/
                 'required' => true,
                 'first_options' => [
                     'label' => 'Saisir votre pseudo',
@@ -40,8 +36,6 @@ class ForgotPasswordType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            //'data_class' => User::class
-        ]);
+        $resolver->setDefaults([]);
     }
 }

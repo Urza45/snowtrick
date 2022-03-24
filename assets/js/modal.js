@@ -17,14 +17,13 @@ $(".userinfo").on("click", function () {
             $(".modal-title").html(newTitle);
             $(".submitBtn").html(newButton);
             $(".submitBtn").show();
-            if (afficheButton == 'no') {
+            if (afficheButton === "no") {
                 $(".submitBtn").hide();
             }
             // Display Modal
             $("#empModal").modal("show");
         },
-        error: function (jqXHR, textStatus) {
-            console.log(jqXHR);
+        error: function () {
             $(".modal-body").html("Une erreur est survenue.");
             $(".modal-title").html("Erreur");
             // Display Modal
@@ -36,85 +35,85 @@ $(".userinfo").on("click", function () {
 $(".close").on("click", function () {
     $("#empModal").modal("hide");
     location.reload(true);
-})
+});
 
 $(".submitBtn").on("click", function () {
     var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-    var name = $('#nameForm').val();
-    var url = $('#route').val();
+    var name = $("#nameForm").val();
+    var road = $("#route'").val();
     var verif = true;
-    var message = '';
+    var message = "";
 
     switch (name) {
-        case 'banUser':
-            var activatedUser = $('input[name="ban_user[activatedUser]"]:checked').val();
-            if (activatedUser == '0') {
-                $('.statusMsg').html('Il vous faut choisir entre Oui ou Non.');
+        case "banUser":
+            var activatedUser = $("input[name='ban_user[activatedUser]']:checked").val();
+            if (activatedUser === "0") {
+                $(".statusMsg").html("Il vous faut choisir entre Oui ou Non.");
                 verif = false;
             }
             break;
-        case 'showUser':
-            var pseudo = $('input[name="show_user[pseudo]"').val().trim();
+        case "showUser":
+            var pseudo = $("input[name='show_user[pseudo]'").val().trim();
             if ((pseudo.length > 10) || (pseudo.length < 5)) {
                 message = "L'identifiant doit être compris entre 5 et 10 caractères.";
                 verif = false;
             }
-            var lastName = $('input[name="show_user[lastName]"').val().trim();
-            if (lastName == '') {
-                if (message != '') { message = message + '<br/>'; }
-                message = message + 'Vous devez saisir un nom.';
+            var lastName = $("input[name='show_user[lastName]'").val().trim();
+            if (lastName === "") {
+                if (message !== "") { message = message + "<br/>"; }
+                message = message + "Vous devez saisir un nom.";
                 verif = false;
             }
-            var firstName = $('input[name="show_user[firstName]"').val();
-            var email = $('input[name="show_user[email]"').val().trim();
-            if (email == '') {
-                if (message != '') { message = message + '<br/>'; }
-                message = message + 'Vous devez saisir un email.';
+            // var firstName = $("input[name='show_user[firstName]'").val();
+            var email = $("input[name='show_user[email]'").val().trim();
+            if (email === "") {
+                if (message !== "") { message = message + "<br/>"; }
+                message = message + "Vous devez saisir un email.";
                 verif = false;
             }
-            if ((email != '') && (!reg.test(email))) {
-                if (message != '') { message = message + '<br/>'; }
-                message = message + 'Vous devez saisir un email valide.';
+            if ((email !== "") && (!reg.test(email))) {
+                if (message !== "") { message = message + "<br/>"; }
+                message = message + "Vous devez saisir un email valide.";
                 verif = false;
             }
-            var phone = $('input[name="show_user[phone]"').val();
-            var cellPhone = $('input[name="show_user[cellPhone]"').val();
-            var roles = $('#show_user_roles').val();
-            if (roles.toString().trim() == '') {
-                if (message != '') { message = message + '<br/>'; }
-                message = message + 'Vous devez choisir au moins un roles.';
+            // var phone = $("input[name='show_user[phone]'").val();
+            // var cellPhone = $("input[name='show_user[cellPhone]'").val();
+            var roles = $("#show_user_roles").val();
+            if (roles.toString().trim() === "") {
+                if (message !== "") { message = message + "<br/>"; }
+                message = message + "Vous devez choisir au moins un roles.";
                 verif = false;
             }
-            var slug = $('input[name="show_user[slug]"').val();
-            var createdAt = $('select[name="show_user[createdAt][day]"').val() + '/' + $('select[name="show_user[createdAt][month]"').val() + '/';
-            createdAt = createdAt + $('select[name="show_user[createdAt][year]"').val();
-            var isVerified = $('input[name="show_user[isVerified]"]:checked').val();
+            // var slug = $("input[name='show_user[slug]'").val();
+            // var createdAt = $("select[name='show_user[createdAt][day]'").val() + '/' + $("select[name='show_user[createdAt][month]'").val() + '/';
+            // createdAt = createdAt + $("select[name='show_user[createdAt][year]'").val();
+            // var isVerified = $("input[name='show_user[isVerified]']:checked").val();
             break;
         default:
             verif = true;
     }
 
-    if (verif == false) {
-        $('.statusMsg').html('<p class="text-danger">' + message + '</p>');
+    if (verif === false) {
+        $(".statusMsg").html("<p class=\"text-danger\">" + message + "</p>");
         return false;
     } else {
         $.ajax({
-            type: 'POST',
-            url: url,
-            data: $('form#formModal').serialize(),
+            type: "POST",
+            url: road,
+            data: $("form#formModal").serialize(),
             beforeSend: function () {
-                $('.submitBtn').attr("disabled", "disabled");
-                $('.modal-body').css('opacity', '.5');
+                $(".submitBtn").attr("disabled", "disabled");
+                $(".modal-body").css("opacity", ".5");
             },
-            success: function (msg) {
-                $('.statusMsg').html(msg);
-                $('.submitBtn').removeAttr("disabled");
-                $('.modal-body').css('opacity', '');
+            success: function (response) {
+                $(".statusMsg").html(response);
+                $(".submitBtn").removeAttr("disabled");
+                $(".modal-body").css("opacity", "");
             },
             error: function () {
-                alert("Error");
-                $('.submitBtn').removeAttr("disabled");
-                $('.modal-body').css('opacity', '');
+                $(".statusMsg").html("<p class=\"text-danger\">Une erreur est survenue.</p>");
+                $(".submitBtn").removeAttr("disabled");
+                $(".modal-body").css("opacity", "");
             }
         });
     }
