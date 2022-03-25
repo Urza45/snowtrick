@@ -1,15 +1,60 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Hello TrickController!
+	Bienvenu(e) sur SNOwTRICKS
 {% endblock %}
 
 {% block body %}
-	<section id="tricks">
-		<h1>Bonjour</h1>
-		<pre>
-			{{ dump() }}
-		</pre>
-		<i class="bi-alarm"></i>
-	</section>
+	<div class="hero text-center align-middle">
+		<h2>Bienvenue sur le site communtaire du Snowboard</h2>
+		<h3>Ouvert à tous</h3>
+		<a href="#tricks" class="text-secondary down">
+			<h1>
+				<i class="fa-solid fa-arrow-down-long"></i>
+			</h1>
+		</a>
+	</div>
+	<div id="tricks" class="container">
+		<div id="listTrick" name="listTrick" class="row justify-content-evenly">
+			<hr/>
+			{# {% set i = 0 %}
+									{% for trick in tricks %}
+										<div class="card" style="width: 15rem;">
+											{% if trick.media.count is same as(0) %}
+												<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
+											{% endif %}
+											<div class="card-body">
+												<P class="card-title">
+													<a class="text-primary" href="{{ path('show_trick' , { id: trick.id }) }}">
+														{{ trick.title }}
+													</a>
+													<a class="text-primary" href="{{ path('modify_trick' , { id: trick.id }) }}">
+														<i class="fa-solid fa-pencil"></i>
+													</a>
+													<a class="text-danger" href="#">
+														<i class="fa-solid fa-trash-can"></i>
+													</a>
+												</p>
+												<p class="card-text"></p>
+											</div>
+										</div>
+										{% set i = i + 1 %}
+									{% endfor %} #}
+			{% include "trick/show_more_trick.html.twig" %}
+		</div>
+		<div id="trickplus" name="trickplus">
+			{% if numberTrickByPage < tricksCount %}
+				<div class="text-center">
+					<button name="showMoreTricks" id="showMoreTricks" class="btn btn-primary" type="button" data-index="{{ numberTrickByPage }}" data-tricksbypage="{{ numberTrickByPage }}" data-nbtrick="{{ tricksCount }}" data-route="{{ path('show_more_trick' , {'index' : numberTrickByPage} ) }}">
+						<i class="fa-solid fa-circle-plus"></i>
+					</button>
+				</div>
+			{% endif %}
+		</div>
+		<a href="#tricks" class="text-light right">
+			<h1>
+				<i class="fa-solid fa-arrow-up-long"></i>
+			</h1>
+		</a>
+	</div>
 {% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Bienvenu(e) sur SNOwTRICKS
+{% endblock %}
+
+{% block body %}
+<br/>
+<section class="bg-secondary p-2 text-dark bg-opacity-50">
+	<div class="container container-fluid">
+		<div class="row justify-content-evenly">
+			<div class="col-lg-10">
+				<div class="table-responsive">
+					<div class="contenant">
+						{% if trick.media.count is same as(0) %}
+							<img src="{{ asset('medias/snow.jpg') }}" class="img-fluid" alt="Pas d'image">
+						{% endif %}
+						<div class="texte_centrer bg-secondary bg-opacity-50">
+							<h1>{{ trick.title}}</h1>
+						</div>
+					</div>
+					<div class="row text-center align-items-center">
+						<div class="col-lg-1">
+							<h1>
+								<a href="#">
+									<i class="fa-solid fa-circle-plus"></i>
+								</a>
+							</h1>
+						</div>
+						<div class="col-lg-11">
+							{% include "trick/carousel.html.twig" %}
+						</div>
+					</div>
+					{{ form_start(form) }}
+					{{ form_row(form.title, {
+                        'label': 'Titre (*) :', 
+                        'attr': {
+                            'placeholder': 'Le titre',
+                            'class': 'form-control'
+                        }
+                    }) }}
+					{{ form_row(form.chapo, {
+					    'label': 'Chapo (*) :', 
+					    'attr': {
+					        'placeholder': 'Texte d\'introduction',
+					        'class': 'form-control'
+					    }
+		    		}) }}
+					{{ form_row(form.content, {
+					    'label': 'Contenu (*) :', 
+					    'attr': {
+					        'placeholder': 'Votre texte',
+					        'class': 'form-control'
+					    }
+		    		}) }}
+
+                    <button type="submit" class="btn btn-primary">Enregister</button>
+
+					{{ form_rest(form) }}
+					{{ form_end(form) }}
+					
+					<button class="btn btn-info disabled">
+					    <i class="fa-solid fa-calendar-days"></i>
+					    Crée le
+					    {{ trick.createdAt|date('d/m/Y') }}
+					</button>
+					<button class="btn btn-info disabled">
+					    <i class="fa-solid fa-user"></i>
+					    Auteur :
+					    {{ trick.user.firstName }}
+					    {{ trick.user.lastName }}</button>
+					{% if trick.createdAt != trick.updatedAt %}
+					    <button class="btn btn-info disabled">Date de dernière modification :
+						    {{ trick.updatedAt|date('d/m/Y') }}
+					    </button>
+					{% endif %}
+					<button class="btn btn-info disabled">Catégorie :
+					    {{ trick.category.label }}
+                    </button>
+						    
+			    </div>
+		    </div>
+        </div>
+	</div>
+</section>{% endblock %}

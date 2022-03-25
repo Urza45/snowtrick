@@ -12,9 +12,6 @@
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
-		{% endblock %}
 	</head>
 	<body>
 		<header>
@@ -32,10 +29,10 @@
 					<div class="collapse navbar-collapse" id="navbarResponsive">
 						<ul class="navbar-nav ms-auto">
 							<li class="nav-item mx-0 mx-lg-1">
-								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Accueil</a>
+								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ path('trick_home') }}">Accueil</a>
 							</li>
 							<li class="nav-item mx-0 mx-lg-1">
-								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Figures</a>
+								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ path('trick_home') }}#tricks">Figures</a>
 							</li>
 							<li class="nav-item mx-0 mx-lg-1">
 								<a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Se connecter</a>
@@ -48,18 +45,18 @@
 				</div>
 			</nav>
 		</header>
-		<section class="hero text-center align-middle">
-			<div class="">
-				<h2>Bienvenue sur le site communtaire du Snowboard</h2>
-				<h3>Ouvert à tous</h3>
-				<a href="#tricks">
-					<h1>
-						<i class="fa-solid fa-arrow-down-long"></i>
-					</h1>
-				</a>
-
-			</div>
-		</section>
 		{% block body %}{% endblock %}
+
+		<footer class="footer mt-auto py-3">
+			<div class="container">
+				<span class="text-notice bg-light ">Place sticky footer content here.</span>
+			</div>
+		</footer>
+
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
 	</body>
 </html>
