@@ -452,7 +452,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function computeSlug(SluggerInterface $slugger)
     {
-        dump($slugger);
         if (!$this->slug || '-' === $this->slug) {
             $this->slug = (string) $slugger->slug('pseudo-' . $this->getPseudo())->lower();
         }

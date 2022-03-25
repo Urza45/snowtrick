@@ -40,7 +40,7 @@ $(".close").on("click", function () {
 $(".submitBtn").on("click", function () {
     var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
     var name = $("#nameForm").val();
-    var road = $("#route'").val();
+    var road = $("#route").val();
     var verif = true;
     var message = "";
 
