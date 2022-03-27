@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -85,7 +85,7 @@ class RegistrationFormType extends AbstractType
             ->add('salt', HiddenType::class)
             ->add('validationKey', HiddenType::class)
             ->add('activatedUser', HiddenType::class)
-            ->add('captcha', NumberType::class, [
+            ->add('captcha', IntegerType::class, [
                 'label' => '',
                 'invalid_message' => 'Vous devez saisir un nombre',
                 'attr' => [
