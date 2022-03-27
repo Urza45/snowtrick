@@ -1,0 +1,21 @@
+{% for trick in tricks %}
+	<div class="card" style="width: 15rem;">
+		{% if trick.media.count is same as(0) %}
+			<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
+		{% endif %}
+		<div class="card-body">
+			<P class="card-title">
+				<a class="text-primary" href="{{ path('show_trick' , { id: trick.id }) }}">
+					{{ trick.title }}
+				</a>
+				<a class="text-primary" href="#">
+					<i class="fa-solid fa-pencil"></i>
+				</a>
+				<a class="text-danger" href="#">
+					<i class="fa-solid fa-trash-can"></i>
+				</a>
+			</p>
+			<p class="card-text"></p>
+		</div>
+	</div>
+{% endfor %}
