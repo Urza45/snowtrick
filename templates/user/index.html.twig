@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Votre Profil
+{% endblock %}
+
+{% block body %}
+	<section class="bg-secondary p-2 text-dark bg-opacity-50">
+		<div class="container container-fluid">
+			<div class="row justify-content-around">
+				<div class="col-lg-8">
+					<h4>Bonjour
+						{{ user.firstName }}
+						{{ user.lastName|upper}}
+					</h4>
+					<div class="col-lg-4">
+						{% if user.avatar %}
+							<img src="{{ asset(user.avatar.url) }}" class="rounded-circle" style="height: 100px" alt="profile picture">
+						{% else %}
+							<img src="{{ asset('medias/avatars/manProfil.jpg') }}" class="rounded-circle" style="height: 100px" alt="profile picture">
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-around">
+				{% include "user/user.html.twig" %}
+			</div>
+			<div class="row justify-content-around">
+				{% include "user/tricks.html.twig" %}
+			</div>
+			<div class="row justify-content-around">
+				{% include "user/comments.html.twig" %}
+			</div>
+		</div>
+	</div>
+</section>{% endblock %}{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('modal') }}{% endblock %}

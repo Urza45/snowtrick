@@ -1,0 +1,32 @@
+<div class="container container-fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			{{ form_start(form, { attr: {'action': '/profile/change_picture', 'id': 'file_upload', 'accept-charset' : 'utf-8' }}) }}
+			<div class="form-group">
+				{% if avatar %}
+					<input type="hidden" name="id" value="{{ avatar.id }}">
+					<input type="hidden" name="legend" value="{{ avatar.legend }}">
+					<input type="hidden" name="type" value="{{ avatar.type }}">
+
+					{% if avatar.url %}
+						<img src="{{ asset(user.avatar.url) }}" class="rounded-circle" height="100px"/>
+					{% else %}
+						<img src="{{ asset('medias/avatars/manProfil.jpg') }}" class="rounded-circle" height="100px"/>
+					{% endif %}
+				{% endif %}
+				&nbsp;Photographie actuelle :
+				{{ app.user.avatar.url }}<br/>
+				{{ form_label(form.upload_file) }}
+				{{ form_widget(form.upload_file) }}
+				{{ form_errors(form.upload_file) }}
+
+				{{ form_widget(form.send, {'label': "Choisir cette photographie", 'attr' : { 'class': 'btn btn-primary' }}) }}
+			</div>
+			<div
+				class="form-group">{#{ form_widget(form.send, {'label': "Upload this file", 'attr' : { 'class': 'btn btn-primary' }}) }#}
+			</div>
+			{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>

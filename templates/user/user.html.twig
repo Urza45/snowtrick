@@ -1,0 +1,67 @@
+{{ form_start(formUser) }}
+<div class="row justify-content-evenly">
+	<div class="col-lg-3 col-12">
+		{{ form_row(formUser.pseudo, {
+			'label': 'Identifiant :', 
+			'attr': {
+				'placeholder': 'Identifiant',
+				'class': 'form-control'
+			}
+		    }) }}
+		{{ form_row(formUser.lastName, {
+			'label': 'Nom', 
+			'attr': {
+				'placeholder': 'Votre nom',
+				'class': 'form-control'
+			}
+		    }) }}
+		{{ form_row(formUser.firstName, {
+			'label': 'Prénom', 
+			'attr': {
+				'placeholder': 'Votre prénom',
+				'class': 'form-control'
+			}
+		    }) }}
+	</div>
+	<div class="col-lg-3 col-12">
+		{{ form_row(formUser.email, {
+			'label': 'Email :', 
+			'attr': {
+				'placeholder': 'Votre email',
+				'class': 'form-control'
+			}
+		    }) }}
+		{{ form_row(formUser.phone, {
+			'label': 'Télephone :', 
+			'attr': {
+				'placeholder': 'Votre téléphone fixe',
+				'class': 'form-control'
+			}
+		    }) }}
+		{{ form_row(formUser.cellPhone, {
+			'label': 'Portable', 
+			'attr': {
+				'placeholder': 'Votre téléphone portable',
+				'class': 'form-control'
+			}
+		    }) }}
+	</div>
+	<div class="col-lg-3 col-12 text-center">
+		<button class="btn btn-lg btn-md btn-primary" type="submit">
+			Enregistrer
+		</button>
+		<br><br>
+		<button type="button" id="theElement1" name="theElement1" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ app.user.id }}" data-affiche="no" data-route="{{ path('change_password_user') }}" data-title="Modifier votre mot de passe" class='btn btn-info userinfo'>
+			Changer de mot de passe
+		</button><br><br>
+		<button type="button" id="theElement1" name="theElement1" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ app.user.id }}" data-affiche="no" data-route="{{ path('change_picture_user') }}" data-title="Modifier votre photographie de profil" class='btn btn-info userinfo'>
+			Changer de photographie
+		</button>
+	</div>
+	{{ form_end(formUser) }}
+
+
+</div>
+<div class="row justify-content-evenly">
+	<div class="col-lg-12"></div>
+</div>

@@ -2,12 +2,20 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.61b1725c.js",
-        "/build/850.60002204.js",
-        "/build/app.6cb98c39.js"
+        "/build/runtime.9a71ee5d.js",
+        "/build/68.4df016ef.js",
+        "/build/457.fca2a60b.js",
+        "/build/app.d4095d3a.js"
       ],
       "css": [
-        "/build/app.09bed60a.css"
+        "/build/app.fcc476e5.css"
+      ]
+    },
+    "modal": {
+      "js": [
+        "/build/runtime.9a71ee5d.js",
+        "/build/68.4df016ef.js",
+        "/build/modal.57b6537f.js"
       ]
     }
   }

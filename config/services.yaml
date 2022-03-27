@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    upload_directory: '%kernel.project_dir%/public/medias'
+    avatars_directory: '%kernel.project_dir%/public/medias/avatars'
+    tricks_directory: '%kernel.project_dir%/public/medias/tricks'
+    police: '%kernel.project_dir%/public/fonts/28_Days_Later.ttF'
+    mail_from: 'sergepillay@gmail.com'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +27,26 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\FileUploaderAvatar:
+        arguments:
+            $uploadDirectory: '%upload_directory%'
+            $avatarDirectory: '%avatars_directory%'
+            $tricksDirectory: '%tricks_directory%'
+    
+    App\Service\MailerService:
+        arguments:
+            $mailFrom: '%mail_from%'
+
+    App\Service\Captcha:
+        arguments:
+            $police: '%police%'
+
+    App\EntityListener\TrickEntityListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Trick'}
+            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Trick'}
+
+    App\EntityListener\UserEntityListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\User'}
+            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\User'}

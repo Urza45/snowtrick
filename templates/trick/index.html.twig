@@ -1,15 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Hello TrickController!
+	Bienvenu(e) sur SNOwTRICKS
 {% endblock %}
 
 {% block body %}
-	<section id="tricks">
-		<h1>Bonjour</h1>
-		<pre>
-			{{ dump() }}
-		</pre>
-		<i class="bi-alarm"></i>
+	<div class="hero text-center align-middle">
+		<div class="">
+			<h2>Bienvenue sur le site communtaire du Snowboard</h2>
+			<h3>Ouvert à tous</h3>
+			<a href="#tricks">
+				<h1>
+					<i class="fa-solid fa-arrow-down-long"></i>
+				</h1>
+			</a>
+		</div>
+	</div>
+	<section id="tricks" class="bg-secondary p-2 text-dark bg-opacity-50">
+		<div class="container">
+			<div class="row">
+				{% for trick in tricks %}
+					<div class="card" style="width: 18rem;">
+						<img src="{{ asset('mediaS/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
+						<div class="card-body">
+							<h5 class="card-title">{{ trick.title }}</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<a href="#" class="btn btn-primary">Go somewhere</a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 	</section>
 {% endblock %}
