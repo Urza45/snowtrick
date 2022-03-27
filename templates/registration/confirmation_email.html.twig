@@ -1,0 +1,16 @@
+<h1>
+	<img src="{{ absolute_url(asset('medias/Snowboarding_pictogram.ico')) }}" alt="Snowtricks" width="50px"/>SNOwTRICKS
+</h1>
+<h1>Bonjour vous devez confirmer votre adresse email.</h1>
+
+<table cellspacing="0" style="border: 2px dashed #FB4314; width: 100%;">
+	<tr style="background-color: #e0e0e0;">
+		<th>
+			<a href="{{ signedUrl }}">Confirmer votre Email</a>.
+			<p>
+				Ce lien expire dans
+				{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+			</p>
+		</th>
+	</tr>
+</table>

@@ -1,11 +1,19 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-	<h1>Page non trouvée</h1>
-	<p>Code de l'erreur :
-		{{ status_code }}</p>
-	<p>Message de l'erreur :
-		{{ status_text }}</p>
-	<p>Message personnalisé :
-		{{ exception.message }}</p>
+	<section class="bg-secondary p-2 text-dark bg-opacity-50">
+		<div class="container container-fluid">
+			<div class="row justify-content-around">
+				<div class="col-lg-4 text-center">
+					<img src="{{ asset('medias/404.png') }}" width="200px" alt="Erreur 404">
+				</div>
+				<div class="col-lg-8 text-middle">
+					<br/>
+					<h1>Page non trouvée</h1>
+					<br/>
+					<p>Il semblerait que la page que vous cherchez ne soit pas ici.</p>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}

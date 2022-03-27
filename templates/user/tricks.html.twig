@@ -1,0 +1,10 @@
+Créer une figure
+<hr/>
+{% if tricks %}
+	Vos figures :
+	{% for trick in tricks %}
+		{{ trick.title }}<br/>
+	{% endfor %}
+{% else %}
+	Vous n'avez pas créé de figure.
+{% endif %}

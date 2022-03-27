@@ -6,13 +6,25 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.scss';
+import "./styles/app.scss";
 
 // You can specify which plugins you need
-import { Tooltip, Toast, Popover } from 'bootstrap';
+import { Tooltip, Toast, Popover } from "bootstrap";
 
 // start the Stimulus application
-import './bootstrap';
+import "./bootstrap";
+
+const $ = require("jquery");
+// this "modifies" the jquery module: adding behavior to it
+// the bootstrap module doesn't export/return anything
+//require('bootstrap');
+
+window.bootstrap = require("bootstrap");
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll("[data-bs-toggle='tooltip']"));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+});
 
 $(function () {
     var page = 1;
@@ -60,4 +72,3 @@ $(function () {
         }
     });
 })
-

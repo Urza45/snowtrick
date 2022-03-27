@@ -7,7 +7,6 @@ use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Media;
 use App\Entity\Trick;
-use App\Entity\TypeMedia;
 use App\Entity\TypeUser;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -31,14 +30,14 @@ class AppFixtures extends Fixture
         $avatar = new Avatar();
         $avatar->setLegend('Femme')
             ->setType('jpg')
-            ->setUrl('\media\avatars\womanProfils.jpg');
+            ->setUrl('media\avatars\womanProfil.jpg');
 
         $manager->persist($avatar);
 
         $avatar = new Avatar();
         $avatar->setLegend('Homme')
             ->setType('jpg')
-            ->setUrl('\media\avatars\manProfils.jpg');
+            ->setUrl('medias\avatars\manProfil.jpg');
 
         $manager->persist($avatar);
 
@@ -61,7 +60,8 @@ class AppFixtures extends Fixture
             ->setValidationKey('-------------------------')
             ->setTypeUser($typeUser)
             ->setCreatedAt($date)
-            ->setAvatar($avatar);
+            ->setAvatar($avatar)
+            ->setIsVerified(true);
 
         $manager->persist($userAdmin);
 
@@ -102,19 +102,6 @@ class AppFixtures extends Fixture
                 $manager->persist($comment);
             }
         }
-
-        // Type media
-        $typeMedia = new TypeMedia();
-        $typeMedia->setGroupMedia('Vidéo')
-            ->setTypeMedia('mp4');
-
-        $manager->persist($typeMedia);
-
-        $typeMedia = new TypeMedia();
-        $typeMedia->setGroupMedia('Image')
-            ->setTypeMedia('jpg');
-
-        $manager->persist($typeMedia);
 
         $manager->flush();
     }

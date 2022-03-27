@@ -1,0 +1,20 @@
+<div class="container container-fluid">
+	<div class="row justify-content-evenly">
+		<div class="col-lg-8">
+			<p class="statusMsg"></p>
+			{{ form_start(form, { attr: {'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
+			<div class="form-group">
+				{% for child in form.activatedUser %}
+					<div class="">
+						{{- form_widget(child) -}}
+						{{- form_label(child, null) -}}
+					</div>
+				{% endfor %}
+				<input type="hidden" name="nameForm" id="nameForm" value="banUser">
+				<input type="hidden" name="route" id="route" value="{{ path("app_managing_userban", { slug: user.slug }) }}">
+			</div>
+			{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>

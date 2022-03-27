@@ -1,0 +1,86 @@
+<div class="container container-fluid">
+	<div class="row justify-content-evenly">
+		<div class="col-lg-12">
+			<p class="statusMsg"></p>
+			{{ form_start(form, { attr: {'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
+			<div class="form-group">
+				<div class="row justify-content-evenly">
+					<div class="col-lg-4 col-12">
+						{{ form_row(form.pseudo, {
+							'label': 'Identifiant :', 
+							'attr': {
+								'placeholder': 'Identifiant',
+								'class': 'form-control'
+							}
+		    			}) }}
+						{{ form_row(form.lastName, {
+							'label': 'Nom :', 
+							'attr': {
+								'placeholder': 'Votre nom',
+								'class': 'form-control'
+							}
+		    			}) }}
+						{{ form_row(form.firstName, {
+							'label': 'Prénom :',
+							'attr': {
+								'placeholder': 'Votre prénom',
+								'class': 'form-control'
+							}
+		    			}) }}
+						{{ form_row(form.email, {
+							'label': 'Email :', 
+							'attr': {
+								'placeholder': 'Votre email',
+								'class': 'form-control'
+							}
+		    			}) }}
+						{{ form_row(form.phone, {
+							'label': 'Télephone :', 
+							'attr': {
+								'placeholder': 'Votre téléphone fixe',
+								'class': 'form-control'
+							}
+		    			}) }}
+						{{ form_row(form.cellPhone, { 
+							'label': 'Portable :', 
+							'attr': {
+								'placeholder': 'Votre téléphone portable',
+								'class': 'form-control'
+							}
+		    			}) }}
+					</div>
+					<div class="col-lg-4 col-12">
+						{{ form_row(form.roles, { 'label': 'Rôles :', 'attr': { 'class': 'form-control' } }) }}
+						{{ form_row(form.slug, { 'label': 'Slug :', 'attr': { 'class': 'form-control' } }) }}
+						{{ form_row(form.createdAt, { 'label': 'Créé(e) le :', 'attr': { 'class': 'form-control', 'disabled': 'disabled' } }) }}
+						<div>
+							Email vérifié :
+							{% for child in form.isVerified %}
+								{{- form_label(child, null) -}}&nbsp;
+								{{- form_widget(child) -}}&nbsp;
+							{% endfor %}
+						</div>
+
+					</div>
+					<div class="col-lg-4 col-12">
+						<img src="{{ asset(user.avatar.url) }}" class="rounded-circle" alt="Avatar" width="100px"/><br/>
+						Url :
+						{{ user.avatar.url }}<br/>
+						Légende :
+						{{ user.avatar.legend }}<br/>
+						Type :
+						{{ user.avatar.type }}<br/>
+						<input type="hidden" name="nameForm" id="nameForm" value="showUser">
+						<input type="hidden" name="route" id="route" value="{{ path("app_managing_user", { slug: user.slug }) }}">
+					</div>
+				</div>
+				<div class="row justify-content-evenly">
+					<div class="col-lg-12"></div>
+				</div>
+
+			</div>
+			{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>

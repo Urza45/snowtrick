@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Administration
+{% endblock %}
+
+{% block body %}
+	<section class="bg-secondary p-2 text-dark bg-opacity-50">
+		<div class="container container-fluid">
+			<div class="row justify-content-evenly">
+				<div class="col-lg-8">
+					<h1 class="h3 mb-3 font-weight-normal">Administration</h1>
+				</div>
+			</div>
+			<div class="row justify-content-evenly">
+				<div class="card text-center" style="width: 18rem;">
+					<img src="{{ asset('mediaS/Users.png') }}" class="card-img-top" alt="Pas d'image">
+					<div class="card-body">
+						<h5 class="card-title"></h5>
+						<p class="card-text"></p>
+						<a href="{{ path('app_managing_users') }}" class="btn btn-primary">Gestion des utilisateurs</a>
+					</div>
+				</div>
+				<div class="card text-center" style="width: 18rem;">
+					<img src="{{ asset('mediaS/Snowboarding_pictogram.svg') }}" class="card-img-top" alt="Pas d'image">
+					<div class="card-body">
+						<h5 class="card-title"></h5>
+						<p class="card-text"></p>
+						<a href="{{ path('app_managing_tricks') }}" class="btn btn-primary">Gestion des tricks</a>
+					</div>
+				</div>
+				<div class="card text-center" style="width: 18rem;">
+					<img src="{{ asset('mediaS/Comments.png') }}" class="card-img-top" alt="Pas d'image">
+					<div class="card-body">
+						<h5 class="card-title"></h5>
+						<p class="card-text"></p>
+						<a href="{{ path('app_managing_comments') }}" class="btn btn-primary">Gestion des commentaires</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
