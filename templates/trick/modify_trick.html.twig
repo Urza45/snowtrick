@@ -107,16 +107,19 @@
 					{% if trick.media.count is same as(0) %}
 						<p>Pas d'image mise en avant.</p>
 					{% else %}
+						{% set findFeaturePicture = 0 %}
 						{% for file in trick.media %}
-							{% set findFeaturePicture = false %}
+							
 							{% if file.featurePicture %}
-								<img src="{{ asset(file.url)}}" alt="{{ file.legend }}">
-								{% set findFeaturePicture = true %}
+							<p>Image mise en avant : </p>
+								<img src="{{ asset(file.url)}}" alt="{{ file.legend }}" width="400px">
+								{% set findFeaturePicture = 1 %}
 							{% endif %}
-							{% if findFeaturePicture == false %}
+							
+						{% endfor %}
+						{% if findFeaturePicture is same as(0)  %}
 								<p>Pas d'image mise en avant choisie.</p>
 							{% endif %}
-						{% endfor %}
 					{% endif %}
 				</div>
 				<div class="col-lg-6 text-center">

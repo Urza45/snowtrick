@@ -2,6 +2,17 @@
 	<div class="card" style="width: 15rem;">
 		{% if trick.media.count is same as(0) %}
 			<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
+		{% else %}
+			{% set ok = 0 %}
+			{% for media in trick.media %}
+				{% if media.featurePicture %}
+					<img src="{{ asset(media.url) }}" class="card-img-top" alt="{{ media.legend }}">
+					{% set ok = 1 %}
+				{% endif %}
+			{% endfor %}
+			{% if ok is same as(0) %}
+				<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
+			{% endif %}
 		{% endif %}
 		<div class="card-body">
 			<P class="card-title text-justify">

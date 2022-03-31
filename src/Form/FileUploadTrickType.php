@@ -39,8 +39,8 @@ class FileUploadTrickType extends AbstractType
             ])
             ->add('featurePicture', ChoiceType::class, [
                 'choices'  => [
-                    ' Oui ' => true,
-                    ' Non ' => false,
+                    'Oui' => true,
+                    'Non' => false,
                 ],
                 'expanded' => true,
                 'label' => 'Photographie mise en avant :',
