@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Trick;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,8 +20,14 @@ class TrickType extends AbstractType
             //->add('createdAt')
             //->add('updatedAt')
             // ->add('user')
-            // ->add('category')
-        ;
+            ->add('category', EntityType::class, [
+                'label' => 'Catégorie : ',
+                // looks for choices from this entity
+                'class' => Category::class,
+                // uses the User.username property as the visible option string
+                'choice_label' => 'label',
+                'choice_value' => 'id'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

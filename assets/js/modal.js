@@ -26,6 +26,11 @@ $(".userinfo").on("click", function () {
         error: function () {
             $(".modal-body").html("Une erreur est survenue.");
             $(".modal-title").html("Erreur");
+            $(".submitBtn").html(newButton);
+            $(".submitBtn").show();
+            if (afficheButton === "no") {
+                $(".submitBtn").hide();
+            }
             // Display Modal
             $("#empModal").modal("show");
         }
@@ -89,6 +94,20 @@ $(".submitBtn").on("click", function () {
             // createdAt = createdAt + $("select[name='show_user[createdAt][year]'").val();
             // var isVerified = $("input[name='show_user[isVerified]']:checked").val();
             break;
+        case "addPictureTrick":
+            var legend = $("input[name='file_upload_trick[legend]'").val().trim();
+            if (legend === "") {
+                if (message !== "") { message = message + "<br/>"; }
+                message = message + "Vous devez saisir un nom de photo.";
+                verif = false;
+            }
+            var file = $("input[name='file_upload_trick[url]'").val().trim();
+            if (file === "") {
+                if (message !== "") { message = message + "<br/>"; }
+                message = message + "Vous devez choisir un fichier.";
+                verif = false;
+            }
+            break;
         default:
             verif = true;
     }
@@ -97,10 +116,17 @@ $(".submitBtn").on("click", function () {
         $(".statusMsg").html("<p class=\"text-danger\">" + message + "</p>");
         return false;
     } else {
+        let fd = new FormData($("form#formModal").get(0));
+
         $.ajax({
             type: "POST",
             url: road,
-            data: $("form#formModal").serialize(),
+            contentType: false,
+            processData: false,
+            data: fd,//ici tu envois le formdata au serveur
+            //data: $("form#formModal").serialize(),
+            //data: new FormData($('form#formModal')),
+            enctype: 'multipart/form-data',
             beforeSend: function () {
                 $(".submitBtn").attr("disabled", "disabled");
                 $(".modal-body").css("opacity", ".5");

@@ -4,16 +4,18 @@
 			<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
 		{% endif %}
 		<div class="card-body">
-			<P class="card-title">
-				<a class="text-primary" href="{{ path('show_trick' , { id: trick.id }) }}">
+			<P class="card-title text-justify">
+				<a class="text-primary" href="{{ path('show_trick' , { slug: trick.slug }) }}">
 					{{ trick.title }}
-				</a>
-				<a class="text-primary" href="#">
-					<i class="fa-solid fa-pencil"></i>
-				</a>
-				<a class="text-danger" href="#">
-					<i class="fa-solid fa-trash-can"></i>
-				</a>
+				</a><br/>
+				{% if app.user %}
+					<a class="text-primary" href="{{ path('modify_trick' , { slug: trick.slug }) }}">
+						<i class="fa-solid fa-pencil"></i>
+					</a>
+					<a class="text-danger" href="#">
+						<i class="fa-solid fa-trash-can"></i>
+					</a>
+				{% endif %}
 			</p>
 			<p class="card-text"></p>
 		</div>

@@ -17,29 +17,16 @@
 	<div id="tricks" class="container">
 		<div id="listTrick" name="listTrick" class="row justify-content-evenly">
 			<hr/>
-			{# {% set i = 0 %}
-									{% for trick in tricks %}
-										<div class="card" style="width: 15rem;">
-											{% if trick.media.count is same as(0) %}
-												<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
-											{% endif %}
-											<div class="card-body">
-												<P class="card-title">
-													<a class="text-primary" href="{{ path('show_trick' , { id: trick.id }) }}">
-														{{ trick.title }}
-													</a>
-													<a class="text-primary" href="{{ path('modify_trick' , { id: trick.id }) }}">
-														<i class="fa-solid fa-pencil"></i>
-													</a>
-													<a class="text-danger" href="#">
-														<i class="fa-solid fa-trash-can"></i>
-													</a>
-												</p>
-												<p class="card-text"></p>
-											</div>
-										</div>
-										{% set i = i + 1 %}
-									{% endfor %} #}
+			{% if app.user %}
+				<div class="card" style="width: 18rem;">
+					<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
+					<div class="card-body">
+						<h5 class="card-title"></h5>
+						<p class="card-text"></p>
+						<a href="{{ path('add_trick') }}" class="btn btn-primary">Ajouter un trick</a>
+					</div>
+				</div>
+			{% endif %}
 			{% include "trick/show_more_trick.html.twig" %}
 		</div>
 		<div id="trickplus" name="trickplus">

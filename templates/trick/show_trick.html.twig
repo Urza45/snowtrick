@@ -6,85 +6,89 @@
 
 {% block body %}
 	<br/>
-	<section class="bg-secondary p-2 text-dark bg-opacity-50">
+	<section class="bg-secondary p-2 bg-opacity-50">
 		<div class="container container-fluid">
 			<div class="row justify-content-evenly">
 				<div class="col-lg-10">
-					<div class="table-responsive">
-						<table
-							class="table table-light table-responsive table-borderless">
-							{# table-bordered  table-striped  table-condensed#}
-							<thead></thead>
-							<tr class="text-center">
-								<td>
-									<div class="contenant">
-										{% if trick.media.count is same as(0) %}
-											<img src="{{ asset('medias/snow.jpg') }}" class="img-fluid" alt="Pas d'image">
-										{% endif %}
-										<div class="texte_centrer bg-secondary bg-opacity-50">
-											<h1>{{ trick.title}}
-											</h1>
-											<a class="text-light" href="{{ path('modify_trick' , { id: trick.id }) }}">
-												<i class="fa-solid fa-pencil"></i>
-											</a>
-											<a class="text-danger" href="#">
-												<i class="fa-solid fa-trash-can"></i>
-											</a>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="row text-center align-items-center">
+					<div>
+						<div class="contenant">
+							{% if trick.media.count is same as(0) %}
+								<img src="{{ asset('medias/snow.jpg') }}" class="img-fluid" alt="Pas d'image">
+							{% endif %}
+							<div class="texte_centrer bg-secondary bg-opacity-50">
+								<h1>
+									{{ trick.title}}
+								</h1>
+								{% if app.user %}
+									<a class="text-light" href="{{ path('modify_trick' , { slug: trick.slug }) }}">
+										<i class="fa-solid fa-pencil"></i>
+									</a>
+									<a class="text-danger" href="#">
+										<i class="fa-solid fa-trash-can"></i>
+									</a>
+								{% endif %}
 
-										<div class="col-lg-12">
-											{% include "trick/carousel.html.twig" %}
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									{{ trick.chapo }}
-								</td>
-							</tr>
-							<tr>
-								<td>{{ trick.content }}</td>
-							</tr>
-							<tr>
-								<td class="text-center">
-									<button class="btn btn-info disabled">
-										<i class="fa-solid fa-calendar-days"></i>
-										Crée le
-										{{ trick.createdAt|date('d/m/Y') }}
-									</button>
-									<button class="btn btn-info disabled">
-										<i class="fa-solid fa-user"></i>
-										Auteur :
-										{{ trick.user.firstName }}
-										{{ trick.user.lastName }}</button>
-									{% if trick.createdAt != trick.updatedAt %}
-										<button class="btn btn-info disabled">Date de dernière modification :
-											{{ trick.updatedAt|date('d/m/Y') }}
-										</button>
-									{% endif %}
-									<button class="btn btn-info disabled">Catégorie :
-										{{ trick.category.label }}</button>
-								</td>
-							</tr>
-							<tr>
-								<td><hr></td>
-							</tr>
-							<tr>
-								<td>Ici le formulaire de commentaires</td>
-							</tr>
-							<tr>
-								<td>
-									Les commentaires
-								</td>
-							</tr>
-						</table>
+							</div>
+						</div>
+						<br/>
+						<div class="row text-center align-items-center">
+							<div class="col-lg-12">
+								{% if trick.media.count is same as(0) %}
+									<p>Pas de média disponible.</p>
+								{% else %}
+									{% include "trick/carousel.html.twig" %}
+								{% endif %}
+							</div>
+						</div>
+						<div class="row p-3 mb-2 bg-white text-dark">
+							{{ trick.chapo }}<br/>
+						</div>
+						<br/>
+						<div class="row p-3 mb-2 bg-white text-dark">
+							{{ trick.content }}
+						</div>
+						<br/>
+						<div class="text-center">
+							<button class="btn btn-info disabled">Catégorie :
+								{{ trick.category.label }}
+							</button>
+							<button class="btn btn-info disabled">
+								<i class="fa-solid fa-user"></i>
+								Auteur :
+								{{ trick.user.firstName }}
+								{{ trick.user.lastName }}
+							</button>
+							<button class="btn btn-info disabled">
+								<i class="fa-solid fa-calendar-days"></i>
+								Crée le
+								{{ trick.createdAt|date('d/m/Y') }}
+							</button>
+							{% if trick.createdAt != trick.updatedAt %}
+								<button class="btn btn-info disabled">
+									<i class="fa-solid fa-calendar-days"></i>
+									Modifié le :
+									{{ trick.updatedAt|date('d/m/Y') }}
+								</button>
+							{% endif %}
+							
+						</div>
+						<hr>
+						<div>
+							{% if app.user %}
+								<p>Ici le formulaire de commentaires</p>
+							{% else %}
+								<p>Vous devez être connecté pour pouvoir poster un commentaire.</p>
+							{% endif %}
+							<br/>
+						</div>
+						<hr>
+						<div>
+							{% if trick.comments.count is same as(0) %}
+								<p>Pas de commentaire disponible</p>
+							{% else %}
+								{% include "comment/index.html.twig" %}
+							{% endif %}
+						</div>
 					</div>
 				</div>
 			</div>
