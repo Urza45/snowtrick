@@ -126,7 +126,7 @@ $(".submitBtn").on("click", function () {
             data: fd,//ici tu envois le formdata au serveur
             //data: $("form#formModal").serialize(),
             //data: new FormData($('form#formModal')),
-            enctype: 'multipart/form-data',
+            enctype: "multipart/form-data",
             beforeSend: function () {
                 $(".submitBtn").attr("disabled", "disabled");
                 $(".modal-body").css("opacity", ".5");
