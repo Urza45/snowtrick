@@ -62,6 +62,42 @@ class MediaRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+     * @return Media[] Returns an array of Media objects
+     */
+    public function getImage($id)
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.typeMedia', 'tm')
+            ->where('tm.groupMedia = :val1')
+            ->setParameter('val1', 'Image')
+            ->innerJoin('m.trick', 'tt')
+            ->andWhere('tt.id = :val2')
+            ->setParameter('val2', $id)
+            ->orderBy('m.id', 'ASC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Media[] Returns an array of Media objects
+     */
+    public function getVideo($id)
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.typeMedia', 'tm')
+            ->where('tm.groupMedia = :val1')
+            ->setParameter('val1', 'Vidéo')
+            ->innerJoin('m.trick', 'tt')
+            ->andWhere('tt.id = :val2')
+            ->setParameter('val2', $id)
+            ->orderBy('m.id', 'ASC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Media
     {

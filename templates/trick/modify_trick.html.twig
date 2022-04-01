@@ -76,20 +76,19 @@
 			</div>
 		</div>
 		<br/>
-
 		<div class="row justify-content-evenly">
 			<div class="col-lg-10">
 				<div class="row text-center align-items-center">
 					<div class="col-lg-2">
 							<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter une photographie">
 								<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('add_picture_trick', { slug: trick.slug }) }}" data-title="Ajouter une photographie">
-									<i class="fa-solid fa-circle-plus"></i> Photo
+									<i class="fa-solid fa-circle-plus"></i> Photo ({{ pictures|length }})
 								</span>
 							</button>
 							<br/><br/>
 							<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Ajouter une vidéo">
-								<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="no" data-route="{{ path('add_video_trick', { slug: trick.slug }) }}" data-title="Ajouter une vidéo ">
-									<i class="fa-solid fa-circle-plus"></i> Vidéo
+								<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ trick.id }}" data-affiche="no" data-route="{{ path('add_video_trick', { slug: trick.slug }) }}" data-title="Ajouter une vidéo">
+									<i class="fa-solid fa-circle-plus"></i> Vidéo ({{ videos|length }})
 								</span>
 							</button>
 					</div>

@@ -29,6 +29,8 @@ class FileUploadTrickType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new File([
+                        'maxSize' => '512k',
+                        'maxSizeMessage' => 'Le fichier est trop volumineux ({{ size }} {{ suffix }}). Maximum autorisé : {{ limit }} {{ suffix }}.',
                         'mimeTypes' => [ // We want to let upload only txt, csv or Excel files
                             'image/jpeg',
                             'image/png'
@@ -42,6 +44,7 @@ class FileUploadTrickType extends AbstractType
                     'Oui' => true,
                     'Non' => false,
                 ],
+                'data' => false,
                 'expanded' => true,
                 'label' => 'Photographie mise en avant :',
                 'attr' => [

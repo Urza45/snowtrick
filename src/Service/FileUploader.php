@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-class FileUploaderAvatar extends AbstractController
+class FileUploader extends AbstractController
 {
     private $uploadDirectory;
     private $avatarDirectory;
@@ -23,24 +23,35 @@ class FileUploaderAvatar extends AbstractController
         $this->slugger = $slugger;
     }
 
-    public function upload(UploadedFile $file, Request $request)
+    public function upload(UploadedFile $file, Request $request, $type = 'tricks')
     {
         $directory = $this->getTricksDirectory();
-        if (in_array($request->getPathInfo(), ['/profile', '/profile/change_picture', '/register'])) {
+        //if (in_array($request->getPathInfo(), ['/profile', '/profile/change_picture', '/register'])) {
+        if ($type == 'avatar') {
             $directory = $this->getAvatarDirectory();
         }
 
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
+
         try {
             $file->move($directory, $fileName);
         } catch (FileException $e) {
             // ... handle exception if something happens during file 
-            $this->addFlash('notice', $e->getMessage());
-            return $this->redirectToRoute('app_user'); // for example
+            //$this->addFlash('notice', $e->getMessage());
+            return [
+                'status' => 'fail',
+                'message' => $e->getMessage()
+            ];
         }
-        return $fileName;
+
+        
+
+        return [
+            'status' => 'success',
+            'message' => $fileName
+        ];
     }
 
     public function getAvatarDirectory()

@@ -27,7 +27,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Service\FileUploaderAvatar:
+    App\Service\FileUploader:
         arguments:
             $uploadDirectory: '%upload_directory%'
             $avatarDirectory: '%avatars_directory%'

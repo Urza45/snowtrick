@@ -255,7 +255,7 @@ class Trick
     public function computeSlug(SluggerInterface $slugger)
     {
         if (!$this->slug || '-' === $this->slug) {
-            $this->slug = (string) $slugger->slug((string) $this);
+            $this->slug = (string) $slugger->slug((string) $this->getTitle())->lower();
         }
     }
 }

@@ -8,7 +8,7 @@ use App\Form\UserType;
 use App\Form\ChangePasswordType;
 use App\Form\FileUploadAvatarType;
 use App\Repository\UserRepository;
-use App\Service\FileUploaderAvatar;
+use App\Service\FileUploader;
 use App\Repository\AvatarRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,7 +55,7 @@ class UserController extends AbstractController
      */
     public function changePicture(
         Request $request,
-        FileUploaderAvatar $fileUploader,
+        FileUploader $fileUploader,
         UserRepository $repoUser,
         AvatarRepository $repoAvatar,
         ManagerRegistry $doctrine

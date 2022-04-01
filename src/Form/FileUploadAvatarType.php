@@ -20,6 +20,7 @@ class FileUploadAvatarType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new File([
+                        'maxSize' => '512k',
                         'mimeTypes' => [ // We want to let upload only txt, csv or Excel files
                             'image/jpeg',
                             'image/png'

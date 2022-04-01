@@ -1,0 +1,33 @@
+<div class="container container-fluid">
+	<div class="row justify-content-evenly">
+		<div class="col-lg-12">
+			<p class="statusMsg"></p>
+			{{ form_start(formMedia, { attr: { 'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
+			<div class="form-group">
+				<div class="row justify-content-evenly">
+					<div class="col-lg-8 col-12">
+						{{ form_row(formMedia.legend, {
+				    		'label': 'Nom de la vidéo (*) :', 
+				    		'attr': {
+				        		'placeholder': 'Légende',
+				        		'class': 'form-control'
+				    		}
+		    			}) }}
+						{{ form_row(formMedia.url, {
+				    		'label': 'URL YouTube (*) :', 
+				    		'attr': {
+				        		'placeholder': 'Légende',
+				        		'class': 'form-control'
+				    		}
+		    			}) }}
+						{{ form_row(formMedia.typeMedia) }}
+						<input type="hidden" name="nameForm" id="nameForm" value="addPictureTrick">
+						<input type="hidden" name="route" id="route" value="{{ path("add_picture_trick", { slug: trick.slug }) }}">
+					</div>
+				</div>
+			</div>
+			{{ form_rest(formMedia) }}
+			{{ form_end(formMedia) }}
+		</div>
+	</div>
+</div>

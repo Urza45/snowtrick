@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\TrickType;
+use App\Form\VideoType;
 use App\Service\Captcha;
+use App\Service\FileUploader;
 use App\Form\FileUploadTrickType;
+use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
-use App\Service\FileUploaderAvatar;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,12 +53,17 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick/{slug}", name="show_trick")
      */
-    public function showTrick(TrickRepository $repoTrick, Request $request)
+    public function showTrick(TrickRepository $repoTrick, Request $request, MediaRepository $repoMedia)
     {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
+        $pictures = $repoMedia->getImage($trick->getId());
+        $videos = $repoMedia->getVideo($trick->getId());
+
         return $this->render('trick/show_trick.html.twig', [
-            'trick' => $trick
+            'trick' => $trick,
+            'pictures' => $pictures,
+            'videos' => $videos
         ]);
     }
 
@@ -77,9 +84,12 @@ class TrickController extends AbstractController
     /**
      * @Route("/modify_trick/{slug}", name="modify_trick")
      */
-    public function modifyTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine)
+    public function modifyTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine, MediaRepository $repoMedia)
     {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
+
+        $pictures = $repoMedia->getImage($trick->getId());
+        $videos = $repoMedia->getVideo($trick->getId());
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -95,7 +105,9 @@ class TrickController extends AbstractController
 
         return $this->render('trick/modify_trick.html.twig', [
             'form' => $form->createView(),
-            'trick' => $trick
+            'trick' => $trick,
+            'pictures' => $pictures,
+            'videos' => $videos
         ]);
     }
 
@@ -114,7 +126,7 @@ class TrickController extends AbstractController
         TrickRepository $repoTrick,
         Request $request,
         ManagerRegistry $doctrine,
-        FileUploaderAvatar $fileUploader
+        FileUploader $fileUploader
     ) {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
@@ -128,7 +140,11 @@ class TrickController extends AbstractController
 
                 $file = $formMedia['url']->getData();
                 if ($file) {
-                    $fileName = $fileUploader->upload($file, $request);
+                    $response = $fileUploader->upload($file, $request);
+                    if ($response['status'] == 'fail') {
+                        return new Response('<p class="text-danger">' . $response['message'] . '</p>');
+                    }
+                    $fileName = $response['message'];
                     $extension = pathinfo($file, PATHINFO_EXTENSION);
                     if ($fileName !== null) {
                         $manager = $doctrine->getManager();
@@ -146,7 +162,7 @@ class TrickController extends AbstractController
                 }
                 return new Response('<p class="text-danger">2</p>');
             }
-            return new Response('<p class="text-danger">' . $formMedia['url']->getData() . '</p>');
+            return new Response('<p class="text-danger">' . $formMedia->getErrors(true, true) . '</p>');
         }
         return $this->render('service/picture.html.twig', [
             'formMedia' => $formMedia->createView(),
@@ -161,6 +177,12 @@ class TrickController extends AbstractController
     {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
-        return $this->render('service/video.html.twig', []);
+        $formMedia = $this->createForm(VideoType::class);
+        $formMedia->handleRequest($request);
+
+        return $this->render('service/video.html.twig', [
+            'formMedia' => $formMedia->createView(),
+            'trick' => $trick
+        ]);
     }
 }

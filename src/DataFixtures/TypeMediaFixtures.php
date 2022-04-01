@@ -22,6 +22,18 @@ class TypeMediaFixtures extends Fixture
 
         $manager->persist($typeMedia);
 
+        $typeMedia = new TypeMedia();
+        $typeMedia->setGroupMedia('Image')
+            ->setTypeMedia('png');
+
+        $manager->persist($typeMedia);
+
+        $typeMedia = new TypeMedia();
+        $typeMedia->setGroupMedia('Image')
+            ->setTypeMedia('gif');
+
+        $manager->persist($typeMedia);
+
         $manager->flush();
     }
 }
