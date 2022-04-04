@@ -1,0 +1,19 @@
+<div class="container container-fluid">
+	<div class="row justify-content-evenly">
+		<div class="col-lg-8">
+			<p class="statusMsg"></p>
+			{{ form_start(form, { attr: {'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
+			<div class="form-group">
+				Supprimer ?
+				{% for child in form.supprimer %}
+					{{- form_label(child, null) -}}&nbsp;
+					{{- form_widget(child) -}}&nbsp;
+				{% endfor %}
+				<input type="hidden" name="nameForm" id="nameForm" value="banUser">
+				<input type="hidden" name="route" id="route" value="{{ path("delete_trick", { slug: trick.slug }) }}">
+			</div>
+			{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>

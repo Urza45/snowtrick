@@ -4,16 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Entity\Trick;
-use App\Entity\TypeMedia;
 use App\Form\TrickType;
 use App\Form\VideoType;
+use App\Form\DeleteType;
 use App\Service\Captcha;
+use App\Entity\TypeMedia;
 use App\Service\FileUploader;
 use App\Form\FileUploadTrickType;
+use App\Repository\UserRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Repository\TypeMediaRepository;
-use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -133,9 +134,27 @@ class TrickController extends AbstractController
     /**
      * @Route("/delete_trick/{slug}", name="delete_trick")
      */
-    public function deleteTrick()
+    public function deleteTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine)
     {
-        # code...
+        $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
+
+        $form = $this->createForm(DeleteType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reponse = $form->get('supprimer')->getData();
+            if ($reponse) {
+                if ($reponse == true) {
+                }
+                return new Response('<p class="text-success">L\'utilisateur n\'a pas été supprimé.</p>');
+            }
+            return new Response('<p class="text-success">L\'utilisateur n\'a pas été supprimé.</p>');
+        }
+
+        return $this->render('trick/delete_trick.html.twig', [
+            'form' => $form->createView(),
+            'trick' => $trick
+        ]);
     }
 
 

@@ -25,7 +25,7 @@
 					</a>
 					{# <a class="text-danger" href="{{ path('delete_trick' , { slug: trick.slug }) }}"> #}
 
-					<a class="userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ trick.id }}" data-affiche="no" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Ajouter une vidéo">
+					<a class="userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Supprimer un trick">
 						<i class="fa-solid fa-trash-can"></i>
 					</a>
 				{% endif %}

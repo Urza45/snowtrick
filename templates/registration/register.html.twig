@@ -78,8 +78,16 @@
 			<br/>
 			<p>(*) : Champs obligatoires.</p>
 		</div>
-		<div class="col-lg-3  text-center">
+		<div class="col-lg-3 text-center">
 			<button type="submit" class="btn btn-lg btn-primary">S'enregistrer</button>
+		</div>
+
+	</div>
+	<div class="row justify-content-evenly">
+		<div class="col-lg-12 text-center tablehead">
+			<a href="{{ path('app_login') }}" class="text-light">
+				Se connecter
+			</a>
 		</div>
 	</div>
 	{{ form_end(registrationForm) }}

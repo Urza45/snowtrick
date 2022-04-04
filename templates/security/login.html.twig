@@ -30,22 +30,21 @@
 						<br/>
 					</div>
 				</div>
-				<div class="row justify-content-center">
+				<div class="row justify-content-center text-center">
 					<div class="col-lg-3 col-12">
 						<button class="btn btn-lg btn-primary" type="submit">
 							Connexion
 						</button>
 					</div>
 				</form>
-				<div
-					class="col-lg-5 col-12">
-					<!--
-																														<button class="btn btn-lg btn-primary">
-																															Identifiant oublié ?
-																														</button>
-																														-->
-					<a href="{{ path('app_forgot_password') }}" class="btn btn-lg btn-primary">
+				<div class="col-lg-3 col-12">
+					<a href="{{ path('app_forgot_password') }}" class="text-light">
 						Mot de passe oublié ?
+					</a>
+				</div>
+				<div class="col-lg-3 col-12 tablehead">
+					<a href="{{ path('app_register') }}" class="text-light">
+						S'enregistrer
 					</a>
 				</div>
 			</div>
