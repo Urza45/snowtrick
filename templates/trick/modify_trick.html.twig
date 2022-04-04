@@ -8,19 +8,27 @@
 <br/>
 <section class="bg-secondary p-2  bg-opacity-50">
 	<div class="text-center">
-		<h1>Modification de l'article "{{ trick.title }}"</h1>
+		{% if trick.title != '' %}
+			<h1>Modification de l'article "{{ trick.title }}"</h1>
+		{% else %}
+			<h1>Ajout d'un article</h1>
+		{% endif %}
 	</div>
 	<div class="container container-fluid ">
 
 		<div class="text-center">
 			<button class="btn btn-info disabled">Catégorie :
-				{{ trick.category.label }}
+				{% if trick.category %}
+					{{ trick.category.label }}
+				{% endif %}
 			</button>
 			<button class="btn btn-info disabled">
 				<i class="fa-solid fa-user"></i>
 				Auteur :
-				{{ trick.user.firstName }}
-				{{ trick.user.lastName }}
+				{% if trick.user %}
+					{{ trick.user.firstName }}
+					{{ trick.user.lastName }}
+				{% endif %}
 			</button>
 			<button class="btn btn-info disabled">
 				<i class="fa-solid fa-calendar-days"></i>
@@ -76,6 +84,7 @@
 			</div>
 		</div>
 		<br/>
+		{% if trick.slug %}
 		<div class="row justify-content-evenly">
 			<div class="col-lg-10">
 				<div class="row text-center align-items-center">
@@ -98,6 +107,7 @@
 				</div>	
 		    </div>
         </div>
+		
 		<br/>
 
 		<div class="col-lg-10">
@@ -126,7 +136,7 @@
 				</div>
 			</div>
 		</div>
-
+		{% endif %}
 		
 	</div>
 </section>{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Entity\Trick;
+use App\Entity\TypeMedia;
 use App\Form\TrickType;
 use App\Form\VideoType;
 use App\Service\Captcha;
@@ -11,6 +12,8 @@ use App\Service\FileUploader;
 use App\Form\FileUploadTrickType;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
+use App\Repository\TypeMediaRepository;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +35,7 @@ class TrickController extends AbstractController
             'tricksCount' => $repoTrick->count([]),
             'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
             'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
-            'tricks' => $repoTrick->findBy([], ['id' => 'ASC'], self::NUMBER_TRICK_BY_PAGE, 0)
+            'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, 0)
         ]);
     }
 
@@ -41,12 +44,14 @@ class TrickController extends AbstractController
      */
     public function showMoreTrick(Request $request, TrickRepository $repoTrick)
     {
+        $tricks = $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'));
+
         return $this->render('trick/show_more_trick.html.twig', [
             'tricksCount' => $repoTrick->count([]),
             'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
             'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
             'index' => $request->get('index'),
-            'tricks' => $repoTrick->findBy([], ['id' => 'ASC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'))
+            'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'))
         ]);
     }
 
@@ -70,13 +75,27 @@ class TrickController extends AbstractController
     /**
      * @Route("/add_trick", name="add_trick")
      */
-    public function addTrick(Request $request)
+    public function addTrick(Request $request, UserRepository $repoUser, ManagerRegistry $doctrine)
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
+            $trick->setUser($user);
+
+            $manager = $doctrine->getManager();
+
+            $manager->persist($trick);
+            $manager->flush();
+
+            $this->addFlash('success', 'Votre article a bien été enregistré.');
+            return $this->redirectToRoute('modify_trick', ['slug' => $trick->getSlug()]);
+        }
+
         return $this->render('trick/modify_trick.html.twig', [
+            'form' => $form->createView(),
             'trick' => $trick
         ]);
     }
@@ -112,77 +131,19 @@ class TrickController extends AbstractController
     }
 
     /**
+     * @Route("/delete_trick/{slug}", name="delete_trick")
+     */
+    public function deleteTrick()
+    {
+        # code...
+    }
+
+
+    /**
      * @Route("/captcha", name="captcha")
      */
     public function captcha(Captcha $captcha, Session $session)
     {
         return $captcha->captcha($session);
-    }
-
-    /**
-     * @Route("/modify_trick/{slug}/add_picture", name="add_picture_trick")
-     */
-    public function addPicture(
-        TrickRepository $repoTrick,
-        Request $request,
-        ManagerRegistry $doctrine,
-        FileUploader $fileUploader
-    ) {
-        $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
-
-        $media = new Media();
-
-        $formMedia = $this->createForm(FileUploadTrickType::class);
-        $formMedia->handleRequest($request);
-
-        if ($formMedia->isSubmitted()) {
-            if ($formMedia->isValid()) {
-
-                $file = $formMedia['url']->getData();
-                if ($file) {
-                    $response = $fileUploader->upload($file, $request);
-                    if ($response['status'] == 'fail') {
-                        return new Response('<p class="text-danger">' . $response['message'] . '</p>');
-                    }
-                    $fileName = $response['message'];
-                    $extension = pathinfo($file, PATHINFO_EXTENSION);
-                    if ($fileName !== null) {
-                        $manager = $doctrine->getManager();
-                        $media->setLegend($formMedia['legend']->getData());
-                        $media->setUrl('medias/tricks/' . $fileName);
-                        $media->setFeaturePicture($formMedia['featurePicture']->getData());
-                        $media->setTypeMedia($formMedia['typeMedia']->getData());
-                        $media->setTrick($trick);
-
-                        $manager->persist($media);
-                        $manager->flush();
-                        return new Response('<p class="text-success">Le status a bien été modifié.</p>');
-                    }
-                    return new Response('<p class="text-danger">1</p>');
-                }
-                return new Response('<p class="text-danger">2</p>');
-            }
-            return new Response('<p class="text-danger">' . $formMedia->getErrors(true, true) . '</p>');
-        }
-        return $this->render('service/picture.html.twig', [
-            'formMedia' => $formMedia->createView(),
-            'trick' => $trick
-        ]);
-    }
-
-    /**
-     * @Route("/modify_trick/{slug}/add_video", name="add_video_trick")
-     */
-    public function addVideo(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine)
-    {
-        $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
-
-        $formMedia = $this->createForm(VideoType::class);
-        $formMedia->handleRequest($request);
-
-        return $this->render('service/video.html.twig', [
-            'formMedia' => $formMedia->createView(),
-            'trick' => $trick
-        ]);
     }
 }
