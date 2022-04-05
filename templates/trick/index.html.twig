@@ -29,11 +29,12 @@
 			{% endif %}
 			{% include "trick/show_more_trick.html.twig" %}
 		</div>
+		<br/>
 		<div id="trickplus" name="trickplus">
 			{% if numberTrickByPage < tricksCount %}
 				<div class="text-center">
 					<button name="showMoreTricks" id="showMoreTricks" class="btn btn-primary" type="button" data-index="{{ numberTrickByPage }}" data-tricksbypage="{{ numberTrickByPage }}" data-nbtrick="{{ tricksCount }}" data-route="{{ path('show_more_trick' , {'index' : numberTrickByPage} ) }}">
-						<i class="fa-solid fa-circle-plus"></i>
+						<i class="fa-solid fa-circle-plus"></i>Voir plus ...
 					</button>
 				</div>
 			{% endif %}

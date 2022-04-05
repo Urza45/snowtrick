@@ -20,10 +20,10 @@
 									</div>
 									<div class="card-img-overlay ">
 										<div class="bg-secondary p-2  bg-opacity-50">
+											{{ picture.legend }}<br/>
 											<a class="text-light" href="{{ path('show_trick' , { slug: trick.slug }) }}">
 												<i class="fa-solid fa-eye text-light"></i>
 											</a>
-											{{ picture.legend }}
 											{% if app.user %}
 												<a class="text-light" href="{{ path('show_trick' , { slug: trick.slug }) }}">
 													<i class="fa-solid fa-pencil"></i>

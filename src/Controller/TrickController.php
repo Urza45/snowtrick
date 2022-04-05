@@ -145,6 +145,7 @@ class TrickController extends AbstractController
             $reponse = $form->get('supprimer')->getData();
             if ($reponse) {
                 if ($reponse == true) {
+                    return new Response('<p class="text-success">Vous avez choisi oui.</p>');
                 }
                 return new Response('<p class="text-success">L\'utilisateur n\'a pas été supprimé.</p>');
             }
