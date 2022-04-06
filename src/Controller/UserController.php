@@ -8,7 +8,7 @@ use App\Form\UserType;
 use App\Form\ChangePasswordType;
 use App\Form\FileUploadAvatarType;
 use App\Repository\UserRepository;
-use App\Service\FileUploader;
+use App\Services\FileUploader;
 use App\Repository\AvatarRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;

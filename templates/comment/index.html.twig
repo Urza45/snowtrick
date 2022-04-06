@@ -5,9 +5,9 @@
 
 	{% for comment in trick.comments %}
 		<hr/>
-		<div class="row p-3 mb-2 bg-white text-dark">
+		<div class="row p-3 mb-2 bg-white text-dark rounded-pill">
 			<div class="col-lg-1 col-12">
-				<img src="{{ asset(comment.user.avatar.url)}}" alt="{{ comment.user.pseudo }}" title="{{ comment.user.pseudo }}" width="40px">
+				<img class="border border-2 rounded-circle" src="{{ asset(comment.user.avatar.url)}}" alt="{{ comment.user.pseudo }}" title="{{ comment.user.pseudo }}" width="40px">
 			</div>
 			<div class="col-lg-11 col-12">
 				{{ comment.content }}

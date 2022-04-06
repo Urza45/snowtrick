@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -55,6 +55,6 @@ class YouTubeVideo extends AbstractController
             $videoEmbedImg     = 'https://i3.ytimg.com/vi/' . $videoId . '/hqdefault.jpg'; //pass 0,1,2,3 for different sizes like 0.jpg, 1.jpg
         }
 
-        return '<img src="' . $videoEmbedImg . '" />';
+        return '<img src="' . $videoEmbedImg . '"  class="small-picture" width="200px" />';
     }
 }

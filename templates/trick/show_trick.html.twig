@@ -51,11 +51,10 @@
 								{% endif %}
 							</div>
 						</div>
-						<div class="row p-3 mb-2 bg-white text-dark">
+						<div class="row p-3 mb-2 bg-white text-dark rounded-pill">
 							{{ trick.chapo }}<br/>
 						</div>
-						<br/>
-						<div class="row p-3 mb-2 bg-white text-dark">
+						<div class="row p-3 mb-2 bg-white text-dark rounded-3">
 							{{ trick.content }}
 						</div>
 						<br/>
@@ -81,7 +80,14 @@
 									{{ trick.updatedAt|date('d/m/Y') }}
 								</button>
 							{% endif %}
-
+							<button class="btn btn-info disabled">
+								<i class="fa-solid fa-image"></i>
+								Photo ({{ pictures|length }})
+							</button>
+							<button class="btn btn-info disabled">
+								<i class="fa-solid fa-video"></i>
+								Vidéo ({{ videos|length }})
+							</button>
 						</div>
 						<hr>
 						<div>
@@ -105,4 +111,9 @@
 			</div>
 		</div>
 	</section>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('modal') }}
 {% endblock %}

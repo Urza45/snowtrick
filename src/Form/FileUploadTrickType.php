@@ -51,25 +51,25 @@ class FileUploadTrickType extends AbstractType
                     'class' => 'form-control',
                 ]
             ])
-            ->add('typeMedia', EntityType::class, [
-                // looks for choices from this entity
-                'class' => TypeMedia::class,
-                'query_builder' => function (TypeMediaRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->andWhere('u.groupMedia = :groupMedia')
-                        ->setParameter('groupMedia', 'Image')
-                        ->orderBy('u.typeMedia', 'ASC');
-                },
-                // uses the User.username property as the visible option string
-                'choice_label' => 'typeMedia',
-                'attr' => [
-                    'class' => 'form-select',
-                ]
+            // ->add('typeMedia', EntityType::class, [
+            //     // looks for choices from this entity
+            //     'class' => TypeMedia::class,
+            //     'query_builder' => function (TypeMediaRepository $er) {
+            //         return $er->createQueryBuilder('u')
+            //             ->andWhere('u.groupMedia = :groupMedia')
+            //             ->setParameter('groupMedia', 'Image')
+            //             ->orderBy('u.typeMedia', 'ASC');
+            //     },
+            //     // uses the User.username property as the visible option string
+            //     'choice_label' => 'typeMedia',
+            //     'attr' => [
+            //         'class' => 'form-select',
+            //     ]
 
-                // used to render a select box, check boxes or radios
-                // 'multiple' => true,
-                // 'expanded' => true,
-            ])
+            //     // used to render a select box, check boxes or radios
+            //     // 'multiple' => true,
+            //     // 'expanded' => true,
+            // ])
             //->add('trick')
         ;
     }

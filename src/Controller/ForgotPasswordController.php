@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Service\MailerService;
+use App\Services\MailerService;
 use App\Form\ResetPasswordType;
 use App\Form\ForgotPasswordType;
 use App\Repository\UserRepository;

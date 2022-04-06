@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Media;
+use App\Form\DeleteType;
 use App\Form\VideoType;
-use App\Service\FileUploader;
+use App\Services\FileUploader;
 use App\Form\FileUploadTrickType;
+use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Repository\TypeMediaRepository;
+use App\Services\YouTubeVideo;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +20,95 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MediaController extends AbstractController
 {
     /**
-     * @Route("/media", name="app_media")
+     * @Route("/media_show", name="app_media")
      */
-    public function index(): Response
-    {
-        return $this->render('media/index.html.twig', [
+    public function showMedia(
+        Request $request,
+        MediaRepository $repoMedia,
+        TypeMediaRepository $repoTypeMedia
+    ): Response {
+        $media = $repoMedia->findOneBy(['id' => $request->get('userId')]);
+        $typeMedia = $repoTypeMedia->findOneBy(['id' => $media->getTypeMedia()]);
+
+        return $this->render('media/show.html.twig', [
             'controller_name' => 'MediaController',
+            'request' => $request,
+            'media' => $media,
+            'typeMedia' => $typeMedia
+        ]);
+    }
+
+    /**
+     * @Route("/media_modify", name="app_modif_media")
+     */
+    public function modifyMedia(
+        Request $request,
+        MediaRepository $repoMedia,
+        TypeMediaRepository $repoTypeMedia
+    ) {
+        $media = $repoMedia->findOneBy(['id' => $request->get('userId')]);
+        $typeMedia = $repoTypeMedia->findOneBy(['id' => $media->getTypeMedia()]);
+
+        return $this->render('media/modify.html.twig', [
+            'request' => $request,
+            'media' => $media,
+            'typeMedia' => $typeMedia
+        ]);
+    }
+
+    /**
+     * @Route("/media_delete", name="app_delete_media")
+     */
+    public function deleteMedia(
+        Request $request,
+        MediaRepository $repoMedia,
+        TypeMediaRepository $repoTypeMedia
+    ) {
+        $media = $repoMedia->findOneBy(['id' => $request->get('userId')]);
+        $typeMedia = $repoTypeMedia->findOneBy(['id' => $media->getTypeMedia()]);
+
+        $form = $this->createForm(DeleteType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reponse = $form->get('supprimer')->getData();
+
+            if ($reponse) {
+                if ($reponse == true) {
+                    $message = '';
+                    if ($typeMedia->getGroupMedia() == 'Image') {
+                        // Suppression de la miniature
+                        if (!unlink($media->getThumbUrl())) {
+                            $message .= 'La miniature n\'a pas pas pu être supprimée';
+                        };
+                        // Suppression de l'image
+                        if (!unlink($media->getUrl())) {
+                            if ($message <> '') {
+                                $message .= '<br/>';
+                            }
+                            $message .= 'La photographie n\'a pas pas pu être supprimée';
+                        };
+                    }
+                    if ($message <> '') {
+                        $message .= 'L\'entrée en base de données est conservée.';
+                        $message = '<p class="text-danger">' . $message . '</p>';
+                        return new Response($message);
+                    } else {
+                        // Suppression de l'entrée en base de données.
+                        $repoMedia->remove($media, true);
+                        return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
+                    }
+                }
+            }
+
+            return new Response('<p class="text-success">Pas de suppression</p>');
+        }
+
+        return $this->render('media/delete.html.twig', [
+            'form' => $form->createView(),
+            'request' => $request,
+            'media' => $media,
+            'typeMedia' => $typeMedia
         ]);
     }
 
@@ -60,13 +146,14 @@ class MediaController extends AbstractController
                         $manager = $doctrine->getManager();
                         $media->setLegend($formMedia['legend']->getData());
                         $media->setUrl('medias/tricks/' . $fileName);
+                        $media->setThumbUrl('medias/tricks/' . 'thumbs_' . $fileName);
                         $media->setFeaturePicture($formMedia['featurePicture']->getData());
                         $media->setTypeMedia($repoTypeMedia->findOneBy(['typeMedia' => $extension]));
                         $media->setTrick($trick);
 
                         $manager->persist($media);
                         $manager->flush();
-                        return new Response('<p class="text-success">' . $extension . ' Le status a bien été modifié.</p>');
+                        return new Response('<p class="text-success">La photographie a bien été enregistrée.</p>');
                     }
                     return new Response('<p class="text-danger">1</p>');
                 }
@@ -83,12 +170,40 @@ class MediaController extends AbstractController
     /**
      * @Route("/modify_trick/{slug}/add_video", name="add_video_trick")
      */
-    public function addVideo(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine)
-    {
+    public function addVideo(
+        TrickRepository $repoTrick,
+        Request $request,
+        ManagerRegistry $doctrine,
+        YouTubeVideo $youTubeVideo,
+        TypeMediaRepository $repoTypeMedia
+    ) {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
+
+        $media = new Media();
 
         $formMedia = $this->createForm(VideoType::class);
         $formMedia->handleRequest($request);
+
+        if ($formMedia->isSubmitted() && $formMedia->isValid()) {
+
+            $newUrl = $youTubeVideo->videoIframeYT($formMedia->get('url')->getData());
+            $newImage = $youTubeVideo->videoImgYT($formMedia->get('url')->getData());
+
+            $manager = $doctrine->getManager();
+            $media->setLegend($formMedia['legend']->getData());
+            $media->setUrl('' . $newUrl);
+            $media->setThumbUrl('' . $newImage);
+            $media->setFeaturePicture(false);
+            $media->setTypeMedia($repoTypeMedia->findOneBy(['typeMedia' => 'mp4']));
+            $media->setTrick($trick);
+
+            $manager->persist($media);
+            $manager->flush();
+
+
+
+            return new Response('Nouvelle URL : ' . $newUrl . '<br/>' . $newImage);
+        }
 
         return $this->render('service/video.html.twig', [
             'formMedia' => $formMedia->createView(),
