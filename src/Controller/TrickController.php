@@ -102,7 +102,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/modify_trick/{slug}", name="modify_trick")
+     * @Route("/manageTricks/modify/{slug}", name="modify_trick")
      */
     public function modifyTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine, MediaRepository $repoMedia)
     {
@@ -132,7 +132,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/delete_trick/{slug}", name="delete_trick")
+     * @Route("/manageTricks/delete/{slug}", name="delete_trick")
      */
     public function deleteTrick(
         TrickRepository $repoTrick,
