@@ -2,26 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\TrickType;
-use App\Form\VideoType;
 use App\Form\DeleteType;
-use App\Entity\TypeMedia;
 use App\Services\Captcha;
 use App\Services\FileUploader;
-use App\Form\FileUploadTrickType;
 use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
-use App\Repository\TypeMediaRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TrickController extends AbstractController
@@ -143,7 +137,6 @@ class TrickController extends AbstractController
     public function deleteTrick(
         TrickRepository $repoTrick,
         Request $request,
-        ManagerRegistry $doctrine,
         FileUploader $fileUploader,
         MediaRepository $repoMedia,
         CommentRepository $repoComment
@@ -165,7 +158,7 @@ class TrickController extends AbstractController
                     // Suppression des medias
                     $medias = $trick->getMedia();
                     foreach ($medias as $media) {
-                        $fileDelete = $fileUploader->deleteFile($media, $media->getTypeMedia(), $repoMedia);
+                        $fileUploader->deleteFile($media, $media->getTypeMedia(), $repoMedia);
                     }
                     // Suppression du trick
                     $repoTrick->remove($trick, true);
@@ -181,7 +174,6 @@ class TrickController extends AbstractController
             'trick' => $trick
         ]);
     }
-
 
     /**
      * @Route("/captcha", name="captcha")
