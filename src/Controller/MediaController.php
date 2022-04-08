@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Media;
-use App\Form\DeleteType;
 use App\Form\VideoType;
+use App\Form\DeleteType;
+use App\Form\ModifyMediaType;
 use App\Services\FileUploader;
+use App\Services\YouTubeVideo;
 use App\Form\FileUploadTrickType;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Repository\TypeMediaRepository;
-use App\Services\YouTubeVideo;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,12 +45,30 @@ class MediaController extends AbstractController
     public function modifyMedia(
         Request $request,
         MediaRepository $repoMedia,
-        TypeMediaRepository $repoTypeMedia
+        TypeMediaRepository $repoTypeMedia,
+        ManagerRegistry $doctrine
     ) {
         $media = $repoMedia->findOneBy(['id' => $request->get('userId')]);
         $typeMedia = $repoTypeMedia->findOneBy(['id' => $media->getTypeMedia()]);
 
+        $form = $this->createForm(ModifyMediaType::class, $media);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $manager = $doctrine->getManager();
+                $manager->persist($media);
+                $manager->flush();
+
+                $repoMedia->updateFeaturePicture($media);
+
+                return new Response('<p class="text-success">Vos modifications sont bien enregistrées.</p>');
+            }
+            return new Response('<p class="text-danger">' . $form->getErrors(true, true) . '</p>');
+        }
+
         return $this->render('media/modify.html.twig', [
+            'form' => $form->createView(),
             'request' => $request,
             'media' => $media,
             'typeMedia' => $typeMedia

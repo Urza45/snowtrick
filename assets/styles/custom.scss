@@ -32,8 +32,8 @@ $dark: $gray-900;
 
 body {
   background: url("/public/medias/snow.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
+  background-position: bottom;
+  background-repeat: repeat-y;
   background-size: cover;
   color: $colour-lightgray;
   font: 18px / 1.5 sans-serif;
@@ -46,9 +46,9 @@ body {
 
 /* HERO */
 .hero {
-  min-height: 90vh;
+  min-height: 100vh;
   background-size: cover;
-  background-position: center;
+  background-position: bottom;
   color: $colour-white;
   display: flex;
   flex-direction: column;
@@ -173,4 +173,18 @@ section {
 .small-picture {
   height: 200px;
   width: auto;
+}
+
+.footer {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    display: block;
+  }
+
+  .header {
+    display: none;
+  }
 }

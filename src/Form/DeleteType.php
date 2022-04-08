@@ -14,8 +14,8 @@ class DeleteType extends AbstractType
         $builder
             ->add('supprimer', ChoiceType::class, [
                 'choices'  => [
-                    ' Oui ' => true,
-                    ' Non ' => false
+                    'Oui' => true,
+                    'Non' => false
                 ],
                 'expanded' => true,
             ]);

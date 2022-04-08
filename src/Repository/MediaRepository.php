@@ -109,4 +109,23 @@ class MediaRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * updateFeaturePicture
+     *
+     * @param  mixed $media
+     * @return void
+     */
+    public function updateFeaturePicture(Media $media)
+    {
+        return $this->createQueryBuilder('e')
+            ->update()
+            ->set('e.featurePicture', 0)
+            ->where('e.id <> :id')
+            ->andWhere('e.trick = :trick')
+            ->setParameter('trick', $media->getTrick())
+            ->setParameter('id', $media->getId())
+            ->getQuery()
+            ->execute();
+    }
 }
