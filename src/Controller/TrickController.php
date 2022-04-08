@@ -7,10 +7,11 @@ use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Form\VideoType;
 use App\Form\DeleteType;
-use App\Services\Captcha;
 use App\Entity\TypeMedia;
+use App\Services\Captcha;
 use App\Services\FileUploader;
 use App\Form\FileUploadTrickType;
+use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TrickController extends AbstractController
@@ -63,14 +65,18 @@ class TrickController extends AbstractController
     {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
-        $pictures = $repoMedia->getImage($trick->getId());
-        $videos = $repoMedia->getVideo($trick->getId());
+        if ($trick) {
+            $pictures = $repoMedia->getImage($trick->getId());
+            $videos = $repoMedia->getVideo($trick->getId());
 
-        return $this->render('trick/show_trick.html.twig', [
-            'trick' => $trick,
-            'pictures' => $pictures,
-            'videos' => $videos
-        ]);
+            return $this->render('trick/show_trick.html.twig', [
+                'trick' => $trick,
+                'pictures' => $pictures,
+                'videos' => $videos
+            ]);
+        }
+
+        return $this->redirectToRoute('trick_home');
     }
 
     /**
@@ -134,8 +140,14 @@ class TrickController extends AbstractController
     /**
      * @Route("/delete_trick/{slug}", name="delete_trick")
      */
-    public function deleteTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine)
-    {
+    public function deleteTrick(
+        TrickRepository $repoTrick,
+        Request $request,
+        ManagerRegistry $doctrine,
+        FileUploader $fileUploader,
+        MediaRepository $repoMedia,
+        CommentRepository $repoComment
+    ) {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
         $form = $this->createForm(DeleteType::class);
@@ -145,11 +157,23 @@ class TrickController extends AbstractController
             $reponse = $form->get('supprimer')->getData();
             if ($reponse) {
                 if ($reponse == true) {
-                    return new Response('<p class="text-success">Vous avez choisi oui.</p>');
+                    // Suppression des commentaires
+                    $comments = $trick->getComments();
+                    foreach ($comments as $comment) {
+                        $repoComment->remove($comment, true);
+                    }
+                    // Suppression des medias
+                    $medias = $trick->getMedia();
+                    foreach ($medias as $media) {
+                        $fileDelete = $fileUploader->deleteFile($media, $media->getTypeMedia(), $repoMedia);
+                    }
+                    // Suppression du trick
+                    $repoTrick->remove($trick, true);
+                    return new Response('<p class="text-success">Le trick a bien été supprimé.</p>');
                 }
-                return new Response('<p class="text-success">L\'utilisateur n\'a pas été supprimé.</p>');
+                return new Response('<p class="text-success">Le trick n\'a pas été supprimé.</p>');
             }
-            return new Response('<p class="text-success">L\'utilisateur n\'a pas été supprimé.</p>');
+            return new Response('<p class="text-success">Le trick  n\'a pas été supprimé.</p>');
         }
 
         return $this->render('trick/delete_trick.html.twig', [

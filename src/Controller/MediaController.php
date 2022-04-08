@@ -119,7 +119,6 @@ class MediaController extends AbstractController
                     }
                 }
             }
-
             return new Response('<p class="text-success">Pas de suppression</p>');
         }
 

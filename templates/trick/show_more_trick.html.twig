@@ -14,23 +14,22 @@
 				<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
 			{% endif %}
 		{% endif %}
-		<div class="card-body">
-			<P class="card-title text-justify">
-				<a class="text-primary" href="{{ path('show_trick' , { slug: trick.slug }) }}">
-					{{ trick.title }}
-				</a><br/>
-				{% if app.user %}
-					<a class="text-primary" href="{{ path('modify_trick' , { slug: trick.slug }) }}">
-						<i class="fa-solid fa-pencil"></i>
-					</a>
-					{# <a class="text-danger" href="{{ path('delete_trick' , { slug: trick.slug }) }}"> #}
+		<div class="card-body text-center text-dark">
+			<P class="card-title small text-justify">{{ trick.title }}</p>
+			<a class="btn text-primary" href="{{ path('show_trick' , { slug: trick.slug }) }}">
+				<i class="fa-solid fa-eye"></i>
+			</a>
+			{% if app.user %}
+				<a class="btn text-primary" href="{{ path('modify_trick' , { slug: trick.slug }) }}">
+					<i class="fa-solid fa-pencil"></i>
+				</a>
+				{# <a class="text-danger" href="{{ path('delete_trick' , { slug: trick.slug }) }}"> #}
 
-					<a class="userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Supprimer un trick">
-						<i class="fa-solid fa-trash-can"></i>
-					</a>
-				{% endif %}
-			</p>
-			<p class="card-text"></p>
-		</div>
+				<a class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Supprimer un trick">
+					<i class="fa-solid fa-trash-can"></i>
+				</a>
+			{% endif %}
+		</p>
+		{# <p class="card-text"></p> #}
 	</div>
-{% endfor %}
+</div>{% endfor %}

@@ -2,7 +2,11 @@
 
 namespace App\Services;
 
+use App\Entity\Media;
+use App\Entity\TypeMedia;
+use App\Repository\MediaRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -74,6 +78,35 @@ class FileUploader extends AbstractController
             'message' => $fileName
         ];
     }
+
+    public function deleteFile(Media $media, TypeMedia $typeMedia, MediaRepository $repoMedia)
+    {
+        $message = '';
+        if ($typeMedia->getGroupMedia() == 'Image') {
+            // Suppression de la miniature
+            if (!unlink($media->getThumbUrl())) {
+                $message .= 'La miniature n\'a pas pas pu être supprimée';
+            };
+            // Suppression de l'image
+            if (!unlink($media->getUrl())) {
+                if ($message <> '') {
+                    $message .= '<br/>';
+                }
+                $message .= 'La photographie n\'a pas pas pu être supprimée';
+            };
+        }
+        if ($message <> '') {
+            $message .= 'L\'entrée en base de données est conservée.';
+            $message = '<p class="text-danger">' . $message . '</p>';
+            return new Response($message);
+        } else {
+            // Suppression de l'entrée en base de données.
+            $repoMedia->remove($media, true);
+            return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
+        }
+        return new Response('<p class="text-success">Pas de suppression</p>');
+    }
+
 
     public function getAvatarDirectory()
     {

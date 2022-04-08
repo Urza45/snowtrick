@@ -2,6 +2,8 @@
 	<div class="row justify-content-evenly">
 		<div class="col-lg-8">
 			<p class="statusMsg"></p>
+			<p>Suppression du trick "{{ trick.title }}" ?</p>
+			<small>Cela implique la suppresion de tous les commentaires et de tous les médias qui lui sont associés</small>
 			{{ form_start(form, { attr: {'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
 			<div class="form-group">
 				Supprimer ?

@@ -112,35 +112,19 @@
 
 		<div class="col-lg-10">
 			<div class="row justify-content-evenly">
-				<div class="col-lg-6 text-center">
+				<div class="col-lg-12 text-center">
 					{% if trick.media.count is same as(0) %}
 						<p>Pas d'image mise en avant.</p>
 					{% else %}
 						{% set findFeaturePicture = 0 %}
 						{% for file in trick.media %}
-							
 							{% if file.featurePicture %}
-							<p>Image mise en avant : </p>
-								<img src="{{ asset(file.url)}}" alt="{{ file.legend }}" width="400px">
-								{% set findFeaturePicture = 1 %}
-							{% endif %}
-							
-						{% endfor %}
-						{% if findFeaturePicture is same as(0)  %}
-								<p>Pas d'image mise en avant choisie.</p>
-							{% endif %}
-					{% endif %}
-				</div>
-				<div class="col-lg-6 text-center">
-					<button class="btn btn-primary">Choisir une image mise en avant</button>
-				</div>
-			</div>
-		</div>
+								<p>Image mise en avant : {{ file.legend }}</p>
+			<img class="" src="{{ asset(file.thumbUrl)}}" alt="{{ file.legend }}">
+			{% set findFeaturePicture = 1 %}
 		{% endif %}
-		
-	</div>
-</section>{% endblock %}
-{% block javascripts %}
-	{{ parent() }}
-	{{ encore_entry_script_tags('modal') }}
-{% endblock %}
+	{% endfor %}
+	{% if findFeaturePicture is same as(0)  %}
+		<p>Pas d'image mise en avant choisie.</p>
+	{% endif %}
+{% endif %}</div></div></div>{% endif %}</div></section>{% endblock %}{% block javascripts %}{{ parent() }}{{ encore_entry_script_tags('modal') }}{% endblock %}
