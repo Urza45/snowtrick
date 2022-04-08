@@ -5,7 +5,7 @@
 		{% endif %}
 		<div class="card-body">
 			<P class="card-title">
-				<a class="text-primary" href="{{ path('show_trick' , { id: trick.id }) }}">
+				<a class="text-primary" href="{{ path('show_trick' , { slug: trick.slug }) }}">
 					{{ trick.title }}
 				</a>
 				<a class="text-primary" href="#">

@@ -26,10 +26,10 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-/medias/
-/medias/avatars/*
-/medias/tricks/*
-!/medias/avatars/manProfil.jpg
-!/medias/avatars/womanProfil.jpg
-!/medias/snow.jpg
-!/medias/Snowboarding_pictogram.svg
+/public/medias/
+/public/medias/avatars/
+/public/medias/tricks/
+!/public/medias/avatars/manProfil.jpg
+!/public/medias/avatars/womanProfil.jpg
+!/public/medias/snow.jpg
+!/public/medias/Snowboarding_pictogram.svg

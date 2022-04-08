@@ -1,20 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ManagingCommentsController!{% endblock %}
+{% block title %}
+	Gestion des commentaires
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/WAMP/www/snowtrick/src/Controller/ManagingCommentsController.php'|file_link(0) }}">src/Controller/ManagingCommentsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/WAMP/www/snowtrick/templates/managing_comments/index.html.twig'|file_link(0) }}">templates/managing_comments/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+	<section class="bg-secondary p-2 text-dark bg-opacity-50">
+		<div class="container container-fluid">
+			<div class="row justify-content-evenly">
+				<div class="col-lg-8">
+					<div class="table-responsive text-center">
+						<h3>Liste des commentaires du site</h3>
+						<table class="table table-striped table-condensed table-responsive table-bordered">
+							<thead>
+								<tr class="text-center">
+									<th>Pseudo</th>
+									<th>
+										<i class="fa-solid fa-person-snowboarding"></th>
+									</th>
+									<th>
+										<i class="fa-solid fa-comments"></i>
+									</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							{% for comment in comments %}
+								<tr class="text-center">
+									<td>
+										<div class="tablehead"></div>
+										{% if comment.user.avatar %}
+											<img src="{{ asset(comment.user.avatar.url) }}" class="rounded-circle" height="40px"/>
+										{% else %}
+											<img src="{{ asset('medias/avatars/manProfil.jpg') }}" class="rounded-circle" width="40px" height="40px"/>
+										{% endif %}
+										{{ comment.user.pseudo }}
+									</td>
+									<td>
+										<div class="tablehead">
+											Trick :
+										</div>
+										{{ comment.trick.title }}
+									</td>
+									<td>
+										<div class="tablehead">
+											Commentaire :
+										</div>
+										{{ comment.content }}
+									</td>
+									<td class="text-center">
+										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ comment.id }}" data-affiche="yes" data-route="{{ path('app_managing_comment', { id: comment.id }) }}" data-title="Modification d'un commentaire">
+												<i class="fa-solid fa-pen text-light"></i>
+											</span>
+										</button>
+										<button
+											class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Interdire">
+											{# <span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ app.user.id }}" data-affiche="yes" data-route="{{ path('app_managing_user', { slug: user.slug }) }}" data-title="Profil de {{ user.lastName }} {{ user.firstName }}"> #}
+											<i class="fa-solid fa-ban text-danger"></i>
+											{# </span> #}
+										</button>
+										<button
+											class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer">
+											{# <span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ app.user.id }}" data-affiche="yes" data-route="{{ path('app_managing_userdelete', { slug: user.slug }) }}" data-title="Supprimer {{ user.lastName }} {{ user.firstName }}"> #}
+											<i class="fa-solid fa-trash-can text-danger"></i>
+											{# </span> #}
+										</button>
+									</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>{% endblock %}{% block javascripts %}
+{{ parent() }}
+{{ encore_entry_script_tags('modal') }}{% endblock %}
