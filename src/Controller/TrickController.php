@@ -54,7 +54,6 @@ class TrickController extends AbstractController
      */
     public function showMoreComment(Request $request, TrickRepository $repoTrick, CommentRepository $repoComment)
     {
-        dump($request);
         $trick = $repoTrick->findOneBy(['id' => $request->get('trickId')]);
 
         return $this->render('comment/index.html.twig', [
@@ -92,7 +91,10 @@ class TrickController extends AbstractController
                 $this->addFlash('comment', 'Le captcha saisi n\'est pas correct.');
                 return $this->render('trick/show_trick.html.twig', [
                     'trick' => $trick,
-                    'formComment' => $form->createView()
+                    'formComment' => $form->createView(),
+                    'listComment' => $repoComment->findBy(['trick' => $trick], ['id' => 'DESC'], self::NUMBER_COMMENT_BY_PAGE, 0),
+                    'commentsCount' => $repoComment->count(['trick' => $trick]),
+                    'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
                 ]);
             }
             $comment->setDisabled(false);
@@ -115,7 +117,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/modify_trick/{slug}", name="modify_trick")
+     * @Route("/manageTrick/modify/{slug}", name="modify_trick")
      */
     public function modifyTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine)
     {
