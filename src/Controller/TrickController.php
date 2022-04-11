@@ -12,16 +12,19 @@ use App\Repository\UserRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\Constraint\ExceptionCode;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TrickController extends AbstractController
 {
-    private const NUMBER_TRICK_BY_ROW = 3;
-    private const NUMBER_TRICK_BY_PAGE = 3;
+    private const NUMBER_TRICK_BY_ROW = 5;
+    private const NUMBER_TRICK_BY_PAGE = 15;
 
     /**
      * @Route("/", name="trick_home")
@@ -76,8 +79,13 @@ class TrickController extends AbstractController
     /**
      * @Route("/add_trick", name="add_trick")
      */
-    public function addTrick(Request $request, UserRepository $repoUser, ManagerRegistry $doctrine)
-    {
+    public function addTrick(
+        Request $request,
+        UserRepository $repoUser,
+        ManagerRegistry $doctrine,
+        TrickRepository $repoTrick,
+        SluggerInterface $slugger
+    ) {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -89,15 +97,30 @@ class TrickController extends AbstractController
             $manager = $doctrine->getManager();
 
             $manager->persist($trick);
+
+
+            if ($repoTrick->findOneBySlug($trick->getSlug()) !== null) {
+
+                $this->addFlash('notice', 'Un article possède déjà ce titre.');
+                return $this->render('trick/modify_trick.html.twig', [
+                    'form' => $form->createView(),
+                    'trick' => $trick,
+                    'add' => 1
+                ]);
+            }
+
             $manager->flush();
 
             $this->addFlash('success', 'Votre article a bien été enregistré.');
-            return $this->redirectToRoute('modify_trick', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('modify_trick', [
+                'slug' => $trick->getSlug(),
+            ]);
         }
 
         return $this->render('trick/modify_trick.html.twig', [
             'form' => $form->createView(),
-            'trick' => $trick
+            'trick' => $trick,
+            'add' => 1
         ]);
     }
 
@@ -117,7 +140,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $doctrine->getManager();
 
-            $manager->persist($trick);
+            //$manager->persist($trick);
             $manager->flush();
 
             $this->addFlash('success', 'Vos modifications ont bien été enregistrées.');
@@ -176,7 +199,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/captcha", name="captcha")
+     * @Route("/captcha", name="captcha", host="127.0.0.1")
      */
     public function captcha(Captcha $captcha, Session $session)
     {

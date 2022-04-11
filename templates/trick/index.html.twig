@@ -16,18 +16,9 @@
 	</div>
 	<div id="tricks" class="container wrapper">
 		<div id="listTrick" name="listTrick" class="row justify-content-evenly">
-			<hr/>
-			{% if app.user %}
-				<div class="card" style="width: 18rem;">
-					<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
-					<div class="card-body">
-						<h5 class="card-title"></h5>
-						<p class="card-text"></p>
-						<a href="{{ path('add_trick') }}" class="btn btn-primary">Ajouter un trick</a>
-					</div>
-				</div>
-			{% endif %}
+
 			{% include "trick/show_more_trick.html.twig" %}
+
 		</div>
 		<br/>
 		<div id="trickplus" name="trickplus">
@@ -39,6 +30,14 @@
 				</div>
 			{% endif %}
 		</div>
+		<hr/>
+		{% if app.user %}
+			<div class="row mx-auto my-auto justify-content-center">
+				<div class="text-center" style="width: 18rem;">
+					<a href="{{ path('add_trick') }}" class="btn btn-primary">Ajouter un trick</a>
+				</div>
+			</div>
+		{% endif %}
 		<a href="#tricks" class="text-light right">
 			<h1>
 				<i class="fa-solid fa-arrow-up-long"></i>

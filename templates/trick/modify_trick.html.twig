@@ -8,10 +8,10 @@
 <br/>
 <section class="bg-secondary p-2  bg-opacity-50">
 	<div class="text-center">
-		{% if trick.title != '' %}
-			<h1>Modification de l'article "{{ trick.title }}"</h1>
-		{% else %}
+		{% if add is defined %}
 			<h1>Ajout d'un article</h1>
+		{% else %}
+			<h1>Modification de l'article "{{ trick.title }}"</h1>
 		{% endif %}
 	</div>
 	<div class="container container-fluid ">
@@ -84,7 +84,8 @@
 			</div>
 		</div>
 		<br/>
-		{% if trick.slug %}
+		{% if add is defined %}
+		{% else %}
 		<div class="row justify-content-evenly">
 			<div class="col-lg-10">
 				<div class="row text-center align-items-center">

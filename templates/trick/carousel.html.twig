@@ -13,10 +13,10 @@
 							{% else %}
 								<div class="carousel-item">
 								{% endif %}
-								<div class="col-md-3 d-block h-50">
+								<div class="col-md-3">
 									<div class="card">
 										<div class="card-img">
-											<img src="{{ asset(picture.thumbUrl) }}" class="small-picture">
+											<img src="{{ asset(picture.thumbUrl) }}" width="400px" class="img-fluid">
 										</div>
 										<div class="card-body">
 											{{ picture.legend }}<br/>

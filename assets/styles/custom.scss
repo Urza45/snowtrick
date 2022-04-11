@@ -30,6 +30,13 @@ $dark: $gray-900;
   font-weight: bold;
 }
 
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
 body {
   background: url("/public/medias/snow.jpg");
   background-position: bottom;
