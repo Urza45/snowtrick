@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MediaController extends AbstractController
 {
     /**
-     * @Route("/media_show", name="app_media")
+     * @Route("/showmedias", name="app_media")
      */
     public function showMedia(
         Request $request,
@@ -40,7 +40,7 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route("/media_modify", name="app_modif_media")
+     * @Route("/media/modify", name="app_modif_media")
      */
     public function modifyMedia(
         Request $request,
@@ -76,7 +76,7 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route("/media_delete", name="app_delete_media")
+     * @Route("/media/delete", name="app_delete_media")
      */
     public function deleteMedia(
         Request $request,
@@ -131,7 +131,7 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route("/modify_trick/{slug}/add_picture", name="add_picture_trick")
+     * @Route("/manageTrick/modify/{slug}/add_picture", name="add_picture_trick")
      */
     public function addPicture(
         TrickRepository $repoTrick,
@@ -186,7 +186,7 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route("/modify_trick/{slug}/add_video", name="add_video_trick")
+     * @Route("/manageTrick/modify/{slug}/add_video", name="add_video_trick")
      */
     public function addVideo(
         TrickRepository $repoTrick,

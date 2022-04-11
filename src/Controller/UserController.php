@@ -51,7 +51,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/change_picture", name="change_picture_user")
+     * @Route("/profile/changePicture", name="change_picture_user")
      */
     public function changePicture(
         Request $request,
@@ -113,7 +113,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/change_password", name="change_password_user")
+     * @Route("/profile/changePassword", name="change_password_user")
      */
     public function changePassword(
         Request $request,

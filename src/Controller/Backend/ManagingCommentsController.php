@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ManagingCommentsController extends AbstractController
 {
     /**
-     * @Route("/admin/managing/comments", name="app_managing_comments")
+     * @Route("/admin/comments", name="app_managing_comments")
      */
     public function index(CommentRepository $repoComment): Response
     {
@@ -25,7 +25,7 @@ class ManagingCommentsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/managing/comment/{id}", name="app_managing_comment")
+     * @Route("/admin/comment/{id}", name="app_managing_comment")
      */
     public function modifyComment(Request $request, CommentRepository $repoComment, ManagerRegistry $doctrine)
     {
@@ -41,7 +41,7 @@ class ManagingCommentsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/managing/comment_ban/{id}", name="app_managing_ban_comment")
+     * @Route("/admin/comment/{id}/ban", name="app_managing_ban_comment")
      */
     public function banComment(Request $request, CommentRepository $repoComment, ManagerRegistry $doctrine)
     {
@@ -49,7 +49,7 @@ class ManagingCommentsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/managing/comment_delete/{id}", name="app_managing_delete_comment")
+     * @Route("/admin/comment/{id}/delete", name="app_managing_delete_comment")
      */
     public function deleteComment(Request $request, CommentRepository $repoComment, ManagerRegistry $doctrine)
     {

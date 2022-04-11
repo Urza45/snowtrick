@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ManagingUsersController extends AbstractController
 {
     /**
-     * @Route("/admin/managing/users", name="app_managing_users")
+     * @Route("/admin/users", name="app_managing_users")
      */
     public function index(UserRepository $repoUser): Response
     {
@@ -27,7 +27,7 @@ class ManagingUsersController extends AbstractController
     }
 
     /**
-     * @Route("/admin/managing/users/{slug}", name="app_managing_user")
+     * @Route("/admin/user/{slug}", name="app_managing_user")
      */
     public function showUser(Request $request, UserRepository $repoUser, ManagerRegistry $doctrine)
     {
@@ -55,7 +55,7 @@ class ManagingUsersController extends AbstractController
     }
 
     /**
-     * @Route("/admin/managing/banusers/{slug}", name="app_managing_userban")
+     * @Route("/admin/user/{slug}/ban", name="app_managing_userban")
      */
     public function banUser(Request $request, UserRepository $repoUser, ManagerRegistry $doctrine)
     {
@@ -79,7 +79,7 @@ class ManagingUsersController extends AbstractController
     }
 
     /**
-     * @Route("/admin/managing/deleteusers/{slug}", name="app_managing_userdelete")
+     * @Route("/admin/user/{slug}/delete", name="app_managing_userdelete")
      */
     public function deleteUser(
         Request $request,

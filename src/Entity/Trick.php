@@ -11,7 +11,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
- * @UniqueEntity(fields{"slug"}, message="Le titre de votre article existe déjà.")
+ * @UniqueEntity(fields={"slug"}, message="Le titre de votre article existe déjà.")
  * @ORM\HasLifecycleCallbacks()
  */
 class Trick
