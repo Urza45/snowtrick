@@ -44,6 +44,11 @@ class Media
      */
     private $featurePicture;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $thumbUrl;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class Media
     public function setFeaturePicture(bool $featurePicture): self
     {
         $this->featurePicture = $featurePicture;
+
+        return $this;
+    }
+
+    public function getThumbUrl(): ?string
+    {
+        return $this->thumbUrl;
+    }
+
+    public function setThumbUrl(?string $thumbUrl): self
+    {
+        $this->thumbUrl = $thumbUrl;
 
         return $this;
     }

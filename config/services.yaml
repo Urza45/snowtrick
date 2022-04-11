@@ -27,17 +27,17 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Service\FileUploaderAvatar:
+    App\Services\FileUploader:
         arguments:
             $uploadDirectory: '%upload_directory%'
             $avatarDirectory: '%avatars_directory%'
             $tricksDirectory: '%tricks_directory%'
     
-    App\Service\MailerService:
+    App\Services\MailerService:
         arguments:
             $mailFrom: '%mail_from%'
 
-    App\Service\Captcha:
+    App\Services\Captcha:
         arguments:
             $police: '%police%'
 

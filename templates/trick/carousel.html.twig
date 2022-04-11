@@ -1,82 +1,79 @@
 <div class="container text-center my-3">
 	<div class="row mx-auto my-auto justify-content-center">
-		<div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-inner" role="listbox">
-				<div class="carousel-item active">
-					<div class="col-md-3">
-						<div class="card">
-							<div class="card-img">
-								<img src="//via.placeholder.com/500x400/31f?text=1" class="img-fluid">
+		{% if trick.media.count is same as(0) %}
+			<p>Pas de média disponible.</p>
+		{% else %}
+			<div id="recipeCarousel" class="carousel slide text-dark" data-bs-ride="carousel">
+				<div class="carousel-inner" role="listbox">
+					{% set i = 1 %}
+					{% for picture in pictures %}
+						{% if i == 1 %}
+							<div class="carousel-item active">
+								{% set i = 0 %}
+							{% else %}
+								<div class="carousel-item">
+								{% endif %}
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-img">
+											<img src="{{ asset(picture.thumbUrl) }}" width="400px" class="img-fluid">
+										</div>
+										<div class="card-body">
+											{{ picture.legend }}<br/>
+											<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ picture.id }}" data-affiche="yes" data-route="{{ path('app_media') }}" data-title="{{ picture.legend }}">
+												<i class="fa-solid fa-eye"></i>
+											</button>
+											{% if app.user %}
+												<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ picture.id }}" data-affiche="yes" data-route="{{ path('app_modif_media') }}" data-title="{{ picture.legend }}">
+													<i class="fa-solid fa-pencil"></i>
+												</button>
+												<button class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ picture.id }}" data-affiche="yes" data-route="{{ path('app_delete_media') }}" data-title="{{ picture.legend }}">
+													<i class="fa-solid fa-trash-can"></i>
+												</button>
+											{% endif %}
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="card-img-overlay">
-								Slide 1
-								<a class="text-light" href="{{ path('show_trick' , { slug: trick.slug }) }}">
-									<i class="fa-solid fa-pencil"></i>
-								</a>
-								<a class="text-danger" href="#">
-									<i class="fa-solid fa-trash-can"></i>
-								</a>
-							</div>
+						{% endfor %}
+						{% for video in videos %}
+							{% if i == 1 %}
+								<div class="carousel-item active">
+									{% set i = 0 %}
+								{% else %}
+									<div class="carousel-item">
+									{% endif %}
+									<div class="col-md-3 d-block h-50">
+										<div class="card">
+											<div class="card-img">
+												{{ video.thumbUrl|raw }}
+											</div>
+											<div class="card-body">
+												{{ video.legend }}<br/>
+												<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ video.id }}" data-affiche="yes" data-route="{{ path('app_media') }}" data-title="{{ video.legend }}">
+													<i class="fa-brands fa-youtube"></i>
+												</button>
+												{% if app.user %}
+													<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ video.id }}" data-affiche="yes" data-route="{{ path('app_modif_media') }}" data-title="{{ video.legend }}">
+														<i class="fa-solid fa-pencil"></i>
+													</button>
+													<button class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ video.id }}" data-affiche="yes" data-route="{{ path('app_delete_media') }}" data-title="{{ video.legend }}">
+														<i class="fa-solid fa-trash-can"></i>
+													</button>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
 						</div>
+						<a class="carousel-control-prev bg-transparent w-aut h-25" href="#recipeCarousel" role="button" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="false"></span>
+						</a>
+						<a class="carousel-control-next bg-transparent w-aut h-25" href="#recipeCarousel" role="button" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						</a>
 					</div>
-				</div>
-				<div class="carousel-item">
-					<div class="col-md-3">
-						<div class="card">
-							<div class="card-img">
-								<img src="//via.placeholder.com/500x400/e66?text=2" class="img-fluid">
-							</div>
-							<div class="card-img-overlay">Slide 2</div>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<div class="col-md-3">
-						<div class="card">
-							<div class="card-img">
-								<img src="//via.placeholder.com/500x400/7d2?text=3" class="img-fluid">
-							</div>
-							<div class="card-img-overlay">Slide 3</div>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<div class="col-md-3">
-						<div class="card">
-							<div class="card-img">
-								<img src="//via.placeholder.com/500x400?text=4" class="img-fluid">
-							</div>
-							<div class="card-img-overlay">Slide 4</div>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<div class="col-md-3">
-						<div class="card">
-							<div class="card-img">
-								<img src="//via.placeholder.com/500x400/aba?text=5" class="img-fluid">
-							</div>
-							<div class="card-img-overlay">Slide 5</div>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<div class="col-md-3">
-						<div class="card">
-							<div class="card-img">
-								<img src="//via.placeholder.com/500x400/fc0?text=6" class="img-fluid">
-							</div>
-							<div class="card-img-overlay">Slide 6</div>
-						</div>
-					</div>
-				</div>
+				{% endif %}
 			</div>
-			<a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			</a>
-			<a class="carousel-control-next bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			</a>
 		</div>
-	</div>
-</div>

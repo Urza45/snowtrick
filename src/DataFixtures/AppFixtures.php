@@ -76,13 +76,13 @@ class AppFixtures extends Fixture
 
             // Trick
             $trick = new Trick();
-            $trick->setTitle('Un exemple de figure de ' . $category->getLabel())
-                ->setChapo('Une courte description de cette figure de  snowboard libre.')
-                ->setContent('Ici sera la description détaillée')
-                ->setCreatedAt($date)
-                ->setUpdatedAt($date)
-                ->setCategory($category)
-                ->setUser($userAdmin);
+            $trick->setTitle('Un exemple de figure de ' . $category->getLabel());
+            $trick->setChapo('Une courte description de cette figure de  snowboard libre.');
+            $trick->setContent('Ici sera la description détaillée');
+            $trick->setCreatedAt($date);
+            $trick->setUpdatedAt($date);
+            $trick->setCategory($category);
+            $trick->setUser($userAdmin);
 
             $manager->persist($trick);
 
