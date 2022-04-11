@@ -31,18 +31,24 @@
 			{% endif %}
 		</div>
 		<hr/>
-		{% if app.user %}
-			<div class="row mx-auto my-auto justify-content-center">
-				<div class="text-center" style="width: 18rem;">
+
+		<div class="row mx-auto my-auto justify-content-center">
+			<div class="text-center" style="width: 18rem;">
+				{% if app.user %}
 					<a href="{{ path('add_trick') }}" class="btn btn-primary">Ajouter un trick</a>
-				</div>
+				{% else %}
+					<a href="{{ path('app_login') }}" class="btn btn-primary">
+						Vous devez être connecté pour ajouter un article
+					</a>
+				{% endif %}
+				<a href="#tricks" class="text-light right">
+					<h1>
+						<i class="fa-solid fa-arrow-up-long"></i>
+					</h1>
+				</a>
 			</div>
-		{% endif %}
-		<a href="#tricks" class="text-light right">
-			<h1>
-				<i class="fa-solid fa-arrow-up-long"></i>
-			</h1>
-		</a>
+		</div>
+
 	</div>
 {% endblock %}
 

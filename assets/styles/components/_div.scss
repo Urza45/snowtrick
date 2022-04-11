@@ -1,0 +1,22 @@
+.center-div {
+    margin: 0 auto;
+    width: 100px;
+}
+
+.contenant {
+    position: relative;
+    text-align: center;
+    color: $colour-lightgray;
+}
+
+.texte_centrer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.small-picture {
+    height: 200px;
+    width: auto;
+}
