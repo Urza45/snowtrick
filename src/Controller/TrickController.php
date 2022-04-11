@@ -6,6 +6,7 @@ use App\Entity\Trick;
 use App\Entity\Comment;
 use App\Form\TrickType;
 use App\Form\DeleteType;
+use App\Form\CommentType;
 use App\Services\Captcha;
 use App\Services\FileUploader;
 use App\Repository\UserRepository;
@@ -130,46 +131,58 @@ class TrickController extends AbstractController
         Session $session,
         UserRepository $repoUser,
         CommentRepository $repoComment,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        MediaRepository $repoMedia
     ) {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
         $comment = new Comment();
 
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
+        if ($trick) {
+            $pictures = $repoMedia->getImage($trick->getId());
+            $videos = $repoMedia->getVideo($trick->getId());
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $doctrine->getManager();
-            $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
+            $form = $this->createForm(CommentType::class, $comment);
+            $form->handleRequest($request);
 
-            // Captcha verification
-            if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
-                $this->addFlash('comment', 'Le captcha saisi n\'est pas correct.');
-                return $this->render('trick/show_trick.html.twig', [
-                    'trick' => $trick,
-                    'formComment' => $form->createView(),
-                    'listComment' => $repoComment->findBy(['trick' => $trick], ['id' => 'DESC'], self::NUMBER_COMMENT_BY_PAGE, 0),
-                    'commentsCount' => $repoComment->count(['trick' => $trick]),
-                    'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
-                ]);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $manager = $doctrine->getManager();
+                $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
+
+                // Captcha verification
+                if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
+                    $this->addFlash('comment', 'Le captcha saisi n\'est pas correct.');
+                    return $this->render('trick/show_trick.html.twig', [
+                        'trick' => $trick,
+                        'formComment' => $form->createView(),
+                        'listComment' => $repoComment->findBy(['trick' => $trick], ['id' => 'DESC'], self::NUMBER_COMMENT_BY_PAGE, 0),
+                        'commentsCount' => $repoComment->count(['trick' => $trick]),
+                        'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
+                        'pictures' => $pictures,
+                        'videos' => $videos
+                    ]);
+                }
+                $comment->setDisabled(false);
+                $comment->setNew(true);
+                $comment->setUser($user);
+                $comment->setTrick($trick);
+
+                $manager->persist($comment);
+                $manager->flush();
+                $this->addFlash('success', 'Votre commentaire a bien été enregistré.');
             }
-            $comment->setDisabled(false);
-            $comment->setNew(true);
-            $comment->setUser($user);
-            $comment->setTrick($trick);
 
-            $manager->persist($comment);
-            $manager->flush();
-            $this->addFlash('success', 'Votre commentaire a bien été enregistré.');
+            return $this->render('trick/show_trick.html.twig', [
+                'trick' => $trick,
+                'formComment' => $form->createView(),
+                'listComment' => $repoComment->findBy(['trick' => $trick], ['id' => 'DESC'], self::NUMBER_COMMENT_BY_PAGE, 0),
+                'commentsCount' => $repoComment->count(['trick' => $trick]),
+                'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
+                'pictures' => $pictures,
+                'videos' => $videos
+            ]);
         }
 
-        return $this->render('trick/show_trick.html.twig', [
-            'trick' => $trick,
-            'formComment' => $form->createView(),
-            'listComment' => $repoComment->findBy(['trick' => $trick], ['id' => 'DESC'], self::NUMBER_COMMENT_BY_PAGE, 0),
-            'commentsCount' => $repoComment->count(['trick' => $trick]),
-            'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
-        ]);
+        return $this->redirectToRoute('trick_home');
     }
 
     /**

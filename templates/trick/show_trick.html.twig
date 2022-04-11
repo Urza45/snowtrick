@@ -34,9 +34,9 @@
 									<a class="btn text-light" href="{{ path('modify_trick' , { slug: trick.slug }) }}">
 										<i class="fa-solid fa-pencil"></i>
 									</a>
-									<<<<<<<HEAD=======<aclass="btnuserinfotext-danger"data-toggle="modal"data-bs-target="#exampleModal"data-button="Supprimer"data-id="{{trick.id}}"data-affiche="yes"data-route="{{path('delete_trick',{slug:trick.slug})}}"data-title="Supprimeruntrick"><iclass="fa-solidfa-trash-can"></i></a>>> {# <a class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Supprimer un trick">
-																																																																																																				<i class="fa-solid fa-trash-can"></i>
-																																																																																																			</a> #}>>>>> main
+									<a class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{trick.id}}" data-affiche="yes" data-route="{{ path('delete_trick',{slug:trick.slug}) }}" data-title="Supprimer un trick">
+										<i class="fa-solid fa-trash-can"></i>
+									</a>
 								{% endif %}
 							</div>
 						</div>
