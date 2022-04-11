@@ -35,8 +35,8 @@
 										<i class="fa-solid fa-pencil"></i>
 									</a>
 									{# <a class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Supprimer un trick">
-																																																																																											<i class="fa-solid fa-trash-can"></i>
-																																																																																										</a> #}
+																																																																																																				<i class="fa-solid fa-trash-can"></i>
+																																																																																																			</a> #}
 								{% endif %}
 							</div>
 						</div>
@@ -100,7 +100,8 @@
 						<hr>
 						<div class="example-wrapper">
 							<h4>
-								✅ Liste des commentaires !
+								<i class="fa-solid fa-comments"></i>
+								Liste des commentaires !
 							</h4>
 							<div id="listComment" name="listComment" class="row justify-content-evenly">
 								{% if trick.comments.count is same as(0) %}
