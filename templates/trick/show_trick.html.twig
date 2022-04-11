@@ -34,9 +34,9 @@
 									<a class="btn text-light" href="{{ path('modify_trick' , { slug: trick.slug }) }}">
 										<i class="fa-solid fa-pencil"></i>
 									</a>
-									<a class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Supprimer un trick">
-										<i class="fa-solid fa-trash-can"></i>
-									</a>
+									<<<<<<<HEAD=======<aclass="btnuserinfotext-danger"data-toggle="modal"data-bs-target="#exampleModal"data-button="Supprimer"data-id="{{trick.id}}"data-affiche="yes"data-route="{{path('delete_trick',{slug:trick.slug})}}"data-title="Supprimeruntrick"><iclass="fa-solidfa-trash-can"></i></a>>> {# <a class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Supprimer un trick">
+																																																																																																				<i class="fa-solid fa-trash-can"></i>
+																																																																																																			</a> #}>>>>> main
 								{% endif %}
 							</div>
 						</div>
@@ -91,19 +91,35 @@
 						<hr>
 						<div>
 							{% if app.user %}
-								<p>Ici le formulaire de commentaires</p>
+								{% include "comment/add_comment.html.twig" %}
 							{% else %}
 								<p>Vous devez être connecté pour pouvoir poster un commentaire.</p>
 							{% endif %}
 							<br/>
 						</div>
 						<hr>
-						<div>
-							{% if trick.comments.count is same as(0) %}
-								<p>Pas de commentaire disponible</p>
-							{% else %}
-								{% include "comment/index.html.twig" %}
-							{% endif %}
+						<div class="example-wrapper">
+							<h4>
+								<i class="fa-solid fa-comments"></i>
+								Liste des commentaires !
+							</h4>
+							<div id="listComment" name="listComment" class="row justify-content-evenly">
+								{% if trick.comments.count is same as(0) %}
+									<p>Pas de commentaire disponible</p>
+								{% else %}
+									{% include "comment/index.html.twig" %}
+								{% endif %}
+							</div>
+							<div id="commentplus" name="commentplus">
+								{% if numberCommentByPage < commentsCount %}
+									<div class="text-center">
+										<button name="showMoreComments" id="showMoreComments" class="btn btn-primary" type="button" data-trick="{{ trick.id }}" data-index="{{ numberCommentByPage }}" data-commentsbypage="{{ numberCommentByPage }}" data-nbcomments="{{ commentsCount }}" data-route="{{ path('show_more_trick' , {'index' : numberCommentByPage} ) }}">
+											<i class="fa-solid fa-circle-plus"></i>Voir plus ...
+										</button>
+									</div>
+								{% endif %}
+							</div>
+
 						</div>
 					</div>
 				</div>

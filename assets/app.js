@@ -71,4 +71,34 @@ $(function () {
             next = next.nextElementSibling;
         }
     });
+
+    var pageComment = 1;
+
+    $("#showMoreComments").on("click", function () {
+
+        var index = $("#showMoreComments").data("index");
+
+        var trickId = $(this).data("trick");
+        var nbCommentByPage = $(this).data("commentsbypage");
+        var nbcomment = $(this).data("nbcomments");
+        var newNbComment = pageComment * nbCommentByPage;
+        var urlDest = "/showmorecomment/" + newNbComment;
+        // AJAX request
+        $.ajax({
+            url: urlDest,
+            type: "post",
+            data: { trickId: trickId },
+            success: function (response) {
+                $("#listComment").append(response);
+                if ((newNbComment + nbCommentByPage) < nbcomment) {
+                    pageComment++;
+                } else {
+                    $("#commentplus").hide();
+                }
+            },
+            error: function () {
+                alert("Error");
+            }
+        });
+    });
 })

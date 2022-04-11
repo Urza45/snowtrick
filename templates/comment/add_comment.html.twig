@@ -1,0 +1,22 @@
+{% for flash_error in app.flashes('comment') %}
+	<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
+
+
+{{ form_start(formComment) }}
+
+{{ form_label(formComment.content) }}
+{{ form_widget(formComment.content) }}
+<div class="text-light font-weight-bold">{{ form_errors(formComment.content) }}</div>
+<br/>
+<label for="form_captcha"><img src="/captcha"/></label>
+{{ form_label(formComment.captcha) }}
+{{ form_widget(formComment.captcha) }}
+<div class="text-light font-weight-bold">{{ form_errors(formComment.captcha) }}</div>
+<br/>
+
+<div class="col-lg-3  text-center">
+	<button type="submit" class="btn btn-lg btn-primary">Soumettre</button>
+</div>
+{{ form_rest(formComment) }}
+{{ form_end(formComment) }}

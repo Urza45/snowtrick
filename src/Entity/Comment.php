@@ -55,6 +55,8 @@ class Comment
      */
     private $trick;
 
+    private $captcha;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -150,5 +152,25 @@ class Comment
     public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * Get the value of captcha
+     */
+    public function getCaptcha()
+    {
+        return $this->captcha;
+    }
+
+    /**
+     * Set the value of captcha
+     *
+     * @return  self
+     */
+    public function setCaptcha($captcha)
+    {
+        $this->captcha = $captcha;
+
+        return $this;
     }
 }

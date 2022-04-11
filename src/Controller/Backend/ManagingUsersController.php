@@ -44,8 +44,6 @@ class ManagingUsersController extends AbstractController
                 $manager->flush();
                 return new Response('<p class="text-success">Vos modifications ont bien été enregistrées.</p>');
             }
-            dump($request);
-            dump($form);
             return new Response($form->getErrors(true, true)[0]->getMessageTemplate());
         }
 
