@@ -1,0 +1,30 @@
+<div class="col justify-content-evenly">
+	<a class="btn text-light" href="{{ path('trick_home') }}">
+		<h1>
+			<i class="fa-solid fa-house-chimney"></i>
+		</h1>
+	</a>
+	<a class="btn text-light" href="{{ path('trick_home') }}#tricks">
+		<h1>
+			<i class="fa-solid fa-person-snowboarding"></i>
+		</h1>
+	</a>
+	{% if app.user %}
+		<a class="btn text-light" href="{{ path('app_logout') }}">
+			<h1>
+				<i class="fa-solid fa-right-from-bracket"></i>
+			</h1>
+		</a>
+	{% else %}
+		<a class="btn text-light" href="{{ path('app_login') }}">
+			<h1>
+				<i class="fa-solid fa-right-to-bracket"></i>
+			</h1>
+		</a>
+		<a class="btn text-light" href="{{ path('app_register') }}">
+			<h1>
+				<i class="fa-solid fa-user-plus"></i>
+			</h1>
+		</a>
+	{% endif %}
+</div>
