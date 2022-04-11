@@ -39,6 +39,7 @@ security:
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/profile/*, roles: ROLE_USER }
         - { path: ^/manageTricks/*, roles: ROLE_USER }
+        - { path: ^/media/*, roles: ROLE_USER }
 
 when@test:
     security:

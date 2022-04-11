@@ -75,7 +75,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/add_trick", name="add_trick")
+     * @Route("/manageTrick/add", name="add_trick")
      */
     public function addTrick(
         Request $request,
@@ -216,7 +216,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/manageTricks/delete/{slug}", name="delete_trick")
+     * @Route("/manageTrick/delete/{slug}", name="delete_trick")
      */
     public function deleteTrick(
         TrickRepository $repoTrick,
