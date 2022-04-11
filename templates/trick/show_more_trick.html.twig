@@ -1,21 +1,43 @@
+{% set indice = 0 %}
+
 {% for trick in tricks %}
 	<div class="card" style="width: 15rem;">
 		{% if trick.media.count is same as(0) %}
 			<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
+		{% else %}
+			{% set ok = 0 %}
+			{% for media in trick.media %}
+				{% if media.featurePicture %}
+					<img src="{{ asset(media.url) }}" class="card-img-top" alt="{{ media.legend }}">
+					{% set ok = 1 %}
+				{% endif %}
+			{% endfor %}
+			{% if ok is same as(0) %}
+				<img src="{{ asset('medias/snow.jpg') }}" class="card-img-top" alt="Pas d'image">
+			{% endif %}
 		{% endif %}
-		<div class="card-body">
-			<P class="card-title">
-				<a class="text-primary" href="{{ path('show_trick' , { id: trick.id }) }}">
-					{{ trick.title }}
-				</a>
-				<a class="text-primary" href="#">
+		<div class="card-img-overlay text-center small bg-light p-2 text-dark bg-opacity-75">
+			{{ trick.title }}<br/>
+			{# </div><div class="card-body text-center text-dark"> #}
+			<a class="btn text-primary" href="{{ path('show_trick' , { slug: trick.slug }) }}">
+				<i class="fa-solid fa-eye"></i>
+			</a>
+			{% if app.user %}
+				<a class="btn text-primary" href="{{ path('modify_trick' , { slug: trick.slug }) }}">
 					<i class="fa-solid fa-pencil"></i>
 				</a>
-				<a class="text-danger" href="#">
+				{# <a class="text-danger" href="{{ path('delete_trick' , { slug: trick.slug }) }}"> #}
+
+				<a class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ trick.id }}" data-affiche="yes" data-route="{{ path('delete_trick', { slug: trick.slug }) }}" data-title="Supprimer un trick">
 					<i class="fa-solid fa-trash-can"></i>
 				</a>
-			</p>
-			<p class="card-text"></p>
+			{% endif %}
+			{# <p class="card-text"></p> #}
 		</div>
 	</div>
+	{% set indice = indice + 1 %}
+	{% if indice > 4 %}
+		{% set indice = 0 %}
+		<hr/>
+	{% endif %}
 {% endfor %}

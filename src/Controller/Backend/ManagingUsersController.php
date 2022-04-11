@@ -3,7 +3,7 @@
 namespace App\Controller\Backend;
 
 use App\Form\BanUserType;
-use App\Form\DeleteUserType;
+use App\Form\DeleteType;
 use App\Form\ShowUserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -89,7 +89,7 @@ class ManagingUsersController extends AbstractController
     ) {
         $user = $repoUser->findOneBy(['slug' => $request->get('slug')]);
 
-        $form = $this->createForm(DeleteUserType::class);
+        $form = $this->createForm(DeleteType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

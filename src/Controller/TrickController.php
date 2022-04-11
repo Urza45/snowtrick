@@ -2,20 +2,29 @@
 
 namespace App\Controller;
 
-use App\Service\Captcha;
+use App\Entity\Trick;
 use App\Form\TrickType;
+use App\Form\DeleteType;
+use App\Services\Captcha;
+use App\Services\FileUploader;
+use App\Repository\CommentRepository;
+use App\Repository\UserRepository;
+use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\Constraint\ExceptionCode;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TrickController extends AbstractController
 {
-    private const NUMBER_TRICK_BY_ROW = 3;
-    private const NUMBER_TRICK_BY_PAGE = 3;
+    private const NUMBER_TRICK_BY_ROW = 5;
+    private const NUMBER_TRICK_BY_PAGE = 15;
 
     /**
      * @Route("/", name="trick_home")
@@ -26,7 +35,7 @@ class TrickController extends AbstractController
             'tricksCount' => $repoTrick->count([]),
             'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
             'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
-            'tricks' => $repoTrick->findBy([], ['id' => 'ASC'], self::NUMBER_TRICK_BY_PAGE, 0)
+            'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, 0)
         ]);
     }
 
@@ -35,33 +44,95 @@ class TrickController extends AbstractController
      */
     public function showMoreTrick(Request $request, TrickRepository $repoTrick)
     {
+        $tricks = $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'));
+
         return $this->render('trick/show_more_trick.html.twig', [
             'tricksCount' => $repoTrick->count([]),
             'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
             'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
             'index' => $request->get('index'),
-            'tricks' => $repoTrick->findBy([], ['id' => 'ASC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'))
+            'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'))
         ]);
     }
 
     /**
-     * @Route("/trick/{id}", name="show_trick")
+     * @Route("/trick/{slug}", name="show_trick")
      */
-    public function showTrick(TrickRepository $repoTrick, Request $request)
+    public function showTrick(TrickRepository $repoTrick, Request $request, MediaRepository $repoMedia)
     {
-        $trick = $repoTrick->findOneBy(['id' => $request->get('id')]);
+        $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
-        return $this->render('trick/show_trick.html.twig', [
-            'trick' => $trick
+        if ($trick) {
+            $pictures = $repoMedia->getImage($trick->getId());
+            $videos = $repoMedia->getVideo($trick->getId());
+
+            return $this->render('trick/show_trick.html.twig', [
+                'trick' => $trick,
+                'pictures' => $pictures,
+                'videos' => $videos
+            ]);
+        }
+
+        return $this->redirectToRoute('trick_home');
+    }
+
+    /**
+     * @Route("/add_trick", name="add_trick")
+     */
+    public function addTrick(
+        Request $request,
+        UserRepository $repoUser,
+        ManagerRegistry $doctrine,
+        TrickRepository $repoTrick,
+        SluggerInterface $slugger
+    ) {
+        $trick = new Trick();
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
+            $trick->setUser($user);
+
+            $manager = $doctrine->getManager();
+
+            $manager->persist($trick);
+
+
+            if ($repoTrick->findOneBySlug($trick->getSlug()) !== null) {
+
+                $this->addFlash('notice', 'Un article possède déjà ce titre.');
+                return $this->render('trick/modify_trick.html.twig', [
+                    'form' => $form->createView(),
+                    'trick' => $trick,
+                    'add' => 1
+                ]);
+            }
+
+            $manager->flush();
+
+            $this->addFlash('success', 'Votre article a bien été enregistré.');
+            return $this->redirectToRoute('modify_trick', [
+                'slug' => $trick->getSlug(),
+            ]);
+        }
+
+        return $this->render('trick/modify_trick.html.twig', [
+            'form' => $form->createView(),
+            'trick' => $trick,
+            'add' => 1
         ]);
     }
 
     /**
-     * @Route("/modify_trick/{id}", name="modify_trick")
+     * @Route("/manageTricks/modify/{slug}", name="modify_trick")
      */
-    public function modifyTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine)
+    public function modifyTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine, MediaRepository $repoMedia)
     {
-        $trick = $repoTrick->findOneBy(['id' => $request->get('id')]);
+        $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
+
+        $pictures = $repoMedia->getImage($trick->getId());
+        $videos = $repoMedia->getVideo($trick->getId());
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -69,20 +140,66 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $doctrine->getManager();
 
-            $manager->persist($trick);
+            //$manager->persist($trick);
             $manager->flush();
 
-            $this->addFlash('success', 'Vos modification ont bien été enregistrées.');
+            $this->addFlash('success', 'Vos modifications ont bien été enregistrées.');
         };
 
         return $this->render('trick/modify_trick.html.twig', [
+            'form' => $form->createView(),
+            'trick' => $trick,
+            'pictures' => $pictures,
+            'videos' => $videos
+        ]);
+    }
+
+    /**
+     * @Route("/manageTricks/delete/{slug}", name="delete_trick")
+     */
+    public function deleteTrick(
+        TrickRepository $repoTrick,
+        Request $request,
+        FileUploader $fileUploader,
+        MediaRepository $repoMedia,
+        CommentRepository $repoComment
+    ) {
+        $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
+
+        $form = $this->createForm(DeleteType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reponse = $form->get('supprimer')->getData();
+            if ($reponse) {
+                if ($reponse == true) {
+                    // Suppression des commentaires
+                    $comments = $trick->getComments();
+                    foreach ($comments as $comment) {
+                        $repoComment->remove($comment, true);
+                    }
+                    // Suppression des medias
+                    $medias = $trick->getMedia();
+                    foreach ($medias as $media) {
+                        $fileUploader->deleteFile($media, $media->getTypeMedia(), $repoMedia);
+                    }
+                    // Suppression du trick
+                    $repoTrick->remove($trick, true);
+                    return new Response('<p class="text-success">Le trick a bien été supprimé.</p>');
+                }
+                return new Response('<p class="text-success">Le trick n\'a pas été supprimé.</p>');
+            }
+            return new Response('<p class="text-success">Le trick  n\'a pas été supprimé.</p>');
+        }
+
+        return $this->render('trick/delete_trick.html.twig', [
             'form' => $form->createView(),
             'trick' => $trick
         ]);
     }
 
     /**
-     *  @Route("/captcha", name="captcha")
+     * @Route("/captcha", name="captcha", host="127.0.0.1")
      */
     public function captcha(Captcha $captcha, Session $session)
     {

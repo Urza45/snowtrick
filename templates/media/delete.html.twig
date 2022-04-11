@@ -1,0 +1,35 @@
+<div class="container container-fluid">
+	<div class="row justify-content-evenly align-items-center">
+		<div class="col-lg-3 col-12">
+			{% if typeMedia.groupMedia == 'Image' %}
+				Photographie :
+			{% else %}
+				Vidéo :
+			{% endif %}
+		</div>
+		<div class="col-lg-5 col-12">
+			{% if typeMedia.groupMedia == 'Image' %}
+				<img src="{{ asset(media.thumbUrl) }}" class="small-picture">
+			{% else %}
+
+				{{ media.thumbUrl|raw }}
+			{% endif %}
+		</div>
+		<div class="col-lg-4 col-12">
+			<p class="statusMsg"></p>
+			{{ form_start(form, { attr: {'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
+			<div class="form-group">
+				Supprimer ?
+				{% for child in form.supprimer %}
+					{{- form_label(child, null) -}}&nbsp;
+					{{- form_widget(child) -}}&nbsp;
+				{% endfor %}
+				<input type="hidden" name="userId" id="userId" value="{{ media.id }}">
+				<input type="hidden" name="nameForm" id="nameForm" value="banUser">
+				<input type="hidden" name="route" id="route" value="{{ path("app_delete_media") }}">
+			</div>
+			{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>

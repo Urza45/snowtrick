@@ -11,7 +11,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
- * @UniqueEntity(fields={"slug"}, message="Le titre de votre article existe déjà.")
+ * @UniqueEntity(fields{"slug"}, message="Le titre de votre article existe déjà.")
  * @ORM\HasLifecycleCallbacks()
  */
 class Trick
@@ -139,11 +139,13 @@ class Trick
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
-        return $this;
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     public function getUser(): ?User
@@ -253,7 +255,7 @@ class Trick
     public function computeSlug(SluggerInterface $slugger)
     {
         if (!$this->slug || '-' === $this->slug) {
-            $this->slug = (string) $slugger->slug((string) $this);
+            $this->slug = (string) $slugger->slug((string) $this->getTitle())->lower();
         }
     }
 }

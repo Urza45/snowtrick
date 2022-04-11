@@ -7,15 +7,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class DeleteUserType extends AbstractType
+class DeleteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('supprimer', ChoiceType::class, [
                 'choices'  => [
-                    ' Oui ' => true,
-                    ' Non ' => false
+                    'Oui' => true,
+                    'Non' => false
                 ],
                 'expanded' => true,
             ]);

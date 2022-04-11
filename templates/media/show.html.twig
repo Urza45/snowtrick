@@ -1,0 +1,7 @@
+{% if typeMedia.groupMedia == 'Image' %}
+	<img class="img-fluid" src="{{ asset(media.url) }}" alt="{{ media.legend }}">
+{% else %}
+	<div class="text-center">
+		{{ media.url|raw }}
+	</div>
+{% endif %}
