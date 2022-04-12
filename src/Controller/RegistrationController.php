@@ -48,60 +48,57 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                // Captcha verification
-                if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
-                    $this->addFlash('notice', 'Le captcha saisi n\'est pas correct.');
-                    return $this->render('registration/register.html.twig', [
-                        'registrationForm' => $form->createView(),
-                    ]);
-                }
-
-                // encode the password
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('password')->getData()
-                    )
-                );
-                $user->setRoles(['ROLE_USER']);
-
-                // Assign default type of user
-                $user->setTypeUser($repoTypeUSer->findOneByLabel('Utilisateur enregistré'));
-
-                // Assign default picture profile
-                $avatar = new Avatar();
-                $avatar->setUrl('/medias/avatars/manProfil.jpg')
-                    ->setType('jpg');
-
-                $entityManager->persist($avatar);
-                //$user->computeSlug($slugger);
-                $user->setAvatar($avatar);
-
-                $entityManager->persist($user);
-
-                $entityManager->flush();
-
-                // generate a signed url and email it to the user
-                $this->emailVerifier->sendEmailConfirmation(
-                    'app_verify_email',
-                    $user,
-                    (new TemplatedEmail())
-                        ->from(new Address('sergepillay@gmail.com', 'SNOwTRICKS'))
-                        ->to($user->getEmail())
-                        ->subject('Confirmer votre email')
-                        ->htmlTemplate('registration/confirmation_email.html.twig')
-                );
-                // do anything else you need here, like send an email
-
-                return $userAuthenticator->authenticateUser(
-                    $user,
-                    $authenticator,
-                    $request
-                );
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Captcha verification
+            if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
+                $this->addFlash('notice', 'Le captcha saisi n\'est pas correct.');
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
             }
-            $this->addFlash('notice', 'La longueur du captcha saisi n\'est pas correcte.');
+
+            // encode the password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $user->setRoles(['ROLE_USER']);
+
+            // Assign default type of user
+            $user->setTypeUser($repoTypeUSer->findOneByLabel('Utilisateur enregistré'));
+
+            // Assign default picture profile
+            $avatar = new Avatar();
+            $avatar->setUrl('/medias/avatars/manProfil.jpg')
+                ->setType('jpg');
+
+            $entityManager->persist($avatar);
+            //$user->computeSlug($slugger);
+            $user->setAvatar($avatar);
+
+            $entityManager->persist($user);
+
+            $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
+                (new TemplatedEmail())
+                    ->from(new Address('sergepillay@gmail.com', 'SNOwTRICKS'))
+                    ->to($user->getEmail())
+                    ->subject('Confirmer votre email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+            // do anything else you need here, like send an email
+
+            return $userAuthenticator->authenticateUser(
+                $user,
+                $authenticator,
+                $request
+            );
         }
 
         return $this->render('registration/register.html.twig', [

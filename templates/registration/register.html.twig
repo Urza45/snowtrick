@@ -48,6 +48,7 @@
 				<label for="form_captcha"><img src="/captcha"/></label>
 				{{ form_label(registrationForm.captcha) }}
 				{{ form_widget(registrationForm.captcha) }}
+				<div class="text-light font-weight-bold">{{ form_errors(registrationForm.captcha) }}</div>
 			</div>
 
 		</div>
