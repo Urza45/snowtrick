@@ -7,7 +7,7 @@ parameters:
     upload_directory: '%kernel.project_dir%/public/medias'
     avatars_directory: '%kernel.project_dir%/public/medias/avatars'
     tricks_directory: '%kernel.project_dir%/public/medias/tricks'
-    police: '%kernel.project_dir%/public/fonts/28_Days_Later.ttF'
+    police: '%kernel.project_dir%/public/fonts/28_Days_Later.ttf'
     mail_from: 'sergepillay@gmail.com'
 
 services:
