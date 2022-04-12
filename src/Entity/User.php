@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"pseudo"}, message="Ce pseudo est déjà utilisé")
+ * @UniqueEntity(fields={"pseudo"},                   message="Ce pseudo est déjà utilisé")
  * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var                       string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
@@ -468,7 +468,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Set the value of captcha
      *
-     * @return  self
+     * @return self
      */
     public function setCaptcha($captcha)
     {

@@ -61,11 +61,12 @@ class FileUploader extends AbstractController
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
-            $message = $this->images_resize_carre($file, $directory . '/' . $fileName, 1200, 'center', false);
-            $message .= '<br/>' . $this->images_resize_carre($file, $directory . '/' . 'thumbs_' . $fileName, 200, 'center', true);
+            $message = $this->imagesResizeCarre($file, $directory . '/' . $fileName, 1200, 'center', false);
+            $message .= '<br/>'
+                . $this->imagesResizeCarre($file, $directory . '/' . 'thumbs_' . $fileName, 200, 'center', true);
             //$file->move($directory, $fileName);
         } catch (FileException $e) {
-            // ... handle exception if something happens during file 
+            // ... handle exception if something happens during file
             //$this->addFlash('notice', $e->getMessage());
             return [
                 'status' => 'fail',
@@ -124,7 +125,7 @@ class FileUploader extends AbstractController
     }
 
     /**
-     * images_resize_carre
+     * imagesResizeCarre
      *
      * @param  mixed $src
      * @param  mixed $dest
@@ -133,7 +134,7 @@ class FileUploader extends AbstractController
      * @param  mixed $carre
      * @return void
      */
-    private function images_resize_carre($src, $dest, $largeur, $pos, $carre = true)
+    private function imagesResizeCarre($src, $dest, $largeur, $pos, $carre = true)
     {
         list($srcX, $srcY, $type, $attr) = getimagesize($src);
 

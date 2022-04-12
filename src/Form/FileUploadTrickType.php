@@ -20,37 +20,48 @@ class FileUploadTrickType extends AbstractType
         $builder
             ->add('legend')
             //->add('url')
-            ->add('url', FileType::class, [
-                //'label' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'mapped' => false, // Tell that there is no Entity to link
-                'required' => true,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Le fichier est trop volumineux ({{ size }} {{ suffix }}). Maximum autorisé : {{ limit }} {{ suffix }}.',
-                        'mimeTypes' => [ // We want to let upload only txt, csv or Excel files
-                            'image/jpeg',
-                            'image/png'
-                        ],
-                        'mimeTypesMessage' => "Le type de votre photographie n'est pas valide.",
-                    ])
-                ],
-            ])
-            ->add('featurePicture', ChoiceType::class, [
-                'choices'  => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
-                'data' => false,
-                'expanded' => true,
-                'label' => 'Photographie mise en avant :',
-                'attr' => [
-                    'class' => 'form-control',
+            ->add(
+                'url',
+                FileType::class,
+                [
+                    //'label' => false,
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                    'mapped' => false, // Tell that there is no Entity to link
+                    'required' => true,
+                    'constraints' => [
+                        new File(
+                            [
+                                'maxSize' => '2M',
+                                'maxSizeMessage' => 'Le fichier est trop volumineux ({{ size }}'
+                                    . ' {{ suffix }}). Maximum autorisé : {{ limit }} {{ suffix }}.',
+                                'mimeTypes' => [ // We want to let upload only txt, csv or Excel files
+                                    'image/jpeg',
+                                    'image/png'
+                                ],
+                                'mimeTypesMessage' => "Le type de votre photographie n'est pas valide.",
+                            ]
+                        )
+                    ],
                 ]
-            ])
+            )
+            ->add(
+                'featurePicture',
+                ChoiceType::class,
+                [
+                    'choices'  => [
+                        'Oui' => true,
+                        'Non' => false,
+                    ],
+                    'data' => false,
+                    'expanded' => true,
+                    'label' => 'Photographie mise en avant :',
+                    'attr' => [
+                        'class' => 'form-control',
+                    ]
+                ]
+            )
             // ->add('typeMedia', EntityType::class, [
             //     // looks for choices from this entity
             //     'class' => TypeMedia::class,
@@ -76,8 +87,10 @@ class FileUploadTrickType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            // 'data_class' => Media::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                // 'data_class' => Media::class,
+            ]
+        );
     }
 }

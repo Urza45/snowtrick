@@ -14,22 +14,27 @@ class ChangePasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('oldPassword', PasswordType::class, [
-                'label' => 'Votre mot de passe actuel :',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Votre mot de passe actuel'
+            ->add(
+                'oldPassword',
+                PasswordType::class,
+                [
+                    'label' => 'Votre mot de passe actuel :',
+                    'attr' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Votre mot de passe actuel'
+                    ]
                 ]
-            ])
+            )
             ->add('newPassword', RepeatedPasswordType::class)
-            ->add('send', SubmitType::class); // We could have added it in the view, as stated in the framework recommendations
-        ;
+            ->add('send', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            // Configure your form options here
-        ]);
+        $resolver->setDefaults(
+            [
+                // Configure your form options here
+            ]
+        );
     }
 }

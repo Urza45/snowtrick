@@ -34,12 +34,15 @@ class TrickController extends AbstractController
      */
     public function index(TrickRepository $repoTrick): Response
     {
-        return $this->render('trick/index.html.twig', [
-            'tricksCount' => $repoTrick->count([]),
-            'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
-            'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
-            'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, 0)
-        ]);
+        return $this->render(
+            'trick/index.html.twig',
+            [
+                'tricksCount' => $repoTrick->count([]),
+                'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
+                'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
+                'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, 0)
+            ]
+        );
     }
 
     /**
@@ -49,29 +52,40 @@ class TrickController extends AbstractController
     {
         $tricks = $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'));
 
-        return $this->render('trick/show_more_trick.html.twig', [
-            'tricksCount' => $repoTrick->count([]),
-            'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
-            'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
-            'index' => $request->get('index'),
-            'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'))
-        ]);
+        return $this->render(
+            'trick/show_more_trick.html.twig',
+            [
+                'tricksCount' => $repoTrick->count([]),
+                'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
+                'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
+                'index' => $request->get('index'),
+                'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'))
+            ]
+        );
     }
 
     /**
-     * @Route("/showmorecomment/{index}", name="show_more_comment", methods={"GET", "POST"},requirements={"index"="\d+"} )
+     * @Route("/morecomment/{index}", name="show_more_comment", methods={"GET", "POST"}, requirements={"index"="\d+"} )
      */
     public function showMoreComment(Request $request, TrickRepository $repoTrick, CommentRepository $repoComment)
     {
         $trick = $repoTrick->findOneBy(['id' => $request->get('trickId')]);
 
-        return $this->render('comment/index.html.twig', [
-            'trick' => $trick,
-            'listComment' => $repoComment->findBy(['trick' => $trick], ['id' => 'DESC'], self::NUMBER_COMMENT_BY_PAGE, $request->get('index')),
-            'commentsCount' => $repoComment->count(['trick' => $trick]),
-            'index' => $request->get('index'),
-            'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
-        ]);
+        return $this->render(
+            'comment/index.html.twig',
+            [
+                'trick' => $trick,
+                'listComment' => $repoComment->findBy(
+                    ['trick' => $trick],
+                    ['id' => 'DESC'],
+                    self::NUMBER_COMMENT_BY_PAGE,
+                    $request->get('index')
+                ),
+                'commentsCount' => $repoComment->count(['trick' => $trick]),
+                'index' => $request->get('index'),
+                'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
+            ]
+        );
     }
 
     /**
@@ -98,28 +112,36 @@ class TrickController extends AbstractController
 
 
             if ($repoTrick->findOneBySlug($trick->getSlug()) !== null) {
-
                 $this->addFlash('notice', 'Un article possède déjà ce titre.');
-                return $this->render('trick/modify_trick.html.twig', [
-                    'form' => $form->createView(),
-                    'trick' => $trick,
-                    'add' => 1
-                ]);
+                return $this->render(
+                    'trick/modify_trick.html.twig',
+                    [
+                        'form' => $form->createView(),
+                        'trick' => $trick,
+                        'add' => 1
+                    ]
+                );
             }
 
             $manager->flush();
 
             $this->addFlash('success', 'Votre article a bien été enregistré.');
-            return $this->redirectToRoute('modify_trick', [
-                'slug' => $trick->getSlug(),
-            ]);
+            return $this->redirectToRoute(
+                'modify_trick',
+                [
+                    'slug' => $trick->getSlug(),
+                ]
+            );
         }
 
-        return $this->render('trick/modify_trick.html.twig', [
-            'form' => $form->createView(),
-            'trick' => $trick,
-            'add' => 1
-        ]);
+        return $this->render(
+            'trick/modify_trick.html.twig',
+            [
+                'form' => $form->createView(),
+                'trick' => $trick,
+                'add' => 1
+            ]
+        );
     }
 
     /**
@@ -151,15 +173,23 @@ class TrickController extends AbstractController
                 // Captcha verification
                 if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
                     $this->addFlash('comment', 'Le captcha saisi n\'est pas correct.');
-                    return $this->render('trick/show_trick.html.twig', [
-                        'trick' => $trick,
-                        'formComment' => $form->createView(),
-                        'listComment' => $repoComment->findBy(['trick' => $trick], ['id' => 'DESC'], self::NUMBER_COMMENT_BY_PAGE, 0),
-                        'commentsCount' => $repoComment->count(['trick' => $trick]),
-                        'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
-                        'pictures' => $pictures,
-                        'videos' => $videos
-                    ]);
+                    return $this->render(
+                        'trick/show_trick.html.twig',
+                        [
+                            'trick' => $trick,
+                            'formComment' => $form->createView(),
+                            'listComment' => $repoComment->findBy(
+                                ['trick' => $trick],
+                                ['id' => 'DESC'],
+                                self::NUMBER_COMMENT_BY_PAGE,
+                                0
+                            ),
+                            'commentsCount' => $repoComment->count(['trick' => $trick]),
+                            'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
+                            'pictures' => $pictures,
+                            'videos' => $videos
+                        ]
+                    );
                 }
                 $comment->setDisabled(false);
                 $comment->setNew(true);
@@ -171,15 +201,23 @@ class TrickController extends AbstractController
                 $this->addFlash('success', 'Votre commentaire a bien été enregistré.');
             }
 
-            return $this->render('trick/show_trick.html.twig', [
-                'trick' => $trick,
-                'formComment' => $form->createView(),
-                'listComment' => $repoComment->findBy(['trick' => $trick], ['id' => 'DESC'], self::NUMBER_COMMENT_BY_PAGE, 0),
-                'commentsCount' => $repoComment->count(['trick' => $trick]),
-                'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
-                'pictures' => $pictures,
-                'videos' => $videos
-            ]);
+            return $this->render(
+                'trick/show_trick.html.twig',
+                [
+                    'trick' => $trick,
+                    'formComment' => $form->createView(),
+                    'listComment' => $repoComment->findBy(
+                        ['trick' => $trick],
+                        ['id' => 'DESC'],
+                        self::NUMBER_COMMENT_BY_PAGE,
+                        0
+                    ),
+                    'commentsCount' => $repoComment->count(['trick' => $trick]),
+                    'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
+                    'pictures' => $pictures,
+                    'videos' => $videos
+                ]
+            );
         }
 
         return $this->redirectToRoute('trick_home');
@@ -188,8 +226,12 @@ class TrickController extends AbstractController
     /**
      * @Route("/manageTrick/modify/{slug}", name="modify_trick")
      */
-    public function modifyTrick(TrickRepository $repoTrick, Request $request, ManagerRegistry $doctrine, MediaRepository $repoMedia)
-    {
+    public function modifyTrick(
+        TrickRepository $repoTrick,
+        Request $request,
+        ManagerRegistry $doctrine,
+        MediaRepository $repoMedia
+    ) {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
         $pictures = $repoMedia->getImage($trick->getId());
@@ -207,12 +249,15 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Vos modifications ont bien été enregistrées.');
         };
 
-        return $this->render('trick/modify_trick.html.twig', [
-            'form' => $form->createView(),
-            'trick' => $trick,
-            'pictures' => $pictures,
-            'videos' => $videos
-        ]);
+        return $this->render(
+            'trick/modify_trick.html.twig',
+            [
+                'form' => $form->createView(),
+                'trick' => $trick,
+                'pictures' => $pictures,
+                'videos' => $videos
+            ]
+        );
     }
 
     /**
@@ -253,10 +298,13 @@ class TrickController extends AbstractController
             return new Response('<p class="text-success">Le trick  n\'a pas été supprimé.</p>');
         }
 
-        return $this->render('trick/delete_trick.html.twig', [
-            'form' => $form->createView(),
-            'trick' => $trick
-        ]);
+        return $this->render(
+            'trick/delete_trick.html.twig',
+            [
+                'form' => $form->createView(),
+                'trick' => $trick
+            ]
+        );
     }
 
     /**

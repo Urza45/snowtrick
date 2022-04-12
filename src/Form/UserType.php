@@ -23,20 +23,26 @@ class UserType extends AbstractType
             ->add('salt', HiddenType::class)
             ->add('validationKey', HiddenType::class)
             ->add('activatedUser', HiddenType::class)
-            ->add('isVerified', ChoiceType::class, [
+            ->add(
+                'isVerified',
+                ChoiceType::class,
+                [
                 'choices'  => [
                     ' Non ' => false,
                     ' Oui ' => true
                 ],
                 'expanded' => true,
                 'disabled' => 'disabled'
-            ]);
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => User::class,
-        ]);
+            ]
+        );
     }
 }

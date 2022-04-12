@@ -13,8 +13,11 @@ class DocumentController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('document/index.html.twig', [
+        return $this->render(
+            'document/index.html.twig',
+            [
             'controller_name' => 'DocumentController',
-        ]);
+            ]
+        );
     }
 }

@@ -19,9 +19,12 @@ class ManagingCommentsController extends AbstractController
     {
         $comments = $repoComment->findAll();
 
-        return $this->render('managing_comments/index.html.twig', [
+        return $this->render(
+            'managing_comments/index.html.twig',
+            [
             'comments' => $comments,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -34,10 +37,13 @@ class ManagingCommentsController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        return $this->render('managing_comments/show_comment.html.twig', [
+        return $this->render(
+            'managing_comments/show_comment.html.twig',
+            [
             'form' => $form->createView(),
             'requete' => $request
-        ]);
+            ]
+        );
     }
 
     /**

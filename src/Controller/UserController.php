@@ -43,12 +43,15 @@ class UserController extends AbstractController
             $this->addFlash('success', 'Vos modifications sont bien enregistrées.');
         }
 
-        return $this->render('user/index.html.twig', [
+        return $this->render(
+            'user/index.html.twig',
+            [
             'user' => $user,
             'formUser' => $form->createView(),
             'tricks' => $tricks,
             'comments' => $comments
-        ]);
+            ]
+        );
     }
 
     /**
@@ -65,7 +68,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $file = $form['upload_file']->getData();
             if ($file) {
                 $fileName = $fileUploader->upload($file, $request, 'avatar');
@@ -105,12 +107,15 @@ class UserController extends AbstractController
         $user = $repoUser->findOneBy(['id' => $request->request->get('userId')]);
         $avatar = $repoAvatar->findOneBy(['id' => $user->getAvatar()]);
 
-        return $this->render('service/file_upload_avatar.html.twig', [
+        return $this->render(
+            'service/file_upload_avatar.html.twig',
+            [
             'form' => $form->createView(),
             'request' => $request,
             'user' => $user,
             'avatar' => $avatar
-        ]);
+            ]
+        );
     }
 
     /**
@@ -127,7 +132,6 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-
                 $manager = $doctrine->getManager();
                 $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
 
@@ -150,8 +154,11 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user');
         }
 
-        return $this->render('user/change_password.html.twig', [
+        return $this->render(
+            'user/change_password.html.twig',
+            [
             'formPassword' => $form->createView(),
-        ]);
+            ]
+        );
     }
 }

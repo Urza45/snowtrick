@@ -19,20 +19,26 @@ class TrickType extends AbstractType
             //->add('createdAt')
             //->add('updatedAt')
             // ->add('user')
-            ->add('category', EntityType::class, [
+            ->add(
+                'category',
+                EntityType::class,
+                [
                 'label' => 'Groupe de la figure : ',
                 // looks for choices from this entity
                 'class' => Category::class,
                 // uses the User.username property as the visible option string
                 'choice_label' => 'label',
                 'choice_value' => 'id'
-            ]);
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Trick::class,
-        ]);
+            ]
+        );
     }
 }

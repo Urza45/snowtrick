@@ -14,14 +14,21 @@ class ModifyMediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('legend', TextType::class, [
+            ->add(
+                'legend',
+                TextType::class,
+                [
                 'label' => 'Légende :',
                 'attr' => [
                     'class' => 'form-control',
                 ]
-            ])
+                ]
+            )
             //->add('url')
-            ->add('featurePicture', ChoiceType::class, [
+            ->add(
+                'featurePicture',
+                ChoiceType::class,
+                [
                 'choices'  => [
                     'Oui' => true,
                     'Non' => false,
@@ -32,7 +39,8 @@ class ModifyMediaType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ]
-            ])
+                ]
+            )
             //->add('thumbUrl')
             //->add('typeMedia')
             //->add('trick')
@@ -41,8 +49,10 @@ class ModifyMediaType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Media::class,
-        ]);
+            ]
+        );
     }
 }

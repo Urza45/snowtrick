@@ -12,14 +12,15 @@ class TypeUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('label')
-        ;
+            ->add('label');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => TypeUser::class,
-        ]);
+            ]
+        );
     }
 }

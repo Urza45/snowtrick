@@ -52,9 +52,12 @@ class RegistrationController extends AbstractController
             // Captcha verification
             if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
                 $this->addFlash('notice', 'Le captcha saisi n\'est pas correct.');
-                return $this->render('registration/register.html.twig', [
+                return $this->render(
+                    'registration/register.html.twig',
+                    [
                     'registrationForm' => $form->createView(),
-                ]);
+                    ]
+                );
             }
 
             // encode the password
@@ -101,9 +104,12 @@ class RegistrationController extends AbstractController
             );
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render(
+            'registration/register.html.twig',
+            [
             'registrationForm' => $form->createView(),
-        ]);
+            ]
+        );
     }
 
     /**

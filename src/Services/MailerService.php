@@ -19,7 +19,7 @@ class MailerService extends AbstractController
     /**
      * twig
      *
-     * @var Environnement 
+     * @var Environnement
      */
     private $twig;
 
@@ -33,9 +33,9 @@ class MailerService extends AbstractController
     /**
      * __construct
      *
-     * @param  string $mailFrom
+     * @param  string          $mailFrom
      * @param  MailerInterface $mailer
-     * @param  Environment $twig
+     * @param  Environment     $twig
      * @return void
      */
     public function __construct($mailFrom, MailerInterface $mailer, Environment $twig)
@@ -47,7 +47,7 @@ class MailerService extends AbstractController
 
     /**
      * send
-     * 
+     *
      * @param  array $array
      * @return void
      */

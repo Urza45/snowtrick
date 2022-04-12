@@ -14,14 +14,15 @@ class AvatarType extends AbstractType
         $builder
             ->add('legend')
             ->add('url')
-            ->add('type')
-        ;
+            ->add('type');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Avatar::class,
-        ]);
+            ]
+        );
     }
 }

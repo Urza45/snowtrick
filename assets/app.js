@@ -82,7 +82,7 @@ $(function () {
         var nbCommentByPage = $(this).data("commentsbypage");
         var nbcomment = $(this).data("nbcomments");
         var newNbComment = pageComment * nbCommentByPage;
-        var urlDest = "/showmorecomment/" + newNbComment;
+        var urlDest = "/morecomment/" + newNbComment;
         // AJAX request
         $.ajax({
             url: urlDest,

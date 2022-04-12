@@ -68,19 +68,22 @@ $(function () {
                 }
                 var lastName = $("input[name='show_user[lastName]'").val().trim();
                 if (lastName === "") {
-                    if (message !== "") { message = message + "<br/>"; }
+                    if (message !== "") {
+                        message = message + "<br/>"; }
                     message = message + "Vous devez saisir un nom.";
                     verif = false;
                 }
                 // var firstName = $("input[name='show_user[firstName]'").val();
                 var email = $("input[name='show_user[email]'").val().trim();
                 if (email === "") {
-                    if (message !== "") { message = message + "<br/>"; }
+                    if (message !== "") {
+                        message = message + "<br/>"; }
                     message = message + "Vous devez saisir un email.";
                     verif = false;
                 }
                 if ((email !== "") && (!reg.test(email))) {
-                    if (message !== "") { message = message + "<br/>"; }
+                    if (message !== "") {
+                        message = message + "<br/>"; }
                     message = message + "Vous devez saisir un email valide.";
                     verif = false;
                 }
@@ -88,7 +91,8 @@ $(function () {
                 // var cellPhone = $("input[name='show_user[cellPhone]'").val();
                 var roles = $("#show_user_roles").val();
                 if (roles.toString().trim() === "") {
-                    if (message !== "") { message = message + "<br/>"; }
+                    if (message !== "") {
+                        message = message + "<br/>"; }
                     message = message + "Vous devez choisir au moins un roles.";
                     verif = false;
                 }
@@ -100,13 +104,15 @@ $(function () {
             case "addPictureTrick":
                 var legend = $("input[name='file_upload_trick[legend]'").val().trim();
                 if (legend === "") {
-                    if (message !== "") { message = message + "<br/>"; }
+                    if (message !== "") {
+                        message = message + "<br/>"; }
                     message = message + "Vous devez saisir un nom de photo.";
                     verif = false;
                 }
                 var file = $("input[name='file_upload_trick[url]'").val().trim();
                 if (file === "") {
-                    if (message !== "") { message = message + "<br/>"; }
+                    if (message !== "") {
+                        message = message + "<br/>"; }
                     message = message + "Vous devez choisir un fichier.";
                     verif = false;
                 }
@@ -148,7 +154,8 @@ $(function () {
         }
     });
 
-    function verif() {
+    function verif()
+    {
 
     };
 })

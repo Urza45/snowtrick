@@ -82,9 +82,12 @@ class ForgotPasswordController extends AbstractController
             $this->redirectToRoute('app_login');
         }
 
-        return $this->render('forgot_password/index.html.twig', [
+        return $this->render(
+            'forgot_password/index.html.twig',
+            [
             'forgotPasswordForm' => $form->createView(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -144,9 +147,12 @@ class ForgotPasswordController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('forgot_password/reset_password_html.twig', [
+        return $this->render(
+            'forgot_password/reset_password_html.twig',
+            [
             'forgotPasswordForm' => $form->createView()
-        ]);
+            ]
+        );
     }
 
     private function getCredentialsFromSession(): array
