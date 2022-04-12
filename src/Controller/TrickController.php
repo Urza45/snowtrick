@@ -260,7 +260,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/captcha", name="captcha", host="127.0.0.1")
+     * @Route("/captcha", name="captcha")
      */
     public function captcha(Captcha $captcha, Session $session)
     {
