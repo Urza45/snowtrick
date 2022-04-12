@@ -45,7 +45,18 @@
 				'class': 'form-control'
 			}
 		    }) }}
+
+
+		<div>
+			{% for child in formUser.isVerified %}
+				{{- form_label(child, null) -}}&nbsp;
+				{{- form_widget(child) -}}&nbsp;
+			{% endfor %}
+		</div>
 	</div>
+	<pre>
+		{{ dump(formUser) }}
+	</pre>
 	<div class="col-lg-3 col-12 text-center">
 		<button class="btn btn-lg btn-md btn-primary" type="submit">
 			Enregistrer

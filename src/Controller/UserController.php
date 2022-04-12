@@ -29,6 +29,7 @@ class UserController extends AbstractController
     ): Response {
         $user = new User();
         $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
+
         $tricks = $user->getTricks();
         $comments = $user->getComments();
         $manager = $doctrine->getManager();
