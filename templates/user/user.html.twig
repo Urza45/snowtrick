@@ -46,8 +46,9 @@
 			}
 		    }) }}
 
-
+		<br/>
 		<div>
+			Email vérifié :
 			{% for child in formUser.isVerified %}
 				{{- form_label(child, null) -}}&nbsp;
 				{{- form_widget(child) -}}&nbsp;
@@ -68,8 +69,6 @@
 	</div>
 	{{ form_rest(formUser) }}
 	{{ form_end(formUser) }}
-
-
 </div>
 <div class="row justify-content-evenly">
 	<div class="col-lg-12"></div>

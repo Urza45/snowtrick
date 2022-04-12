@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class UserType extends AbstractType
@@ -22,7 +23,14 @@ class UserType extends AbstractType
             ->add('salt', HiddenType::class)
             ->add('validationKey', HiddenType::class)
             ->add('activatedUser', HiddenType::class)
-            ->add('isVerified', HiddenType::class);
+            ->add('isVerified', ChoiceType::class, [
+                'choices'  => [
+                    ' Non ' => false,
+                    ' Oui ' => true
+                ],
+                'expanded' => true,
+                'disabled' => 'disabled'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
