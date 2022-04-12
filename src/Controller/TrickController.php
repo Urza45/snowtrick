@@ -109,7 +109,7 @@ class TrickController extends AbstractController
 
 
             if ($repoTrick->findOneBySlug($trick->getSlug()) !== null) {
-                $this->addFlash('notice', 'Un article possède déjà ce titre.');
+                $this->addFlash('notice', 'Une figure possède déjà ce titre.');
                 return $this->render(
                     'trick/modify_trick.html.twig',
                     [
@@ -122,7 +122,7 @@ class TrickController extends AbstractController
 
             $manager->flush();
 
-            $this->addFlash('success', 'Votre article a bien été enregistré.');
+            $this->addFlash('success', 'Votre figure a bien été enregistrée.');
             return $this->redirectToRoute(
                 'modify_trick',
                 [
@@ -227,7 +227,8 @@ class TrickController extends AbstractController
         TrickRepository $repoTrick,
         Request $request,
         ManagerRegistry $doctrine,
-        MediaRepository $repoMedia
+        MediaRepository $repoMedia,
+        SluggerInterface $slugger
     ) {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
@@ -240,7 +241,32 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $doctrine->getManager();
 
-            //$manager->persist($trick);
+            $trick->setSlug((string) $slugger->slug((string) $trick->getTitle())->lower());
+            $manager->persist($trick);
+
+            $tricks = $repoTrick->findBySlug($trick->getSlug());
+
+            $verif = false;
+            foreach ($tricks as $sample) {
+                if ($sample->getId() !== $trick->getId()) {
+                    $verif = true;
+                }
+            }
+
+            if ($verif) {
+                $this->addFlash('notice', 'Une figure possède déjà ce titre.');
+                return $this->render(
+                    'trick/modify_trick.html.twig',
+                    [
+                        'form' => $form->createView(),
+                        'trick' => $trick,
+                        'pictures' => $pictures,
+                        'videos' => $videos
+                    ]
+                );
+            }
+
+            $manager->persist($trick);
             $manager->flush();
 
             $this->addFlash('success', 'Vos modifications ont bien été enregistrées.');
