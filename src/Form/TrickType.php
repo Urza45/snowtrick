@@ -15,13 +15,12 @@ class TrickType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('chapo')
             ->add('content')
             //->add('createdAt')
             //->add('updatedAt')
             // ->add('user')
             ->add('category', EntityType::class, [
-                'label' => 'Catégorie : ',
+                'label' => 'Groupe de la figure : ',
                 // looks for choices from this entity
                 'class' => Category::class,
                 // uses the User.username property as the visible option string

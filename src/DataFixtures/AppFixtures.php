@@ -77,7 +77,6 @@ class AppFixtures extends Fixture
             // Trick
             $trick = new Trick();
             $trick->setTitle('Un exemple de figure de ' . $category->getLabel());
-            $trick->setChapo('Une courte description de cette figure de  snowboard libre.');
             $trick->setContent('Ici sera la description détaillée');
             $trick->setCreatedAt($date);
             $trick->setUpdatedAt($date);

@@ -29,11 +29,6 @@ class Trick
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $chapo;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $content;
@@ -94,18 +89,6 @@ class Trick
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getChapo(): ?string
-    {
-        return $this->chapo;
-    }
-
-    public function setChapo(string $chapo): self
-    {
-        $this->chapo = $chapo;
 
         return $this;
     }
