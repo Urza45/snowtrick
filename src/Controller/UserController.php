@@ -39,7 +39,7 @@ class UserController extends AbstractController
             $user->setStatusConnected(true);
             $manager->persist($user);
             $manager->flush();
-            $this->addFlash('notice', 'Vos modifications sont bien enregitrées.');
+            $this->addFlash('success', 'Vos modifications sont bien enregistrées.');
         }
 
         return $this->render('user/index.html.twig', [
