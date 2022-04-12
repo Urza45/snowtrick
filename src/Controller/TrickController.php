@@ -50,8 +50,6 @@ class TrickController extends AbstractController
      */
     public function showMoreTrick(Request $request, TrickRepository $repoTrick)
     {
-        $tricks = $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'));
-
         return $this->render(
             'trick/show_more_trick.html.twig',
             [
@@ -95,8 +93,7 @@ class TrickController extends AbstractController
         Request $request,
         UserRepository $repoUser,
         ManagerRegistry $doctrine,
-        TrickRepository $repoTrick,
-        SluggerInterface $slugger
+        TrickRepository $repoTrick
     ) {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);

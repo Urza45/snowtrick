@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Entity\Media;
 use App\Entity\TypeMedia;
 use App\Repository\MediaRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -48,7 +47,7 @@ class FileUploader extends AbstractController
         $this->slugger = $slugger;
     }
 
-    public function upload(UploadedFile $file, Request $request, $type = 'tricks')
+    public function upload(UploadedFile $file, $type = 'tricks')
     {
         $directory = $this->getTricksDirectory();
         //if (in_array($request->getPathInfo(), ['/profile', '/profile/change_picture', '/register'])) {
