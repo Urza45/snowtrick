@@ -15,6 +15,20 @@
 				<i class="fa-solid fa-right-from-bracket"></i>
 			</h1>
 		</a>
+		<a class="py-3 px-0 px-lg-3 rounded" href="{{ path('app_user') }}">
+			{% if app.user.avatar %}
+				<img src="{{ asset(app.user.avatar.url) }}" class="rounded-circle" height="35px"/>
+			{% else %}
+				<img src="{{ asset('medias/avatars/manProfil.jpg') }}" class="rounded-circle" width="40px" height="35px"/>
+			{% endif %}
+		</a>
+		{% if 'ROLE_ADMIN' in app.user.roles %}
+			<a class="btn text-light" href="{{ path('admin_home') }}">
+				<h1>
+					<i class="fa-solid fa-gear"></i>
+				</h1>
+			</a>
+		{% endif %}
 	{% else %}
 		<a class="btn text-light" href="{{ path('app_login') }}">
 			<h1>
