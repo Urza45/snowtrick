@@ -67,7 +67,7 @@ class UserController extends AbstractController
 
             $file = $form['upload_file']->getData();
             if ($file) {
-                $fileName = $fileUploader->upload($file, $request);
+                $fileName = $fileUploader->upload($file, $request, 'avatar');
                 $extension = pathinfo($file, PATHINFO_EXTENSION);
                 if ($fileName !== null) {
                     $manager = $doctrine->getManager();
@@ -86,8 +86,8 @@ class UserController extends AbstractController
                         $avatar->setType($extension);
                         $manager->persist($avatar);
                     }
-
-                    $avatar->setUrl('medias/avatars/' . $fileName);
+                    dump($fileName);
+                    $avatar->setUrl('medias/avatars/' . $fileName['message']);
 
                     $manager->flush();
 
@@ -101,6 +101,7 @@ class UserController extends AbstractController
             //$this->addFlash('notice', $form->getErrors(true)[0]->getMessageTemplate());
             //return $this->redirectToRoute('app_user');
         }
+
         $user = $repoUser->findOneBy(['id' => $request->request->get('userId')]);
         $avatar = $repoAvatar->findOneBy(['id' => $user->getAvatar()]);
 
