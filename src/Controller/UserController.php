@@ -86,7 +86,6 @@ class UserController extends AbstractController
                         $avatar->setType($extension);
                         $manager->persist($avatar);
                     }
-                    dump($fileName);
                     $avatar->setUrl('medias/avatars/' . $fileName['message']);
 
                     $manager->flush();
