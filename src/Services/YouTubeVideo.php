@@ -58,6 +58,6 @@ class YouTubeVideo extends AbstractController
             $videoEmbedImg     = 'https://i3.ytimg.com/vi/' . $videoId . '/hqdefault.jpg';
         }
 
-        return '<img src="' . $videoEmbedImg . '"  class="small-picture img-fluid" width="200px" />';
+        return '<img src="' . $videoEmbedImg . '"  class="img-fluid" width="500px" />';
     }
 }

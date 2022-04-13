@@ -224,7 +224,7 @@ class MediaController extends AbstractController
             $manager->persist($media);
             $manager->flush();
 
-            return new Response('Nouvelle URL : ' . $newUrl . '<br/>' . $newImage);
+            return new Response('<center>' . $newUrl . '<br/>' . $newImage . '</center>');
         }
 
         return $this->render(

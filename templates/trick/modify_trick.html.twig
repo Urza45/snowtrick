@@ -98,7 +98,19 @@
 									</button>
 								</div>
 								<div class="col-lg-10">
-									{% include "trick/carousel.html.twig" %}
+									{% if trick.media.count is same as(0) %}
+										<p>Pas de média disponible.</p>
+									{% else %}
+										{% if trick.media.count < 4 %}
+											<div>
+												{% include "trick/medias.html.twig" %}
+											</div>
+										{% else %}
+											<div>
+												{% include "trick/carousel.html.twig" %}
+											</div>
+										{% endif %}
+									{% endif %}
 								</div>
 							</div>
 						</div>
