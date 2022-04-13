@@ -15,19 +15,26 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content', TextareaType::class, [
+            ->add(
+                'content',
+                TextareaType::class,
+                [
                 'label' => 'Votre commentaire :',
                 'attr' => [
                     'class' => 'form-control'
                 ]
-            ])
+                ]
+            )
             // ->add('createdAt')
             // ->add('disabled')
             // ->add('new')
             // ->add('updatedAt')
             // ->add('user')
             // ->add('trick')
-            ->add('captcha', IntegerType::class, [
+            ->add(
+                'captcha',
+                IntegerType::class,
+                [
                 'label' => '',
                 'invalid_message' => 'Vous devez saisir un nombre',
                 'attr' => [
@@ -35,19 +42,24 @@ class CommentType extends AbstractType
                     'placeholder' => 'Captcha *'
                 ],
                 'constraints' => [
-                    new Length([
+                    new Length(
+                        [
                         'min' => 4,
                         'max' => 4,
                         'exactMessage' => 'Votre captcha doit contenir exactement 4 caractères.',
-                    ]),
+                        ]
+                    ),
                 ]
-            ]);
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Comment::class,
-        ]);
+            ]
+        );
     }
 }

@@ -1,0 +1,51 @@
+<div class="container container-fluid ">
+	<div class="row justify-content-evenly text-dark">
+		{% for picture in pictures %}
+
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-img">
+						<img src="{{ asset(picture.thumbUrl) }}" width="200px" class="img-fluid">
+					</div>
+					<div class="card-body">
+						{{ picture.legend }}<br/>
+						<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ picture.id }}" data-affiche="yes" data-route="{{ path('app_media') }}" data-title="{{ picture.legend }}">
+							<i class="fa-solid fa-eye"></i>
+						</button>
+						{% if app.user %}
+							<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ picture.id }}" data-affiche="yes" data-route="{{ path('app_modif_media') }}" data-title="{{ picture.legend }}">
+								<i class="fa-solid fa-pencil"></i>
+							</button>
+							<button class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ picture.id }}" data-affiche="yes" data-route="{{ path('app_delete_media') }}" data-title="{{ picture.legend }}">
+								<i class="fa-solid fa-trash-can"></i>
+							</button>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		{% for video in videos %}
+			<div class="col-md-3 d-block h-50">
+				<div class="card">
+					<div class="card-img">
+						{{ video.thumbUrl|raw }}
+					</div>
+					<div class="card-body">
+						{{ video.legend }}<br/>
+						<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ video.id }}" data-affiche="yes" data-route="{{ path('app_media') }}" data-title="{{ video.legend }}">
+							<i class="fa-brands fa-youtube"></i>
+						</button>
+						{% if app.user %}
+							<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ video.id }}" data-affiche="yes" data-route="{{ path('app_modif_media') }}" data-title="{{ video.legend }}">
+								<i class="fa-solid fa-pencil"></i>
+							</button>
+							<button class="btn userinfo text-danger" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ video.id }}" data-affiche="yes" data-route="{{ path('app_delete_media') }}" data-title="{{ video.legend }}">
+								<i class="fa-solid fa-trash-can"></i>
+							</button>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>

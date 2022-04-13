@@ -11,7 +11,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
- * @UniqueEntity(fields={"slug"}, message="Le titre de votre article existe déjà.")
+ * @UniqueEntity(fields={"slug"},                      message="Le titre de votre article existe déjà.")
  * @ORM\HasLifecycleCallbacks()
  */
 class Trick
@@ -27,11 +27,6 @@ class Trick
      * @ORM\Column(type="string", length=255)
      */
     private $title;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $chapo;
 
     /**
      * @ORM\Column(type="text")
@@ -94,18 +89,6 @@ class Trick
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getChapo(): ?string
-    {
-        return $this->chapo;
-    }
-
-    public function setChapo(string $chapo): self
-    {
-        $this->chapo = $chapo;
 
         return $this;
     }

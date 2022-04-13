@@ -1,29 +1,29 @@
 .table {
-    background-color: $colour-secondary;
+  background-color: $colour-secondary;
 }
 
 .tablehead {
-    display: none;
+  display: none;
 }
 
 @media (max-width: 700px) {
-    .tablehead {
-        font-weight: bold;
-        display: inline;
-    }
+  .tablehead {
+    font-weight: bold;
+    display: inline;
+  }
 
-    .table thead {
-        display: none;
-    }
+  .table thead {
+    display: none;
+  }
 
-    .table tr {
-        display: block;
+  .table tr {
+    display: block;
 
-        //margin-bottom: 10px;
-    }
+    //margin-bottom: 10px;
+  }
 
-    .table td {
-        display: block;
-        text-align: left;
-    }
+  .table td {
+    display: block;
+    text-align: left;
+  }
 }

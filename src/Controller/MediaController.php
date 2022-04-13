@@ -31,12 +31,15 @@ class MediaController extends AbstractController
         $media = $repoMedia->findOneBy(['id' => $request->get('userId')]);
         $typeMedia = $repoTypeMedia->findOneBy(['id' => $media->getTypeMedia()]);
 
-        return $this->render('media/show.html.twig', [
-            'controller_name' => 'MediaController',
-            'request' => $request,
-            'media' => $media,
-            'typeMedia' => $typeMedia
-        ]);
+        return $this->render(
+            'media/show.html.twig',
+            [
+                'controller_name' => 'MediaController',
+                'request' => $request,
+                'media' => $media,
+                'typeMedia' => $typeMedia
+            ]
+        );
     }
 
     /**
@@ -67,12 +70,15 @@ class MediaController extends AbstractController
             return new Response('<p class="text-danger">' . $form->getErrors(true, true) . '</p>');
         }
 
-        return $this->render('media/modify.html.twig', [
-            'form' => $form->createView(),
-            'request' => $request,
-            'media' => $media,
-            'typeMedia' => $typeMedia
-        ]);
+        return $this->render(
+            'media/modify.html.twig',
+            [
+                'form' => $form->createView(),
+                'request' => $request,
+                'media' => $media,
+                'typeMedia' => $typeMedia
+            ]
+        );
     }
 
     /**
@@ -91,43 +97,42 @@ class MediaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reponse = $form->get('supprimer')->getData();
-
-            if ($reponse) {
-                if ($reponse == true) {
-                    $message = '';
-                    if ($typeMedia->getGroupMedia() == 'Image') {
-                        // Suppression de la miniature
-                        if (!unlink($media->getThumbUrl())) {
-                            $message .= 'La miniature n\'a pas pas pu être supprimée';
-                        };
-                        // Suppression de l'image
-                        if (!unlink($media->getUrl())) {
-                            if ($message <> '') {
-                                $message .= '<br/>';
-                            }
-                            $message .= 'La photographie n\'a pas pas pu être supprimée';
-                        };
-                    }
-                    if ($message <> '') {
-                        $message .= 'L\'entrée en base de données est conservée.';
-                        $message = '<p class="text-danger">' . $message . '</p>';
-                        return new Response($message);
-                    } else {
-                        // Suppression de l'entrée en base de données.
-                        $repoMedia->remove($media, true);
-                        return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
-                    }
+            if ($reponse == true) {
+                $message = '';
+                if ($typeMedia->getGroupMedia() == 'Image') {
+                    // Suppression de la miniature
+                    if (!unlink($media->getThumbUrl())) {
+                        $message .= 'La miniature n\'a pas pas pu être supprimée';
+                    };
+                    // Suppression de l'image
+                    if (!unlink($media->getUrl())) {
+                        if ($message <> '') {
+                            $message .= '<br/>';
+                        }
+                        $message .= 'La photographie n\'a pas pas pu être supprimée';
+                    };
+                }
+                if ($message <> '') {
+                    $message .= 'L\'entrée en base de données est conservée.';
+                    $message = '<p class="text-danger">' . $message . '</p>';
+                    return new Response($message);
+                } else {
+                    // Suppression de l'entrée en base de données.
+                    $repoMedia->remove($media, true);
+                    return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
                 }
             }
-            return new Response('<p class="text-success">Pas de suppression</p>');
         }
 
-        return $this->render('media/delete.html.twig', [
-            'form' => $form->createView(),
-            'request' => $request,
-            'media' => $media,
-            'typeMedia' => $typeMedia
-        ]);
+        return $this->render(
+            'media/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'request' => $request,
+                'media' => $media,
+                'typeMedia' => $typeMedia
+            ]
+        );
     }
 
     /**
@@ -149,7 +154,6 @@ class MediaController extends AbstractController
 
         if ($formMedia->isSubmitted()) {
             if ($formMedia->isValid()) {
-
                 $file = $formMedia['url']->getData();
                 if ($file) {
                     $response = $fileUploader->upload($file, $request);
@@ -179,10 +183,13 @@ class MediaController extends AbstractController
             }
             return new Response('<p class="text-danger">' . $formMedia->getErrors(true, true) . '</p>');
         }
-        return $this->render('service/picture.html.twig', [
-            'formMedia' => $formMedia->createView(),
-            'trick' => $trick
-        ]);
+        return $this->render(
+            'service/picture.html.twig',
+            [
+                'formMedia' => $formMedia->createView(),
+                'trick' => $trick
+            ]
+        );
     }
 
     /**
@@ -203,7 +210,6 @@ class MediaController extends AbstractController
         $formMedia->handleRequest($request);
 
         if ($formMedia->isSubmitted() && $formMedia->isValid()) {
-
             $newUrl = $youTubeVideo->videoIframeYT($formMedia->get('url')->getData());
             $newImage = $youTubeVideo->videoImgYT($formMedia->get('url')->getData());
 
@@ -218,14 +224,15 @@ class MediaController extends AbstractController
             $manager->persist($media);
             $manager->flush();
 
-
-
-            return new Response('Nouvelle URL : ' . $newUrl . '<br/>' . $newImage);
+            return new Response('<center>' . $newUrl . '<br/>' . $newImage . '</center>');
         }
 
-        return $this->render('service/video.html.twig', [
-            'formMedia' => $formMedia->createView(),
-            'trick' => $trick
-        ]);
+        return $this->render(
+            'service/video.html.twig',
+            [
+                'formMedia' => $formMedia->createView(),
+                'trick' => $trick
+            ]
+        );
     }
 }

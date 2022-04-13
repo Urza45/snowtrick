@@ -13,7 +13,10 @@ class BanUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('activatedUser', ChoiceType::class, [
+            ->add(
+                'activatedUser',
+                ChoiceType::class,
+                [
                 'choices'  => [
                     ' Peut-être ' => null,
                     ' Non ' => true,
@@ -24,13 +27,16 @@ class BanUserType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ]
-            ]);
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => User::class,
-        ]);
+            ]
+        );
     }
 }

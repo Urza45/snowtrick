@@ -21,9 +21,12 @@ class ManagingUsersController extends AbstractController
     {
         $users = $repoUser->findAll();
 
-        return $this->render('managing_users/index.html.twig', [
+        return $this->render(
+            'managing_users/index.html.twig',
+            [
             'users' => $users,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -38,7 +41,6 @@ class ManagingUsersController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-
                 $manager = $doctrine->getManager();
                 //$manager->persist($user);
                 $manager->flush();
@@ -47,11 +49,14 @@ class ManagingUsersController extends AbstractController
             return new Response($form->getErrors(true, true)[0]->getMessageTemplate());
         }
 
-        return $this->render('managing_users/show_user.html.twig', [
+        return $this->render(
+            'managing_users/show_user.html.twig',
+            [
             'form' => $form->createView(),
             'user' => $user,
             'requete' => $request
-        ]);
+            ]
+        );
     }
 
     /**
@@ -71,11 +76,14 @@ class ManagingUsersController extends AbstractController
             return new Response('<p class="text-success">Le status a bien été modifié.</p>');
         }
 
-        return $this->render('managing_users/ban_user.html.twig', [
+        return $this->render(
+            'managing_users/ban_user.html.twig',
+            [
             'form' => $form->createView(),
             'user' => $user,
             'requete' => $request
-        ]);
+            ]
+        );
     }
 
     /**
@@ -108,9 +116,12 @@ class ManagingUsersController extends AbstractController
             return new Response('<p class="text-success">L\'utilisateur n\'a pas été supprimé.</p>');
         }
 
-        return $this->render('managing_users/delete_user.html.twig', [
+        return $this->render(
+            'managing_users/delete_user.html.twig',
+            [
             'form' => $form->createView(),
             'user' => $user
-        ]);
+            ]
+        );
     }
 }

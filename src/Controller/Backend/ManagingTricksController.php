@@ -13,8 +13,11 @@ class ManagingTricksController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('managing_tricks/index.html.twig', [
+        return $this->render(
+            'managing_tricks/index.html.twig',
+            [
             'controller_name' => 'ManagingTricksController',
-        ]);
+            ]
+        );
     }
 }

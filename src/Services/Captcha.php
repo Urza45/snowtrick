@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Captcha extends AbstractController
 {
-
     private $policeCaptcha;
 
     public function __construct($police)

@@ -19,18 +19,23 @@ class RepeatedPasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $constraints = [
-            new NotBlank([
+            new NotBlank(
+                [
                 'message' => 'Entrer votre mot de passe.',
-            ]),
-            new Length([
+                ]
+            ),
+            new Length(
+                [
                 'min' => 6,
                 'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
                 'max' => 10,
                 'maxMessage' => 'Votre mot de passe doit contenir au plus 10 caractères.',
-            ]),
+                ]
+            ),
         ];
 
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'type' => PasswordType::class,
             'invalid_message' => 'Les mots de passe saisis ne correspondent pas.',
             'required' => true,
@@ -58,6 +63,7 @@ class RepeatedPasswordType extends AbstractType
                 ],
                 'constraints' => $constraints,
             ]
-        ]);
+            ]
+        );
     }
 }

@@ -165,7 +165,7 @@ class Comment
     /**
      * Set the value of captcha
      *
-     * @return  self
+     * @return self
      */
     public function setCaptcha($captcha)
     {

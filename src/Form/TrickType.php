@@ -2,11 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
 use App\Entity\Trick;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Category;
+use App\Form\FileUploadTrickType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TrickType extends AbstractType
@@ -15,25 +16,30 @@ class TrickType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('chapo')
             ->add('content')
             //->add('createdAt')
             //->add('updatedAt')
             // ->add('user')
-            ->add('category', EntityType::class, [
-                'label' => 'Catégorie : ',
-                // looks for choices from this entity
-                'class' => Category::class,
-                // uses the User.username property as the visible option string
-                'choice_label' => 'label',
-                'choice_value' => 'id'
-            ]);
+            ->add(
+                'category',
+                EntityType::class,
+                [
+                    'label' => 'Groupe de la figure : ',
+                    // looks for choices from this entity
+                    'class' => Category::class,
+                    // uses the User.username property as the visible option string
+                    'choice_label' => 'label',
+                    'choice_value' => 'id'
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => Trick::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Trick::class,
+            ]
+        );
     }
 }

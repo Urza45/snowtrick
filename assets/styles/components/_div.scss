@@ -1,22 +1,38 @@
 .center-div {
-    margin: 0 auto;
-    width: 100px;
+  margin: 0 auto;
+  width: 100px;
 }
 
 .contenant {
-    position: relative;
-    text-align: center;
-    color: $colour-lightgray;
+  position: relative;
+  text-align: center;
+  color: $colour-lightgray;
 }
 
 .texte_centrer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .small-picture {
-    height: 200px;
-    width: auto;
+  height: 200px;
+  width: auto;
+}
+
+.smallView {
+  display: none;
+
+  @media all and (max-width: 767px) {
+    display: block;
+  }
+}
+
+.largeView {
+  display: block;
+
+  @media all and (max-width: 767px) {
+    display: none;
+  }
 }

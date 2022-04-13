@@ -16,7 +16,7 @@
 								<div class="col-md-3">
 									<div class="card">
 										<div class="card-img">
-											<img src="{{ asset(picture.thumbUrl) }}" width="400px" class="img-fluid">
+											<img src="{{ asset(picture.thumbUrl) }}" width="500px" class="img-fluid">
 										</div>
 										<div class="card-body">
 											{{ picture.legend }}<br/>
@@ -43,7 +43,7 @@
 								{% else %}
 									<div class="carousel-item">
 									{% endif %}
-									<div class="col-md-3 d-block h-50">
+									<div class="col-md-3">
 										<div class="card">
 											<div class="card-img">
 												{{ video.thumbUrl|raw }}

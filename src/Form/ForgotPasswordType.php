@@ -13,7 +13,10 @@ class ForgotPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', RepeatedType::class, [
+            ->add(
+                'pseudo',
+                RepeatedType::class,
+                [
                 'type' => TextType::class,
                 'invalid_message' => "Les pseudos doivent être identiques.",
                 'required' => true,
@@ -31,7 +34,8 @@ class ForgotPasswordType extends AbstractType
                         'class' => 'form-control'
                     ]
                 ]
-            ]);
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

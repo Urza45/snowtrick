@@ -18,14 +18,18 @@ class ShowUserType extends AbstractType
     {
         $builder
             ->add('pseudo')
-            ->add('roles', ChoiceType::class, [
+            ->add(
+                'roles',
+                ChoiceType::class,
+                [
                 'choices' => [
                     'Admininistrateur' => 'ROLE_ADMIN',
                     'Utilisateur enregistré' => 'ROLE_USER',
                 ],
                 'expanded'  => false, // liste déroulante
                 'multiple'  => true, // choix multiple
-            ])
+                ]
+            )
             // ->add('password')
             ->add('lastName')
             ->add('firstName')
@@ -37,17 +41,25 @@ class ShowUserType extends AbstractType
             // ->add('validationKey')
             // ->add('activatedUser')
             ->add('createdAt', DateType::class)
-            ->add('isVerified', ChoiceType::class, [
+            ->add(
+                'isVerified',
+                ChoiceType::class,
+                [
                 'choices'  => [
                     ' Non ' => false,
                     ' Oui ' => true
                 ],
                 'expanded' => true,
                 'disabled' => 'disabled'
-            ])
-            ->add('slug', TextType::class, [
+                ]
+            )
+            ->add(
+                'slug',
+                TextType::class,
+                [
                 'disabled' => 'disabled'
-            ])
+                ]
+            )
             // ->add('typeUser', TypeUserType::class, [
             //     'label' => false,
             //     'required' => false
@@ -61,8 +73,10 @@ class ShowUserType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => User::class,
-        ]);
+            ]
+        );
     }
 }

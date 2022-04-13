@@ -82,7 +82,7 @@ $(function () {
         var nbCommentByPage = $(this).data("commentsbypage");
         var nbcomment = $(this).data("nbcomments");
         var newNbComment = pageComment * nbCommentByPage;
-        var urlDest = "/showmorecomment/" + newNbComment;
+        var urlDest = "/morecomment/" + newNbComment;
         // AJAX request
         $.ajax({
             url: urlDest,
@@ -100,5 +100,19 @@ $(function () {
                 alert("Error");
             }
         });
+    });
+
+    $("#hideMedias").hide();
+
+    $("#viewMedias").on("click", function () {
+        $("#largeView").show();
+        $("#viewMedias").hide();
+        $("#hideMedias").show();
+    });
+
+    $("#hideMedias").on("click", function () {
+        $("#largeView").hide();
+        $("#viewMedias").show();
+        $("#hideMedias").hide();
     });
 })

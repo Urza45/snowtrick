@@ -12,19 +12,25 @@ class DeleteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('supprimer', ChoiceType::class, [
+            ->add(
+                'supprimer',
+                ChoiceType::class,
+                [
                 'choices'  => [
                     'Oui' => true,
                     'Non' => false
                 ],
                 'expanded' => true,
-            ]);
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             // Configure your form options here
-        ]);
+            ]
+        );
     }
 }
