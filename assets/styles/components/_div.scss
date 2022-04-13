@@ -20,3 +20,19 @@
   height: 200px;
   width: auto;
 }
+
+.smallView {
+  display: none;
+
+  @media all and (max-width: 767px) {
+    display: block;
+  }
+}
+
+.largeView {
+  display: block;
+
+  @media all and (max-width: 767px) {
+    display: none;
+  }
+}

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * 
+ */
+
 namespace App\Controller;
 
 use App\Entity\Trick;
@@ -23,6 +27,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
 
+/**
+ * TrickController
+ */
 class TrickController extends AbstractController
 {
     private const NUMBER_TRICK_BY_ROW = 5;
@@ -30,7 +37,13 @@ class TrickController extends AbstractController
     private const NUMBER_COMMENT_BY_PAGE = 5;
 
     /**
+     * Index
+     * 
+     * @param TrickRepository $repoTrick
+     * 
      * @Route("/", name="trick_home")
+     * 
+     * @return Response
      */
     public function index(TrickRepository $repoTrick): Response
     {
@@ -40,13 +53,25 @@ class TrickController extends AbstractController
                 'tricksCount' => $repoTrick->count([]),
                 'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
                 'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
-                'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, 0)
+                'tricks' => $repoTrick->findBy(
+                    [],
+                    ['id' => 'DESC'],
+                    self::NUMBER_TRICK_BY_PAGE,
+                    0
+                )
             ]
         );
     }
 
     /**
+     * ShowMoreTrick
+     *
+     * @param mixed $request
+     * @param mixed $repoTrick
+     * 
      * @Route("/showmoretrick/{index}", name="show_more_trick", methods={"GET", "POST"},requirements={"index"="\d+"})
+     * 
+     * @return void
      */
     public function showMoreTrick(Request $request, TrickRepository $repoTrick)
     {
@@ -57,16 +82,32 @@ class TrickController extends AbstractController
                 'numberTrickByRow' => self::NUMBER_TRICK_BY_ROW,
                 'numberTrickByPage' => self::NUMBER_TRICK_BY_PAGE,
                 'index' => $request->get('index'),
-                'tricks' => $repoTrick->findBy([], ['id' => 'DESC'], self::NUMBER_TRICK_BY_PAGE, $request->get('index'))
+                'tricks' => $repoTrick->findBy(
+                    [],
+                    ['id' => 'DESC'],
+                    self::NUMBER_TRICK_BY_PAGE,
+                    $request->get('index')
+                )
             ]
         );
     }
 
     /**
+     * ShowMoreComment
+     *
+     * @param mixed $request
+     * @param mixed $repoTrick
+     * @param mixed $repoComment
+     * 
      * @Route("/morecomment/{index}", name="show_more_comment", methods={"GET", "POST"}, requirements={"index"="\d+"} )
+     * 
+     * @return void
      */
-    public function showMoreComment(Request $request, TrickRepository $repoTrick, CommentRepository $repoComment)
-    {
+    public function showMoreComment(
+        Request $request,
+        TrickRepository $repoTrick,
+        CommentRepository $repoComment
+    ) {
         $trick = $repoTrick->findOneBy(['id' => $request->get('trickId')]);
 
         return $this->render(
@@ -87,7 +128,11 @@ class TrickController extends AbstractController
     }
 
     /**
+     * addTrick
+     * 
      * @Route("/manageTrick/add", name="add_trick")
+     *
+     * @return void
      */
     public function addTrick(
         Request $request,
@@ -100,13 +145,14 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
+            $user = $repoUser->findOneByPseudo(
+                $this->getUser()->getUserIdentifier()
+            );
             $trick->setUser($user);
 
             $manager = $doctrine->getManager();
 
             $manager->persist($trick);
-
 
             if ($repoTrick->findOneBySlug($trick->getSlug()) !== null) {
                 $this->addFlash('notice', 'Une figure possède déjà ce titre.');
@@ -142,7 +188,11 @@ class TrickController extends AbstractController
     }
 
     /**
+     * ShowTrick
+     * 
      * @Route("/trick/{slug}", name="show_trick")
+     *
+     * @return void
      */
     public function showTrick(
         TrickRepository $repoTrick,
@@ -165,11 +215,16 @@ class TrickController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $manager = $doctrine->getManager();
-                $user = $repoUser->findOneByPseudo($this->getUser()->getUserIdentifier());
+                $user = $repoUser->findOneByPseudo(
+                    $this->getUser()->getUserIdentifier()
+                );
 
                 // Captcha verification
                 if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
-                    $this->addFlash('comment', 'Le captcha saisi n\'est pas correct.');
+                    $this->addFlash(
+                        'comment',
+                        'Le captcha saisi n\'est pas correct.'
+                    );
                     return $this->render(
                         'trick/show_trick.html.twig',
                         [
@@ -181,7 +236,11 @@ class TrickController extends AbstractController
                                 self::NUMBER_COMMENT_BY_PAGE,
                                 0
                             ),
-                            'commentsCount' => $repoComment->count(['trick' => $trick]),
+                            'commentsCount' => $repoComment->count(
+                                [
+                                    'trick' => $trick
+                                ]
+                            ),
                             'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
                             'pictures' => $pictures,
                             'videos' => $videos
@@ -195,7 +254,10 @@ class TrickController extends AbstractController
 
                 $manager->persist($comment);
                 $manager->flush();
-                $this->addFlash('success', 'Votre commentaire a bien été enregistré.');
+                $this->addFlash(
+                    'success',
+                    'Votre commentaire a bien été enregistré.'
+                );
             }
 
             return $this->render(
@@ -221,7 +283,11 @@ class TrickController extends AbstractController
     }
 
     /**
+     * ModifyTrick
+     * 
      * @Route("/manageTrick/modify/{slug}", name="modify_trick")
+     *
+     * @return void
      */
     public function modifyTrick(
         TrickRepository $repoTrick,
@@ -241,7 +307,9 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $doctrine->getManager();
 
-            $trick->setSlug((string) $slugger->slug((string) $trick->getTitle())->lower());
+            $trick->setSlug(
+                (string) $slugger->slug((string) $trick->getTitle())->lower()
+            );
             $manager->persist($trick);
 
             $tricks = $repoTrick->findBySlug($trick->getSlug());
@@ -269,7 +337,10 @@ class TrickController extends AbstractController
             $manager->persist($trick);
             $manager->flush();
 
-            $this->addFlash('success', 'Vos modifications ont bien été enregistrées.');
+            $this->addFlash(
+                'success',
+                'Vos modifications ont bien été enregistrées.'
+            );
         };
 
         return $this->render(
@@ -284,7 +355,18 @@ class TrickController extends AbstractController
     }
 
     /**
+     * DeleteTrick
+     * Delete a trick and all comments and media attached to it
+     * 
+     * @param TrickRepository   $repoTrick    
+     * @param Request           $request
+     * @param FileUploader      $fileUploader 
+     * @param MediaRepository   $repoMedia   
+     * @param CommentRepository $repoComment
+     * 
      * @Route("/manageTrick/delete/{slug}", name="delete_trick")
+     * 
+     * @return void
      */
     public function deleteTrick(
         TrickRepository $repoTrick,
@@ -300,25 +382,30 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reponse = $form->get('supprimer')->getData();
-            if ($reponse) {
-                if ($reponse == true) {
-                    // Suppression des commentaires
-                    $comments = $trick->getComments();
-                    foreach ($comments as $comment) {
-                        $repoComment->remove($comment, true);
-                    }
-                    // Suppression des medias
-                    $medias = $trick->getMedia();
-                    foreach ($medias as $media) {
-                        $fileUploader->deleteFile($media, $media->getTypeMedia(), $repoMedia);
-                    }
-                    // Suppression du trick
-                    $repoTrick->remove($trick, true);
-                    return new Response('<p class="text-success">Le trick a bien été supprimé.</p>');
+            if ($reponse == true) {
+                // Suppression des commentaires
+                $comments = $trick->getComments();
+                foreach ($comments as $comment) {
+                    $repoComment->remove($comment, true);
                 }
-                return new Response('<p class="text-success">Le trick n\'a pas été supprimé.</p>');
+                // Suppression des medias
+                $medias = $trick->getMedia();
+                foreach ($medias as $media) {
+                    $fileUploader->deleteFile(
+                        $media,
+                        $media->getTypeMedia(),
+                        $repoMedia
+                    );
+                }
+                // Suppression du trick
+                $repoTrick->remove($trick, true);
+                return new Response(
+                    '<p class="text-success">Le trick a bien été supprimé.</p>'
+                );
             }
-            return new Response('<p class="text-success">Le trick  n\'a pas été supprimé.</p>');
+            return new Response(
+                '<p class="text-success">Le trick n\'a pas été supprimé.</p>'
+            );
         }
 
         return $this->render(
@@ -331,7 +418,14 @@ class TrickController extends AbstractController
     }
 
     /**
+     * Captcha
+     *
+     * @param Captcha $captcha Generate a picture based 
+     * @param Session $session Saves a random number
+     * 
      * @Route("/captcha", name="captcha")
+     * 
+     * @return void
      */
     public function captcha(Captcha $captcha, Session $session)
     {

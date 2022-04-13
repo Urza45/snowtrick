@@ -46,7 +46,27 @@
 								{% if trick.media.count is same as(0) %}
 									<p>Pas de média disponible.</p>
 								{% else %}
-									{% include "trick/carousel.html.twig" %}
+									<div class="largeView" id="largeView" name="largeView">
+										{% if trick.media.count < 4 %}
+											<div>
+												{% include "trick/medias.html.twig" %}
+											</div>
+										{% else %}
+											<div>
+												{% include "trick/carousel.html.twig" %}
+											</div>
+										{% endif %}
+									</div>
+									<hr/>
+									<div class="smallView">
+										<button class="btn btn-info" id="viewMedias" name="viewMedias">
+											Voir les médias
+										</button>
+										<button class="btn btn-info hideMedias" id="hideMedias" name="hideMedias">
+											Masquer les médias
+										</button>
+										<hr/>
+									</div>
 								{% endif %}
 							</div>
 						</div>
