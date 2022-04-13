@@ -1,8 +1,22 @@
-# [[https://github.com/Urza45/snowtrick/main/public/medias/Snowboarding_pictogram.svg|alt=SNOwTRICK]] snowtrick
+# SNOwTRICK
+
+P6 OpenClassRoom Project
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f03f0dffe632446393f5a47e4521f12d)](https://www.codacy.com/gh/Urza45/snowtrick/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Urza45/snowtrick&amp;utm_campaign=Badge_Grade)
 
-P6 OpenClassRoom Project
+## Pre-requisites
+
+The present project was developed with:
+
+- PHP 7.4.9 (cli) (built: Aug  4 2020 11:52:41)
+
+- MySQL  5.7.31 Community Server (GPL)
+
+- Bootstrap v5.0
+
+- JQuery 3.4.1
+
+## Installation
 
 1. Clone Repository on your web server : `git clone git@github.com:Urza45/snowtrick.git`
 
@@ -23,7 +37,7 @@ P6 OpenClassRoom Project
 8. Change parameters `mail_from` on `config/services.yaml`
 
 9. Account fixtures:
-      * Role : Admin
-        * PSeudo : admin
-        * Email  : mon@email.fr
-        * Pass   : aToo_422
+      - Role : Admin
+        - PSeudo : admin
+        - Email  : mon@email.fr
+        - Pass   : aToo_422
