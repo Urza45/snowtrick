@@ -25,7 +25,7 @@ The present project was developed with:
 3. Configure SMTP connect on `.env` file
 
 4. Install dependencies, in a command prompt: `composer install` puis `npm install`
-    (Node js et Composer doivent être installés sur votre poste)
+    (Node js and Composer must be installed on your server)
 
 5. Create database, in a command prompt: `php bin/console doctrine:database:create`
 
