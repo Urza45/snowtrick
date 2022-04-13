@@ -1,8 +1,8 @@
-# snowtrick
+# [[https://github.com/Urza45/snowtrick/main/public/medias/Snowboarding_pictogram.svg|alt=SNOwTRICK]] snowtrick
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f03f0dffe632446393f5a47e4521f12d)](https://www.codacy.com/gh/Urza45/snowtrick/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Urza45/snowtrick&amp;utm_campaign=Badge_Grade)
 
-[[https://github.com/Urza45/snowtrick/main/public/medias/Snowboarding_pictogram.ico|alt=SNOwTRICK]] P6 OpenClassRoom Project
+P6 OpenClassRoom Project
 
 1. Clone Repository on your web server : `git clone git@github.com:Urza45/snowtrick.git`
 
