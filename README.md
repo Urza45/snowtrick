@@ -16,6 +16,8 @@ The present project was developed with:
 
 - JQuery 3.4.1
 
+- SASS
+
 ## Installation
 
 1. Clone Repository on your web server : `git clone git@github.com:Urza45/snowtrick.git`
@@ -24,14 +26,14 @@ The present project was developed with:
 
 3. Configure SMTP connect on `.env` file
 
-4. Install dependencies, in a command prompt: `composer install` puis `npm install`
+4. Install dependencies, in a command prompt: `composer install` then `npm install`
     (Node js and Composer must be installed on your server)
 
 5. Create database, in a command prompt: `php bin/console doctrine:database:create`
 
-6. Migrate tables on database, in a command prompt: `php bin/console doctrine:database:create`
+6. Migrate tables on database, in a command prompt: `php bin/console doctrine:migrations:migrate`
 
-7. Load fixtures into the database, in a command prompt: `php bin/console doctrine:migrations:migrate`
+7. Load fixtures into the database, in a command prompt: `php bin/console doctrine:fixtures:load`
     (You need fixtures to have one administrator account and some others parameters in database)
 
 8. Change parameters `mail_from` on `config/services.yaml`
