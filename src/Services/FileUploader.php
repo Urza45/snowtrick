@@ -46,7 +46,14 @@ class FileUploader extends AbstractController
         $this->tricksDirectory = $tricksDirectory;
         $this->slugger = $slugger;
     }
-
+    
+    /**
+     * upload
+     *
+     * @param  mixed $file
+     * @param  mixed $type
+     * @return void
+     */
     public function upload(UploadedFile $file, $type = 'tricks')
     {
         $directory = $this->getTricksDirectory();

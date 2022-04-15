@@ -4,6 +4,10 @@ P6 OpenClassRoom Project
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f03f0dffe632446393f5a47e4521f12d)](https://www.codacy.com/gh/Urza45/snowtrick/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Urza45/snowtrick&amp;utm_campaign=Badge_Grade)
 
+## Context
+
+
+
 ## Pre-requisites
 
 The present project was developed with:
@@ -22,9 +26,9 @@ The present project was developed with:
 
 1. Clone Repository on your web server : `git clone git@github.com:Urza45/snowtrick.git`
 
-2. Configure BDD connect on `.env` file
+2. Configure database connection in `.env` file
 
-3. Configure SMTP connect on `.env` file
+3. Configure SMTP connection in `.env` file
 
 4. Install dependencies, in a command prompt: `composer install` then `npm install`
     (Node js and Composer must be installed on your server)
@@ -40,6 +44,6 @@ The present project was developed with:
 
 9. Account fixtures:
       - Role : Admin
-        - PSeudo : admin
+        - Pseudo : admin
         - Email  : mon@email.fr
         - Pass   : aToo_422
