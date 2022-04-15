@@ -47,7 +47,7 @@
 
 			<div class="row justify-content-evenly">
 				<div class="col-lg-10">
-					{{ form_start(form) }}
+					{{ form_start(form, { attr: {'enctype': 'multipart/form-data'} }) }}
 					{{ form_row(form.title, {
                         'label': 'Nom (*) :', 
                         'attr': {
@@ -70,6 +70,17 @@
 				    }
 		    	}) }}
 					<br/>
+					{% if add is defined %}
+						<label for="basic-url" class="form-label">Votre première vidéo :</label>
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon3">https://...</span>
+							<input type="text" class="form-control" id="basic-url" name="basic-url" aria-describedby="basic-addon3">
+						</div>
+						<label class="form-label" for="inputGroupFile01">Votre première photo :</label>
+						<div class="input-group mb-3">
+							<input type="file" class="form-control" id="inputGroupFile01" name="inputGroupFile01">
+						</div>
+					{% endif %}
 					<button type="submit" class="btn btn-primary">Enregister</button>
 
 					{{ form_rest(form) }}

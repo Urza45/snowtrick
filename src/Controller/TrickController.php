@@ -6,6 +6,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Media;
 use App\Entity\Trick;
 use App\Entity\Comment;
 use App\Form\TrickType;
@@ -13,10 +14,12 @@ use App\Form\DeleteType;
 use App\Form\CommentType;
 use App\Services\Captcha;
 use App\Services\FileUploader;
+use App\Services\YouTubeVideo;
 use App\Repository\UserRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use App\Repository\CommentRepository;
+use App\Repository\TypeMediaRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -138,7 +141,10 @@ class TrickController extends AbstractController
         Request $request,
         UserRepository $repoUser,
         ManagerRegistry $doctrine,
-        TrickRepository $repoTrick
+        TrickRepository $repoTrick,
+        FileUploader $fileUploader,
+        TypeMediaRepository $repoTypeMedia,
+        YouTubeVideo $youTubeVideo
     ) {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
@@ -164,6 +170,45 @@ class TrickController extends AbstractController
                         'add' => 1
                     ]
                 );
+            }
+
+            // First picture
+            $file = $request->files->get('inputGroupFile01');
+            if ($file) {
+                $response = $fileUploader->upload($file);
+                if ($response['status'] == 'fail') {
+                    return new Response('<p class="text-danger">' . $response['message'] . '</p>');
+                }
+                $fileName = $response['message'];
+                $path = explode('.', $fileName);
+                $extension = end($path);
+                $mediaPicture = new Media();
+                if ($fileName !== null) {
+                    $mediaPicture->setUrl('medias/tricks/' . $fileName);
+                    $mediaPicture->setThumbUrl('medias/tricks/' . 'thumbs_' . $fileName);
+                    $mediaPicture->setFeaturePicture(true);
+                    $mediaPicture->setTypeMedia($repoTypeMedia->findOneBy(['typeMedia' => $extension]));
+                    $mediaPicture->setTrick($trick);
+
+                    $manager->persist($mediaPicture);
+                }
+            }
+
+            // First video
+            $video = $request->get('basic-url');
+            if ($video) {
+                $newUrl = $youTubeVideo->videoIframeYT($video);
+                $newImage = $youTubeVideo->videoImgYT($video);
+
+                $mediaVideo = new Media();
+
+                $mediaVideo->setUrl('' . $newUrl);
+                $mediaVideo->setThumbUrl('' . $newImage);
+                $mediaVideo->setFeaturePicture(false);
+                $mediaVideo->setTypeMedia($repoTypeMedia->findOneBy(['typeMedia' => 'mp4']));
+                $mediaVideo->setTrick($trick);
+
+                $manager->persist($mediaVideo);
             }
 
             $manager->flush();
