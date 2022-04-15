@@ -19,37 +19,10 @@ class CommentType extends AbstractType
                 'content',
                 TextareaType::class,
                 [
-                'label' => 'Votre commentaire :',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-                ]
-            )
-            // ->add('createdAt')
-            // ->add('disabled')
-            // ->add('new')
-            // ->add('updatedAt')
-            // ->add('user')
-            // ->add('trick')
-            ->add(
-                'captcha',
-                IntegerType::class,
-                [
-                'label' => '',
-                'invalid_message' => 'Vous devez saisir un nombre',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Captcha *'
-                ],
-                'constraints' => [
-                    new Length(
-                        [
-                        'min' => 4,
-                        'max' => 4,
-                        'exactMessage' => 'Votre captcha doit contenir exactement 4 caractères.',
-                        ]
-                    ),
-                ]
+                    'label' => 'Votre commentaire :',
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
             );
     }
@@ -58,7 +31,7 @@ class CommentType extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => Comment::class,
+                'data_class' => Comment::class,
             ]
         );
     }

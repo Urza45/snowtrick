@@ -219,34 +219,6 @@ class TrickController extends AbstractController
                     $this->getUser()->getUserIdentifier()
                 );
 
-                // Captcha verification
-                if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
-                    $this->addFlash(
-                        'comment',
-                        'Le captcha saisi n\'est pas correct.'
-                    );
-                    return $this->render(
-                        'trick/show_trick.html.twig',
-                        [
-                            'trick' => $trick,
-                            'formComment' => $form->createView(),
-                            'listComment' => $repoComment->findBy(
-                                ['trick' => $trick],
-                                ['id' => 'DESC'],
-                                self::NUMBER_COMMENT_BY_PAGE,
-                                0
-                            ),
-                            'commentsCount' => $repoComment->count(
-                                [
-                                    'trick' => $trick
-                                ]
-                            ),
-                            'numberCommentByPage' => self::NUMBER_COMMENT_BY_PAGE,
-                            'pictures' => $pictures,
-                            'videos' => $videos
-                        ]
-                    );
-                }
                 $comment->setDisabled(false);
                 $comment->setNew(true);
                 $comment->setUser($user);
