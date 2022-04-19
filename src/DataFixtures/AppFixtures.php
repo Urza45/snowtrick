@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\Entity\Avatar;
 use App\Entity\Category;
 use App\Entity\Comment;
-use App\Entity\Media;
 use App\Entity\Trick;
 use App\Entity\TypeUser;
 use App\Entity\User;

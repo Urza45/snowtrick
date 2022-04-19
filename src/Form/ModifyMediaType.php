@@ -33,18 +33,13 @@ class ModifyMediaType extends AbstractType
                         'Oui' => true,
                         'Non' => false,
                     ],
-                    //'data' => false,
                     'expanded' => true,
                     'label' => 'Photo mise en avant ?',
                     'attr' => [
                         'class' => 'form-control',
                     ]
                 ]
-            )
-            //->add('thumbUrl')
-            //->add('typeMedia')
-            //->add('trick')
-        ;
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

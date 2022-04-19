@@ -2,12 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Media;
-use App\Entity\TypeMedia;
-use App\Repository\TypeMediaRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -61,28 +57,7 @@ class FileUploadTrickType extends AbstractType
                         'class' => 'form-control',
                     ]
                 ]
-            )
-            // ->add('typeMedia', EntityType::class, [
-            //     // looks for choices from this entity
-            //     'class' => TypeMedia::class,
-            //     'query_builder' => function (TypeMediaRepository $er) {
-            //         return $er->createQueryBuilder('u')
-            //             ->andWhere('u.groupMedia = :groupMedia')
-            //             ->setParameter('groupMedia', 'Image')
-            //             ->orderBy('u.typeMedia', 'ASC');
-            //     },
-            //     // uses the User.username property as the visible option string
-            //     'choice_label' => 'typeMedia',
-            //     'attr' => [
-            //         'class' => 'form-select',
-            //     ]
-
-            //     // used to render a select box, check boxes or radios
-            //     // 'multiple' => true,
-            //     // 'expanded' => true,
-            // ])
-            //->add('trick')
-        ;
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
