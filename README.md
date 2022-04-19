@@ -41,56 +41,46 @@ The present project was developed with:
 ## Installation
 
 1.Clone Repository on your web server :
-
-    ```text
-    git clone git@github.com:Urza45/snowtrick.git
-    ```
+```text
+git clone git@github.com:Urza45/snowtrick.git
+```
 
 2.Configure BDD connect on `.env` file
 
 3.Configure SMTP connect on `.env` file
 
 4.Install dependencies, in a command prompt:
-
-    ```text
-    composer install
-    ```
-
+```text
+composer install
+```
 then
-
-    ```text
-    npm install
-    ```
-
+```text
+npm install
+```
 (Node js and Composer must be installed on your server)
 
 5.Create database, in a command prompt:
-
-    ```text
-    php bin/console doctrine:database:create
-    ```
+```text
+php bin/console doctrine:database:create
+```
 
 6.Migrate tables on database, in a command prompt:
-
-    ```text
-    php bin/console doctrine:migrations:migrate
-    ```
+```text
+php bin/console doctrine:migrations:migrate
+```
 
 7.Load fixtures into the database, in a command prompt:
-
-    ```text
-    php bin/console doctrine:fixtures:load
-    ```
-
+```text
+php bin/console doctrine:fixtures:load
+```
 (You need fixtures to have one administrator account and some others parameters in database)
 
 8.Change parameters `mail_from` on `config/services.yaml`
 
 9.Rebuild js script and css, in a command prompt:
-
-    ```text
-    npm run build
-    ```
+```text
+npm run build
+```
 
 10.Account fixtures:
       - Role : Admin
