@@ -39,7 +39,7 @@ class YouTubeVideo extends AbstractController
 
         if (!empty($videoUrl)) {
             $videoUrl = $this->videoCleanUrlYT($videoUrl);
-            $videoIframe = '<iframe width="560" height="315" src="' . $videoUrl
+            $videoIframe = '<iframe class="img-fluid" width="560" height="315" src="' . $videoUrl
                 . '"  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
         }
 
