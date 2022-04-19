@@ -16,7 +16,8 @@ For this project, we will focus on the technical creation of the site for Jimmy.
 
 You are responsible for developing the site that meets Jimmy's needs. You must therefore implement the following functionalities:
 
-    - A directory of snowboard tricks. You can take inspiration from the list of figures on Wikipedia. Just integrate 10 figures, the rest will be entered by Internet users;
+    - A directory of snowboard tricks. You can take inspiration from the list of figures on Wikipedia. 
+        Just integrate 10 figures, the rest will be entered by Internet users;
     - Figure management (creation, modification, consultation);
     - A space for discussion common to all figures.
 
