@@ -49,13 +49,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($request);
             // Captcha verification
-            if (!($form->get('captcha')->getData() == $session->get('captcha'))) {
+            if (!($request->get('captcha') == $session->get('captcha'))) {
                 $this->addFlash('notice', 'Le captcha saisi n\'est pas correct.');
                 return $this->render(
                     'registration/register.html.twig',
                     [
-                    'registrationForm' => $form->createView(),
+                        'registrationForm' => $form->createView(),
                     ]
                 );
             }
@@ -107,7 +108,7 @@ class RegistrationController extends AbstractController
         return $this->render(
             'registration/register.html.twig',
             [
-            'registrationForm' => $form->createView(),
+                'registrationForm' => $form->createView(),
             ]
         );
     }

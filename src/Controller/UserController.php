@@ -46,10 +46,10 @@ class UserController extends AbstractController
         return $this->render(
             'user/index.html.twig',
             [
-            'user' => $user,
-            'formUser' => $form->createView(),
-            'tricks' => $tricks,
-            'comments' => $comments
+                'user' => $user,
+                'formUser' => $form->createView(),
+                'tricks' => $tricks,
+                'comments' => $comments
             ]
         );
     }
@@ -70,7 +70,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form['upload_file']->getData();
             if ($file) {
-                $fileName = $fileUploader->upload($file, $request, 'avatar');
+                $fileName = $fileUploader->upload($file, 'avatar');
                 $extension = pathinfo($file, PATHINFO_EXTENSION);
                 if ($fileName !== null) {
                     $manager = $doctrine->getManager();
@@ -110,10 +110,10 @@ class UserController extends AbstractController
         return $this->render(
             'service/file_upload_avatar.html.twig',
             [
-            'form' => $form->createView(),
-            'request' => $request,
-            'user' => $user,
-            'avatar' => $avatar
+                'form' => $form->createView(),
+                'request' => $request,
+                'user' => $user,
+                'avatar' => $avatar
             ]
         );
     }
@@ -157,7 +157,7 @@ class UserController extends AbstractController
         return $this->render(
             'user/change_password.html.twig',
             [
-            'formPassword' => $form->createView(),
+                'formPassword' => $form->createView(),
             ]
         );
     }

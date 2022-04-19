@@ -45,7 +45,15 @@
 										<div class="tablehead">
 											Commentaire :
 										</div>
-										{{ comment.content }}
+										{{ comment.disabled }}&nbsp;
+										{% if comment.disabled %}
+											<p class="text-danger">
+											{% else %}
+												<p class="text-success">
+												{% endif %}
+												{{ comment.content }}
+											</p>
+										</td>
 									</td>
 									<td class="text-center">
 										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
@@ -53,17 +61,15 @@
 												<i class="fa-solid fa-pen text-light"></i>
 											</span>
 										</button>
-										<button
-											class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Interdire">
-											{# <span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ app.user.id }}" data-affiche="yes" data-route="{{ path('app_managing_user', { slug: user.slug }) }}" data-title="Profil de {{ user.lastName }} {{ user.firstName }}"> #}
-											<i class="fa-solid fa-ban text-danger"></i>
-											{# </span> #}
+										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Interdire">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Interdire" data-id="{{ comment.id }}" data-affiche="yes" data-route="{{ path('app_managing_ban_comment', { id: comment.id }) }}" data-title="Interdiction d'un commentaire">
+												<i class="fa-solid fa-ban text-danger"></i>
+											</span>
 										</button>
-										<button
-											class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer">
-											{# <span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ app.user.id }}" data-affiche="yes" data-route="{{ path('app_managing_userdelete', { slug: user.slug }) }}" data-title="Supprimer {{ user.lastName }} {{ user.firstName }}"> #}
-											<i class="fa-solid fa-trash-can text-danger"></i>
-											{# </span> #}
+										<button class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer">
+											<span class="userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Supprimer" data-id="{{ comment.id }}" data-affiche="yes" data-route="{{ path('app_managing_delete_comment', { id: comment.id }) }}" data-title="Supprimer un commentaire">
+												<i class="fa-solid fa-trash-can text-danger"></i>
+											</span>
 										</button>
 									</td>
 								</tr>
@@ -73,7 +79,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</section>{% endblock %}{% block javascripts %}
-{{ parent() }}
-{{ encore_entry_script_tags('modal') }}{% endblock %}
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('modal') }}
+{% endblock %}

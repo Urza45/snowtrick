@@ -18,10 +18,10 @@ class ModifyMediaType extends AbstractType
                 'legend',
                 TextType::class,
                 [
-                'label' => 'Légende :',
-                'attr' => [
-                    'class' => 'form-control',
-                ]
+                    'label' => 'Légende :',
+                    'attr' => [
+                        'class' => 'form-control',
+                    ]
                 ]
             )
             //->add('url')
@@ -29,29 +29,24 @@ class ModifyMediaType extends AbstractType
                 'featurePicture',
                 ChoiceType::class,
                 [
-                'choices'  => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
-                //'data' => false,
-                'expanded' => true,
-                'label' => 'Photo mise en avant ?',
-                'attr' => [
-                    'class' => 'form-control',
+                    'choices'  => [
+                        'Oui' => true,
+                        'Non' => false,
+                    ],
+                    'expanded' => true,
+                    'label' => 'Photo mise en avant ?',
+                    'attr' => [
+                        'class' => 'form-control',
+                    ]
                 ]
-                ]
-            )
-            //->add('thumbUrl')
-            //->add('typeMedia')
-            //->add('trick')
-        ;
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-            'data_class' => Media::class,
+                'data_class' => Media::class,
             ]
         );
     }

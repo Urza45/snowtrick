@@ -20,17 +20,26 @@
 			{{ form_start(form, { attr: {'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
 			<div class="form-group">
 				{{ form_row(form.legend) }}<br/>
-				{{ form_label(form.featurePicture) }}<br/>
-				{% for child in form.featurePicture %}
-					{{- form_label(child, null) -}}&nbsp;
-					{{- form_widget(child) -}}&nbsp;
-				{% endfor %}
+
+				{% if typeMedia.groupMedia == 'Image' %}
+					{{ form_label(form.featurePicture) }}<br/>
+					{% for child in form.featurePicture %}
+						{{- form_label(child, null) -}}&nbsp;
+						{{- form_widget(child) -}}&nbsp;
+					{% endfor %}
+				{% else %}
+					{{ form_label(form.featurePicture) }}<br/>
+					{% for child in form.featurePicture %}
+						{{- form_label(child, null) -}}&nbsp;
+						{{- form_widget(child, {'attr': {'disabled' : 'disabled'}}) -}}&nbsp;
+					{% endfor %}
+				{% endif %}
 
 				<input type="hidden" name="userId" id="userId" value="{{ media.id }}">
 				<input type="hidden" name="nameForm" id="nameForm" value="ModifyMedia">
 				<input type="hidden" name="route" id="route" value="{{ path("app_modif_media") }}">
 			</div>
-			{{ form_rest(form) }}
+			<div display="hidden">{{ form_rest(form) }}</div>
 			{{ form_end(form) }}
 		</div>
 	</div>

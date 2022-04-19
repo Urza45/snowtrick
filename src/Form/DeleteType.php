@@ -16,11 +16,11 @@ class DeleteType extends AbstractType
                 'supprimer',
                 ChoiceType::class,
                 [
-                'choices'  => [
-                    'Oui' => true,
-                    'Non' => false
-                ],
-                'expanded' => true,
+                    'choices'  => [
+                        'Oui' => true,
+                        'Non' => false
+                    ],
+                    'expanded' => true,
                 ]
             );
     }
@@ -29,7 +29,7 @@ class DeleteType extends AbstractType
     {
         $resolver->setDefaults(
             [
-            // Configure your form options here
+                // Configure your form options here
             ]
         );
     }

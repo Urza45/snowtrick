@@ -122,8 +122,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $slug;
 
-    private $captcha;
-
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
@@ -455,25 +453,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->slug || '-' === $this->slug) {
             $this->slug = (string) $slugger->slug('pseudo-' . $this->getPseudo())->lower();
         }
-    }
-
-    /**
-     * Get the value of captcha
-     */
-    public function getCaptcha()
-    {
-        return $this->captcha;
-    }
-
-    /**
-     * Set the value of captcha
-     *
-     * @return self
-     */
-    public function setCaptcha($captcha)
-    {
-        $this->captcha = $captcha;
-
-        return $this;
     }
 }

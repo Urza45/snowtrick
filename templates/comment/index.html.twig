@@ -7,7 +7,12 @@
 			Par
 			{{ comment.user.pseudo }}, le
 			{{ comment.createdAt|date('d/m/Y')}}<br/>
-			{{ comment.content }}
+			{% if comment.disabled %}
+				<p class="text-danger">Commentaire interdit par l'administrateur</p>
+			{% else %}
+				<p class="text-primary">{{ comment.content }}</p>
+			{% endif %}
+
 		</div>
 	</div>
 {% endfor %}

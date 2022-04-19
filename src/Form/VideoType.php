@@ -15,34 +15,14 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('legend')
-            ->add('url')
-            // ->add('typeMedia', EntityType::class, [
-            //     // looks for choices from this entity
-            //     'class' => TypeMedia::class,
-            //     'query_builder' => function (TypeMediaRepository $er) {
-            //         return $er->createQueryBuilder('u')
-            //             ->andWhere('u.groupMedia = :groupMedia')
-            //             ->setParameter('groupMedia', 'Vidéo')
-            //             ->orderBy('u.typeMedia', 'ASC');
-            //     },
-            //     // uses the User.username property as the visible option string
-            //     'choice_label' => 'typeMedia',
-            //     'attr' => [
-            //         'class' => 'form-select',
-            //     ]
-
-            //     // used to render a select box, check boxes or radios
-            //     // 'multiple' => true,
-            //     // 'expanded' => true,
-            // ])
-        ;
+            ->add('url');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-            // Configure your form options here
+                // Configure your form options here
             ]
         );
     }

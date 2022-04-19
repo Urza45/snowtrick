@@ -116,11 +116,10 @@ class MediaController extends AbstractController
                     $message .= 'L\'entrée en base de données est conservée.';
                     $message = '<p class="text-danger">' . $message . '</p>';
                     return new Response($message);
-                } else {
-                    // Suppression de l'entrée en base de données.
-                    $repoMedia->remove($media, true);
-                    return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
                 }
+                // Suppression de l'entrée en base de données.
+                $repoMedia->remove($media, true);
+                return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
             }
         }
 
@@ -143,7 +142,8 @@ class MediaController extends AbstractController
         Request $request,
         ManagerRegistry $doctrine,
         FileUploader $fileUploader,
-        TypeMediaRepository $repoTypeMedia
+        TypeMediaRepository $repoTypeMedia,
+        MediaRepository $repoMedia
     ) {
         $trick = $repoTrick->findOneBy(['slug' => $request->get('slug')]);
 
@@ -156,7 +156,7 @@ class MediaController extends AbstractController
             if ($formMedia->isValid()) {
                 $file = $formMedia['url']->getData();
                 if ($file) {
-                    $response = $fileUploader->upload($file, $request);
+                    $response = $fileUploader->upload($file);
                     if ($response['status'] == 'fail') {
                         return new Response('<p class="text-danger">' . $response['message'] . '</p>');
                     }
@@ -175,6 +175,8 @@ class MediaController extends AbstractController
 
                         $manager->persist($media);
                         $manager->flush();
+
+                        $repoMedia->updateFeaturePicture($media);
                         return new Response('<p class="text-success">La photographie a bien été enregistrée.</p>');
                     }
                     return new Response('<p class="text-danger">1</p>');
