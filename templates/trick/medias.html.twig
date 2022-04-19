@@ -9,7 +9,7 @@
 					</div>
 					<div class="card-body">
 						{{ picture.legend }}<br/>
-						<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ picture.id }}" data-affiche="yes" data-route="{{ path('app_media') }}" data-title="{{ picture.legend }}">
+						<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ picture.id }}" data-affiche="no" data-route="{{ path('app_media') }}" data-title="{{ picture.legend }}">
 							<i class="fa-solid fa-eye"></i>
 						</button>
 						{% if app.user %}
@@ -34,7 +34,7 @@
 					</div>
 					<div class="card-body">
 						{{ video.legend }}<br/>
-						<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ video.id }}" data-affiche="yes" data-route="{{ path('app_media') }}" data-title="{{ video.legend }}">
+						<button class="btn userinfo" data-toggle="modal" data-bs-target="#exampleModal" data-button="Enregistrer" data-id="{{ video.id }}" data-affiche="no" data-route="{{ path('app_media') }}" data-title="{{ video.legend }}">
 							<i class="fa-brands fa-youtube"></i>
 						</button>
 						{% if app.user %}
