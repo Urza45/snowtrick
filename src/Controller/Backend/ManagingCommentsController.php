@@ -2,6 +2,8 @@
 
 namespace App\Controller\Backend;
 
+use App\Form\BanType;
+use App\Form\DeleteType;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,7 +24,7 @@ class ManagingCommentsController extends AbstractController
         return $this->render(
             'managing_comments/index.html.twig',
             [
-            'comments' => $comments,
+                'comments' => $comments,
             ]
         );
     }
@@ -37,11 +39,23 @@ class ManagingCommentsController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $manager = $doctrine->getManager();
+                $manager->persist($comment);
+                $manager->flush();
+                return new Response('<p class="text-success">Vos modifications ont bien été enregistrées.</p>');
+            }
+            return new Response($form->getErrors(true, true)[0]->getMessageTemplate());
+        }
+
+
         return $this->render(
             'managing_comments/show_comment.html.twig',
             [
-            'form' => $form->createView(),
-            'requete' => $request
+                'form' => $form->createView(),
+                'requete' => $request,
+                'comment' => $comment
             ]
         );
     }
@@ -51,14 +65,59 @@ class ManagingCommentsController extends AbstractController
      */
     public function banComment(Request $request, CommentRepository $repoComment, ManagerRegistry $doctrine)
     {
-        return new Response('Hello');
+        $comment = $repoComment->findOneBy(['id' => $request->get('id')]);
+
+        $form = $this->createForm(BanType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $manager = $doctrine->getManager();
+                $manager->persist($comment);
+                $manager->flush();
+                return new Response('<p class="text-success">Vos modifications ont bien été enregistrées.</p>');
+            }
+            return new Response($form->getErrors(true, true)[0]->getMessageTemplate());
+        }
+
+        return $this->render(
+            'managing_comments/ban_comment.html.twig',
+            [
+                'form' => $form->createView(),
+                'requete' => $request,
+                'comment' => $comment
+            ]
+        );
     }
 
     /**
      * @Route("/admin/comment/{id}/delete", name="app_managing_delete_comment")
      */
-    public function deleteComment(Request $request, CommentRepository $repoComment, ManagerRegistry $doctrine)
+    public function deleteComment(Request $request, CommentRepository $repoComment)
     {
-        return new Response('Hello');
+        $comment = $repoComment->findOneBy(['id' => $request->get('id')]);
+
+        $form = $this->createForm(DeleteType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reponse = $form->get('supprimer')->getData();
+            if ($reponse == true) {
+                // Suppression du commentaire
+                $repoComment->remove($comment, true);
+                return new Response(
+                    '<p class="text-success">Le commentaire a bien été supprimé.</p>'
+                );
+            }
+        }
+
+        return $this->render(
+            'managing_comments/delete_comment.html.twig',
+            [
+                'form' => $form->createView(),
+                'requete' => $request,
+                'comment' => $comment
+            ]
+        );
     }
 }

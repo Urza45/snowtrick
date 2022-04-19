@@ -1,1 +1,15 @@
-{{ form(form)}}
+<div class="container container-fluid">
+	<div class="row justify-content-evenly align-items-center">
+		<div class="col-lg-8 col-12">
+			<p class="statusMsg"></p>
+			{{ form_start(form, { attr: {'name' : 'formModal', 'id' : 'formModal', 'role' : 'form', 'accept-charset' : 'utf-8' }}) }}
+			<div class="form-group">
+				<input type="hidden" name="userId" id="userId" value="{{ comment.id }}">
+				<input type="hidden" name="nameForm" id="nameForm" value="banUser">
+				<input type="hidden" name="route" id="route" value="{{ path('app_managing_comment', { id: comment.id }) }}">
+			</div>
+			{{ form_rest(form) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>
