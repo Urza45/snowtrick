@@ -16,30 +16,26 @@ For this project, we will focus on the technical creation of the site for Jimmy.
 
 You are responsible for developing the site that meets Jimmy's needs. You must therefore implement the following functionalities:
 
-    - A directory of snowboard tricks. You can take inspiration from the list of figures on Wikipedia. 
-        Just integrate 10 figures, the rest will be entered by Internet users;
-    - Figure management (creation, modification, consultation);
-    - A space for discussion common to all figures.
+- A directory of snowboard tricks. You can take inspiration from the list of figures on Wikipedia.
+    Just integrate 10 figures, the rest will be entered by Internet users;
+- Figure management (creation, modification, consultation);
+- A space for discussion common to all figures.
 
 To implement these features, you need to create the following pages:
 
-    - The home page where the list of figures will appear;
-    - The page for creating a new figure;
-    - The edit page of a figure;
-    - The presentation page of a figure (containing the common discussion space around a figure).
+- The home page where the list of figures will appear;
+- The page for creating a new figure;
+- The edit page of a figure;
+- The presentation page of a figure (containing the common discussion space around a figure).
 
 ## Pre-requisites
 
 The present project was developed with:
 
 - PHP 7.4.9 (cli) (built: Aug  4 2020 11:52:41)
-
 - MySQL  5.7.31 Community Server (GPL)
-
 - Bootstrap v5.0
-
 - JQuery 3.4.1
-
 - SASS
 
 ## Installation

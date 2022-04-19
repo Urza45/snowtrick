@@ -116,11 +116,10 @@ class MediaController extends AbstractController
                     $message .= 'L\'entrée en base de données est conservée.';
                     $message = '<p class="text-danger">' . $message . '</p>';
                     return new Response($message);
-                } else {
-                    // Suppression de l'entrée en base de données.
-                    $repoMedia->remove($media, true);
-                    return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
                 }
+                // Suppression de l'entrée en base de données.
+                $repoMedia->remove($media, true);
+                return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
             }
         }
 
@@ -173,8 +172,6 @@ class MediaController extends AbstractController
                         $media->setFeaturePicture($formMedia['featurePicture']->getData());
                         $media->setTypeMedia($repoTypeMedia->findOneBy(['typeMedia' => $extension]));
                         $media->setTrick($trick);
-
-
 
                         $manager->persist($media);
                         $manager->flush();

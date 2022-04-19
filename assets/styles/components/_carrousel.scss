@@ -1,9 +1,9 @@
 @media (max-width: 767px) {
-  .carousel-inner .carousel-item>div {
+  .carousel-inner .carousel-item > div {
     display: none;
   }
 
-  .carousel-inner .carousel-item>div:first-child {
+  .carousel-inner .carousel-item > div:first-child {
     display: block;
   }
 }

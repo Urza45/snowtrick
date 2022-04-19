@@ -48,7 +48,7 @@ class MediaRepository extends ServiceEntityRepository
     /**
      * @return Media[] Returns an array of Media objects
      */
-    public function getImage($id)
+    public function getImage($idPicture)
     {
         return $this->createQueryBuilder('m')
             ->innerJoin('m.typeMedia', 'tm')
@@ -56,7 +56,7 @@ class MediaRepository extends ServiceEntityRepository
             ->setParameter('val1', 'Image')
             ->innerJoin('m.trick', 'tt')
             ->andWhere('tt.id = :val2')
-            ->setParameter('val2', $id)
+            ->setParameter('val2', $idPicture)
             ->orderBy('m.id', 'ASC')
             //->setMaxResults(10)
             ->getQuery()
@@ -66,7 +66,7 @@ class MediaRepository extends ServiceEntityRepository
     /**
      * @return Media[] Returns an array of Media objects
      */
-    public function getVideo($id)
+    public function getVideo($idVideo)
     {
         return $this->createQueryBuilder('m')
             ->innerJoin('m.typeMedia', 'tm')
@@ -74,7 +74,7 @@ class MediaRepository extends ServiceEntityRepository
             ->setParameter('val1', 'Vidéo')
             ->innerJoin('m.trick', 'tt')
             ->andWhere('tt.id = :val2')
-            ->setParameter('val2', $id)
+            ->setParameter('val2', $idVideo)
             ->orderBy('m.id', 'ASC')
             ->getQuery()
             ->getResult();

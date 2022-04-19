@@ -240,7 +240,6 @@ class TrickController extends AbstractController
     public function showTrick(
         TrickRepository $repoTrick,
         Request $request,
-        Session $session,
         UserRepository $repoUser,
         CommentRepository $repoComment,
         ManagerRegistry $doctrine,

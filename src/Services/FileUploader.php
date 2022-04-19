@@ -46,7 +46,7 @@ class FileUploader extends AbstractController
         $this->tricksDirectory = $tricksDirectory;
         $this->slugger = $slugger;
     }
-    
+
     /**
      * upload
      *
@@ -67,9 +67,8 @@ class FileUploader extends AbstractController
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
-            $message = $this->imagesResizeCarre($file, $directory . '/' . $fileName, 1200, 'center', false);
-            $message .= '<br/>'
-                . $this->imagesResizeCarre($file, $directory . '/' . 'thumbs_' . $fileName, 200, 'center', true);
+            $this->imagesResizeCarre($file, $directory . '/' . $fileName, 1200, 'center', false);
+            $this->imagesResizeCarre($file, $directory . '/' . 'thumbs_' . $fileName, 200, 'center', true);
             //$file->move($directory, $fileName);
         } catch (FileException $e) {
             // ... handle exception if something happens during file
@@ -106,12 +105,10 @@ class FileUploader extends AbstractController
             $message .= 'L\'entrée en base de données est conservée.';
             $message = '<p class="text-danger">' . $message . '</p>';
             return new Response($message);
-        } else {
-            // Suppression de l'entrée en base de données.
-            $repoMedia->remove($media, true);
-            return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
         }
-        return new Response('<p class="text-success">Pas de suppression</p>');
+        // Suppression de l'entrée en base de données.
+        $repoMedia->remove($media, true);
+        return new Response('<p class="text-success">Le média a bien été supprimé.</p>');
     }
 
 
